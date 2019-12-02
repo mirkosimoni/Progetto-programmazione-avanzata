@@ -2,7 +2,7 @@ package univpm.advprog.aule.app;
 
 /**
  * Hello world!
- *
+ *ciao
  */
 public class App 
 {
