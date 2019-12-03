@@ -1,8 +1,6 @@
 .classpath
 .DS_Store
 .project
-target/*
 bin/*
-/target/
 *.class
 
