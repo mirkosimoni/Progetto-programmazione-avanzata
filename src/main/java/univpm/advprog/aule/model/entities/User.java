@@ -1,5 +1,7 @@
 package univpm.advprog.aule.model.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 
@@ -14,4 +16,6 @@ public class User {
 
 	  @Column(name = "ENABLED", nullable = false)
 	  private boolean enabled;
+	  
+	  private Set<Role> roles;
 }
