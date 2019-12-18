@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import univpm.advprog.aule.model.dao.UserDao;
+import univpm.advprog.aule.model.entities.Role;
 import univpm.advprog.aule.model.entities.User;
 
 @Service("userDetailsService")
