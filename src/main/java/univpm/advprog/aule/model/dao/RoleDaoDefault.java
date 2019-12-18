@@ -1,5 +1,5 @@
 package univpm.advprog.aule.model.dao;
 
-public class RoleDaoDefault {
+public class RoleDaoDefault extends DefaultDao implements RoleDao {
 
 }
