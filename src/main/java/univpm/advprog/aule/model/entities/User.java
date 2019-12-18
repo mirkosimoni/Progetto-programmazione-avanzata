@@ -24,7 +24,7 @@ public class User implements Serializable{
 	private Profile profile;
 	  
 	  
-	  @ManyToOne   // Pensare a cosa mettere se ManyToMany o ManyToOne
+	  @ManyToOne
 	  @JoinTable( 
 	      name = "users_roles", 
 	      joinColumns = @JoinColumn(
