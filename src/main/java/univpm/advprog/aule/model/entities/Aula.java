@@ -69,4 +69,12 @@ public class Aula implements Serializable {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	public void addPrenotation(Prenotation prenotation) {
+		this.prenotazioni.add(prenotation);
+	}
+	
+	public void removePrenotation(Prenotation prenotation) {
+		this.prenotazioni.remove(prenotation);
+	}
 }
