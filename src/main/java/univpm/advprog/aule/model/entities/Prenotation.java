@@ -20,34 +20,50 @@ import javax.persistence.Version;
 @Entity
 public class Prenotation implements Serializable{
 	
-	private Long id;
-	private DateTime oraInizio;
-	private DateTime oraFine;
-	private User user;
-	private Aula aula;
-	private String nomeEvento;
-	private String note;
-	private int version;
-	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
+	private Long id;	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ORA_INIZIO", nullable = false)
+	private DateTime oraInizio;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ORA_FINE", nullable = false)
+	private DateTime oraFine;
+	
+	@ManyToOne
+	@JoinColumn(name = "USERNAME", nullable=false)
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID", nullable = false)
+	private Aula aula;
+	
+	@Column(name = "NOME_EVENTO", nullable = false)
+	private String nomeEvento;
+	
+	@Column(name = "NOTE")
+	private String note;
+	
+	@Version
+	@Column(name = "VERSION")
+	private int version;
+	
+	
+
 	public Long getId() {
 		return this.id;
 	}
 
-	@Version
-	@Column(name = "VERSION")
+	
 	public int getVersion() {
 		return version;
 	}
 	
 	
 	//TODO controllare valore di TIMESTAMP sul db
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ORA_INIZIO")
 	public DateTime getOraInizio() {
 		return this.oraInizio;
 	}
@@ -56,8 +72,7 @@ public class Prenotation implements Serializable{
 		this.oraInizio = oraInizio;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ORA_FINE")
+	
 	public DateTime getOraFine() {
 		return this.oraFine;
 	}
