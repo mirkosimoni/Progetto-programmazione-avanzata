@@ -2,6 +2,8 @@ package univpm.advprog.aule.model.entities;
 
 import javax.persistence.Column;
 
+@Entity
+@Table(name = "profilo")
 public class Profile {
 	
 	@Column(name = "NOME", nullable = false)
