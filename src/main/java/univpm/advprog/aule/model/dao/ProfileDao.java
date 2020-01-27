@@ -1,5 +1,22 @@
 package univpm.advprog.aule.model.dao;
 
-public interface ProfileDao {
+import java.util.List;
 
+import it.univpm.advprog.aule.model.entities.Profile;
+
+
+
+public interface ProfileDao {
+    Profile findByName(String name);
+	
+	List<Profile> findAll();
+
+	Profile findById(String id);
+
+	Profile update(Profile profile);
+
+	void delete(Profile contact);
+	
+	Profile create(String id, String name, String family);
+	
 }
