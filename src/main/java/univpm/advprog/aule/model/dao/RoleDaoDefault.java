@@ -1,6 +1,5 @@
 package univpm.advprog.aule.model.dao;
-
-import javax.management.relation.Role;
+import univpm.advprog.aule.model.entities.Role;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +12,8 @@ public class RoleDaoDefault extends DefaultDao implements RoleDao {
 
 	@Override
 	public Role create(String name) {
-		Role r = new Role(name, null);
-		r.setRoleName(name);
+		Role r = new Role();
+		r.setName(name);
 		this.getSession().save(r);
 		
 		return r;

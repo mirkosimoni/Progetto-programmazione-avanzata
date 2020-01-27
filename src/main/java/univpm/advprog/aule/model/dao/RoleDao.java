@@ -1,6 +1,6 @@
 package univpm.advprog.aule.model.dao;
 
-import javax.management.relation.Role;
+import univpm.advprog.aule.model.entities.Role;
 
 import org.hibernate.Session;
 
