@@ -2,7 +2,7 @@ package univpm.advprog.aule.model.dao;
 
 import java.util.List;
 
-import it.univpm.advprog.aule.model.entities.Profile;
+import univpm.advprog.aule.model.entities.Profile;
 
 
 
@@ -17,6 +17,6 @@ public interface ProfileDao {
 
 	void delete(Profile contact);
 	
-	Profile create(String id, String name, String family);
+	Profile create(String id, String nome, String cognome);
 	
 }
