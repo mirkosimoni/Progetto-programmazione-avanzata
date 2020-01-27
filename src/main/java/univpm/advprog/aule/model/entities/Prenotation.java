@@ -18,6 +18,7 @@ import javax.persistence.Version;
 
 
 @Entity
+@Table(name="prenotation")
 public class Prenotation implements Serializable{
 	
 	@Id
