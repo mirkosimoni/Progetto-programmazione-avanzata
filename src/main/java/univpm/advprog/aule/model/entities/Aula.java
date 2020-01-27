@@ -19,6 +19,8 @@ import javax.persistence.Version;
 public class Aula implements Serializable {
 	
 	private long id;
+	private String nome;
+	private int quota;
 	private int numeroPosti;
 	private boolean presentiPrese;
 	private Set<Prenotation> prenotazioni = new HashSet<Prenotation>();
@@ -42,6 +44,24 @@ public class Aula implements Serializable {
 	
 	public void setNumeroPosti(int numeroPosti) {
 		this.numeroPosti = numeroPosti;
+	}
+	
+	@Column(name = "NOME")
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	@Column(name = "QUOTA")
+	public int getQuota() {
+		return quota;
+	}
+
+	public void setQuota(int quota) {
+		this.quota = quota;
 	}
 	
 	@Column(name = "PRESE")
