@@ -44,6 +44,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		prenotation.setAula(aula);
 		prenotation.setNomeEvento(nomeEvento);
 		prenotation.setNote(note);
+		this.getSession().save(prenotation);
 		return prenotation;
 	}
 	
