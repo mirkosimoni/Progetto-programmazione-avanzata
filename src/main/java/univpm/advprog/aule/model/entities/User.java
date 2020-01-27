@@ -20,7 +20,8 @@ public class User implements Serializable{
 
 	@Column(name = "ENABLED", nullable = false)
 	private boolean enabled;
-	  
+	
+	@Column(name = "PROFILE", nullable = false)
 	private Profile profile;
 	  
 	  
