@@ -21,50 +21,34 @@ import javax.persistence.Version;
 @Table(name="prenotation")
 public class Prenotation implements Serializable{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
 	private Long id;	
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ORA_INIZIO", nullable = false)
 	private DateTime oraInizio;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ORA_FINE", nullable = false)
 	private DateTime oraFine;
-	
-	@ManyToOne
-	@JoinColumn(name = "USERNAME", nullable=false)
 	private User user;
-	
-	@ManyToOne
-	@JoinColumn(name = "ID", nullable = false)
 	private Aula aula;
-	
-	@Column(name = "NOME_EVENTO", nullable = false)
 	private String nomeEvento;
-	
-	@Column(name = "NOTE")
 	private String note;
-	
-	@Version
-	@Column(name = "VERSION")
 	private int version;
 	
 	
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	public Long getId() {
 		return this.id;
 	}
 
-	
+	@Version
+	@Column(name = "VERSION")
 	public int getVersion() {
 		return version;
 	}
 	
 	
 	//TODO controllare valore di TIMESTAMP sul db
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ORA_INIZIO", nullable = false)
 	public DateTime getOraInizio() {
 		return this.oraInizio;
 	}
@@ -73,7 +57,8 @@ public class Prenotation implements Serializable{
 		this.oraInizio = oraInizio;
 	}
 	
-	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ORA_FINE", nullable = false)
 	public DateTime getOraFine() {
 		return this.oraFine;
 	}
@@ -82,6 +67,8 @@ public class Prenotation implements Serializable{
 		this.oraFine = oraFine;
 	}
 	
+	@ManyToOne
+	@JoinColumn(name = "USERNAME", nullable=false)
 	public User getUser() {
 		return user;
 	}
@@ -90,6 +77,8 @@ public class Prenotation implements Serializable{
 		this.user = user;
 	}
 	
+	@ManyToOne
+	@JoinColumn(name = "ID", nullable = false)
 	public Aula getAula() {
 		return aula;
 	}
@@ -98,6 +87,7 @@ public class Prenotation implements Serializable{
 		this.aula = aula;
 	}
 	
+	@Column(name = "NOME_EVENTO", nullable = false)
 	public String getNomeEvento() {
 		return nomeEvento;
 	}
@@ -106,6 +96,7 @@ public class Prenotation implements Serializable{
 		this.nomeEvento = nomeEvento;
 	}
 	
+	@Column(name = "NOTE")
 	public String getNote() {
 		return note;
 	}

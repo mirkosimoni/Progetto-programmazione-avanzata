@@ -8,12 +8,11 @@ import javax.persistence.Table;
 @Table(name = "profilo")
 public class Profile {
 	
-	@Column(name = "NOME", nullable = false)
 	private String nome;
 	
-	@Column(name = "COGNOME", nullable = false)
 	private String cognome;
 
+	@Column(name = "NOME", nullable = false)
 	public String getNome() {
 		return nome;
 	}
@@ -22,6 +21,7 @@ public class Profile {
 		this.nome = nome;
 	}
 
+	@Column(name = "COGNOME", nullable = false)
 	public String getCognome() {
 		return cognome;
 	}
