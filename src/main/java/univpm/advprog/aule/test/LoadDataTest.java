@@ -24,7 +24,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class LoadDataTest {
 	public static void main(String ...args) {
-		System.out.println("Quiiiiiiiii");
+		System.out.println("Inizio di load data test");
 		
 		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
 			
@@ -56,6 +56,9 @@ public class LoadDataTest {
 				aulaDao.create("D2", 150, 34, false);
 
 				System.out.println("Qui 2");
+				
+				session.getTransaction().commit();
+				
 				/*
 				Singer rw = singerDao.create("Roger", "Waters", LocalDate.of(1963, 9, 6));
 				Singer mj = singerDao.create("Michael", "Jackson", null);
@@ -191,7 +194,7 @@ public class LoadDataTest {
 			}
 
 		} catch (Exception e) {
-//			logger.error("Eccezione: " + e.getMessage());
+			//logger.error("Eccezione: " + e.getMessage());
 			e.printStackTrace(System.err);
 		}
 //		logger.info("Esco ...");

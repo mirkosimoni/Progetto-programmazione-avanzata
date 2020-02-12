@@ -48,7 +48,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public Set<Prenotation> getPrenotazioni(Aula aula) {
-		Query q = this.getSession().createQuery("From Prenotation p JOIN FETCH p.aula WHERE p.aula :aula", Prenotation.class);
+		Query q = this.getSession().createQuery("From Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula", Prenotation.class);
 		return new HashSet<Prenotation>(q.setParameter("aula", aula).getResultList());
 	}
 
@@ -59,6 +59,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 	
 	
+	@Override
 	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {
 		Aula a = new Aula();
 		a.setNome(nome);
@@ -83,7 +84,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public List<Aula> findAulePrese() {
-		return this.getSession().createQuery("FROM Aula a WHERE a.presentiPrese = TRUE").getResultList();
+		return this.getSession().createQuery("FROM Aula a WHERE a.presentiPrese = TRUE", Aula.class).getResultList();
 	}
 
 }
