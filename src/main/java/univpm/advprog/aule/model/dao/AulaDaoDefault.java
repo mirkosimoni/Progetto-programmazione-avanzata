@@ -7,11 +7,19 @@ import java.util.Set;
 import javax.persistence.Query;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
 
+@Transactional
+@Repository("aulaDao")
 public class AulaDaoDefault extends DefaultDao implements AulaDao {
+	
+	@Autowired
+	PrenotationDao prenotationDao;
 
 	@Override
 	public List<Aula> findAll() {

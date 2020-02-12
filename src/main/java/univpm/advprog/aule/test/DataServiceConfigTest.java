@@ -27,14 +27,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 @Configuration
-//@ComponentScan(basePackages =
-//     "it.univpm.advprog.singers")
-//@ComponentScan(basePackages = { "it.univpm.advprog.singers.controller", "it.univpm.advprog.singers.model",
-//		"it.univpm.advprog.singers.services" })
-//@ComponentScan(basePackages = { "it.univpm.advprog.singers" },
-//excludeFilters  = {@ComponentScan.Filter(
-//		type = FilterType.ASSIGNABLE_TYPE, classes = {WebConfig.class, WebInit.class, DataServiceConfig.class})})
-@ComponentScan(basePackages = { "it.univpm.advprog.singers.model" })
+@ComponentScan(basePackages = { "univpm.advprog.aule.model" })
 @EnableTransactionManagement
 public class DataServiceConfigTest extends DataServiceConfig {
 

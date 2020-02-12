@@ -16,10 +16,12 @@ public abstract class DefaultDao {
 
 	@Resource(name = "sessionFactory")
 	public void setSessionFactory(SessionFactory sessionFactory) {
+		System.out.println("SessionFactory set");
 		this.sessionFactory = sessionFactory;
 	}
 
 	public void setSession(Session session) {
+		System.out.println("Session set");
 		// added to allow a single thread session sharing scheme
 		this.session = session; 
 	}

@@ -47,7 +47,7 @@ public class Prenotation implements Serializable{
 	
 	
 	//TODO controllare valore di TIMESTAMP sul db
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ORA_INIZIO", nullable = false)
 	public DateTime getOraInizio() {
 		return this.oraInizio;
@@ -57,7 +57,7 @@ public class Prenotation implements Serializable{
 		this.oraInizio = oraInizio;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ORA_FINE", nullable = false)
 	public DateTime getOraFine() {
 		return this.oraFine;

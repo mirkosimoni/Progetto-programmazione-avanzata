@@ -23,10 +23,10 @@ import univpm.advprog.aule.test.DataServiceConfigTest;
 
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-//@ComponentScan(basePackages =
-//     "it.univpm.advprog.singers")
 @ComponentScan(basePackages = { "univpm.advprog.aule.model" },
 		excludeFilters  = {@ComponentScan.Filter(
 				type = FilterType.ASSIGNABLE_TYPE, classes = {DataServiceConfigTest.class})})
@@ -59,6 +59,11 @@ public class DataServiceConfig {
 			return null;
 		}
 	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	protected Properties hibernateProperties() {
 		Properties hibernateProp = new Properties();
@@ -71,24 +76,24 @@ public class DataServiceConfig {
 		hibernateProp.put("hibernate.max_fetch_depth", 3);
 		hibernateProp.put("hibernate.jdbc.batch_size", 10);
 		hibernateProp.put("hibernate.jdbc.fetch_size", 50);
-//		    hibernateProp.put("hibernate.enable_lazy_load_no_trans", true);
-		// hibernateProp.put("javax.persistence.schema-generation.database.action",
-		// "create"); // importante, altrimenti si aspetta il DB gia` "strutturato"
+		//hibernateProp.put("hibernate.enable_lazy_load_no_trans", true);
+		//hibernateProp.put("javax.persistence.schema-generation.database.action", "create"); // importante, altrimenti si aspetta il DB gia` "strutturato"
 		hibernateProp.put("javax.persistence.schema-generation.database.action", "none"); // importante, altrimenti si
 																							// aspetta il DB gia`
 																							// "strutturato"
 		return hibernateProp;
 	}
 
+	
 	@Bean
 	public SessionFactory sessionFactory() throws IOException {
 		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 		sessionFactoryBean = new LocalSessionFactoryBean();
 		sessionFactoryBean.setDataSource(dataSource());
-//		    sessionFactoryBean.setPackagesToScan("it.univpm.advprog.singers");
-		sessionFactoryBean.setPackagesToScan("it.univpm.advprog.singers.model");
+		sessionFactoryBean.setPackagesToScan("univpm.advprog.aule.model");
 		sessionFactoryBean.setHibernateProperties(hibernateProperties());
 		sessionFactoryBean.afterPropertiesSet();
+		System.out.println("Dopo PropertiesSet");
 		return sessionFactoryBean.getObject();
 	}
 

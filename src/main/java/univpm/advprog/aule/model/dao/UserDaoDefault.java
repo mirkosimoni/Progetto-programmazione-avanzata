@@ -2,13 +2,17 @@ package univpm.advprog.aule.model.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import univpm.advprog.aule.model.entities.User;
 
+@Transactional
+@Repository("userDao")
 public class UserDaoDefault extends DefaultDao implements UserDao {
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	//@Autowired
+	//private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public User findUserByUsername(String username) {
@@ -39,7 +43,8 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 
 	@Override
 	public String encryptPassword(String password) {
-		return this.passwordEncoder.encode(password);
+		//return this.passwordEncoder.encode(password);
+		return password;
 	}
 
 }

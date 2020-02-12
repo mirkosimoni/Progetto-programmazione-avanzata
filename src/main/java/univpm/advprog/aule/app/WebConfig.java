@@ -42,7 +42,7 @@ import univpm.advprog.aule.utils.StringToLocalDateConverter;
 // "it.univpm.advprog.singers.controller", 
 // "it.univpm.advprog.singers.services", 
 // "it.univpm.advprog.singers.model", "it.univpm.advprog.singers.utils"})
-@ComponentScan(basePackages = { "it.univpm.advprog.singers" },
+@ComponentScan(basePackages = { "univpm.advprog.aule" },
 excludeFilters  = {@ComponentScan.Filter(
 		type = FilterType.ASSIGNABLE_TYPE, classes = {DataServiceConfigTest.class})})
 public class WebConfig implements WebMvcConfigurer {

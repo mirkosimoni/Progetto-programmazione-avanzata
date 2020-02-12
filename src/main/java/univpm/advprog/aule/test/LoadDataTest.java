@@ -24,34 +24,38 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class LoadDataTest {
 	public static void main(String ...args) {
+		System.out.println("Quiiiiiiiii");
 		
 		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-
+			
+			System.out.println("Inizio ...........");
+			
 			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
 			
 			AulaDao aulaDao = ctx.getBean(AulaDao.class);
-			PrenotationDao prenotationDao = ctx.getBean(PrenotationDao.class);
-			ProfileDao profileDao = ctx.getBean(ProfileDao.class);
-			RoleDao roleDao = ctx.getBean(RoleDao.class);
-			UserDao userDao = ctx.getBean(UserDao.class);
+			//PrenotationDao prenotationDao = ctx.getBean(PrenotationDao.class);
+			//ProfileDao profileDao = ctx.getBean(ProfileDao.class);
+			//RoleDao roleDao = ctx.getBean(RoleDao.class);
+			//UserDao userDao = ctx.getBean(UserDao.class);
 			
 			
 			try (Session session = sf.openSession()) {
 				
 				
 				aulaDao.setSession(session);
-				prenotationDao.setSession(session);
-				profileDao.setSession(session);
-				userDao.setSession(session);
-				roleDao.setSession(session);
+				//prenotationDao.setSession(session);
+				//profileDao.setSession(session);
+				//userDao.setSession(session);
+				//roleDao.setSession(session);
 			
 				// phase 1 : add data to database
-				
+				System.out.println("Qui 1");
 				session.beginTransaction();
 				
 				aulaDao.create("D1", 155, 40, true);
 				aulaDao.create("D2", 150, 34, false);
 
+				System.out.println("Qui 2");
 				/*
 				Singer rw = singerDao.create("Roger", "Waters", LocalDate.of(1963, 9, 6));
 				Singer mj = singerDao.create("Michael", "Jackson", null);
