@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.Query;
 
+import org.joda.time.DateTime;
+
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
 
@@ -20,19 +22,9 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public Aula findById(long id) {
-		return getSession().find(Aula.class, id);
+		return this.getSession().find(Aula.class, id);
 	}
 
-	@Override
-	public Aula create(int numeroPosti, boolean presentiPrese) {
-		Aula a = new Aula();
-		a.setNumeroPosti(numeroPosti);
-		a.setPresentiPrese(presentiPrese);
-		
-		this.getSession().save(a);
-		
-		return a;
-	}
 
 	@Override
 	public Aula update(Aula aula) {
@@ -50,6 +42,29 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	public Set<Prenotation> getPrenotazioni(Aula aula) {
 		Query q = this.getSession().createQuery("From Prenotation p JOIN FETCH p.aula WHERE p.aula :aula", Prenotation.class);
 		return new HashSet<Prenotation>(q.setParameter("aula", aula).getResultList());
+	}
+
+	@Override
+	public List<Aula> findByNomeQuota(String nome, int quota) {
+		return this.getSession().createQuery("FROM Aula a  WHERE a.nome= :nome AND a.quota= :quota", Aula.class).setParameter("nome",nome).
+				setParameter("quota", quota).getResultList();
+	}
+
+	@Override
+	public List<Aula> findByNomeQuotaOraInizio(String nome, int quota, DateTime oraInizio) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {
+		Aula a = new Aula();
+		a.setNome(nome);
+		a.setQuota(quota);
+		a.setNumeroPosti(numeroPosti);
+		a.setPresentiPrese(presentiPrese);
+		this.getSession().save(a);
+		return a;
 	}
 
 }
