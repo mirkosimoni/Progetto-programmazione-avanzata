@@ -52,5 +52,18 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	public Prenotation update(Prenotation prenotation) {
 		return(Prenotation)this.getSession().merge(prenotation);
 	}
+
+	@Override
+	public List<Prenotation> findByAula(Aula aula) {
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula", Prenotation.class).
+				setParameter("aula", aula).getResultList();
+				
+	}
+
+	@Override
+	public Prenotation findByAulaOra(Aula aula, DateTime oraInizio) {
+		return this.getSession().createQuery("FROM Prenotation p WHERE p.aula= :aula AND p.oraInizio= :oraInizio", Prenotation.class).
+				setParameter("aula", aula).setParameter("oraInizio", oraInizio).getSingleResult();
+	}
 	
 }

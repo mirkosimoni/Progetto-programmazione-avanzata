@@ -17,6 +17,10 @@ public interface PrenotationDao {
 	
 	Prenotation findById(Long id);
 	
+	List<Prenotation> findByAula(Aula aula);
+	
+	Prenotation findByAulaOra(Aula aula, DateTime oraInizio);
+	
 	Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note);
 	
 	Prenotation update(Prenotation prenotation);
