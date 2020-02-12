@@ -18,9 +18,7 @@ public interface AulaDao {
 	
 	Aula findById(long id);
 	
-	List<Aula> findByNomeQuota(String nome, int quota);
-	
-	List<Aula> findByNomeQuotaOraInizio(String nome, int quota, DateTime oraInizio);
+	Aula findByNomeQuota(String nome, int quota);
 	
 	Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese);
 	
@@ -29,5 +27,11 @@ public interface AulaDao {
 	void delete(Aula aula);
 	
 	Set<Prenotation> getPrenotazioni(Aula aula);
+	
+	List<Aula> findAulePosti(int minimoPosti);
+	
+	List<Aula> findAuleQuota(int quota);
+	
+	List<Aula> findAulePrese();
 	
 }

@@ -16,11 +16,9 @@ public interface AulaService {
 	
 	Aula update(Aula aula);
 	
-	Aula delete(Aula aula);
+	void delete(Aula aula);
 	
-	Aula delete(long id);
-	
-	List<Aula> findLibere(DateTime oraInizio);
+	List<Aula> findLibere(DateTime oraInizio); //
 	
 	List<Aula> findLibere(DateTime oraInizio, DateTime oraFine);
 	

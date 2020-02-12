@@ -45,18 +45,12 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findByNomeQuota(String nome, int quota) {
-		return this.getSession().createQuery("FROM Aula a  WHERE a.nome= :nome AND a.quota= :quota", Aula.class).setParameter("nome",nome).
-				setParameter("quota", quota).getResultList();
+	public Aula findByNomeQuota(String nome, int quota) {
+		return this.getSession().createQuery("FROM Aula a  WHERE a.nome= :nome AND a.quota = :quota", Aula.class).setParameter("nome",nome).
+				setParameter("quota", quota).getSingleResult();
 	}
-
-	@Override
-	public List<Aula> findByNomeQuotaOraInizio(String nome, int quota, DateTime oraInizio) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	
+	
 	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {
 		Aula a = new Aula();
 		a.setNome(nome);
@@ -65,6 +59,23 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		a.setPresentiPrese(presentiPrese);
 		this.getSession().save(a);
 		return a;
+	}
+
+	@Override
+	public List<Aula> findAulePosti(int minimoPosti) {
+		return this.getSession().createQuery("FROM Aula a WHERE a.numeroPosti >= :minimoPosti", Aula.class).
+				setParameter("minimoPosti", minimoPosti).getResultList();
+	}
+
+	@Override
+	public List<Aula> findAuleQuota(int quota) {
+		return this.getSession().createQuery("FROM Aula a WHERE a.quota = :quota", Aula.class).
+				setParameter("quota", quota).getResultList();
+	}
+
+	@Override
+	public List<Aula> findAulePrese() {
+		return this.getSession().createQuery("FROM Aula a WHERE a.presentiPrese = TRUE").getResultList();
 	}
 
 }
