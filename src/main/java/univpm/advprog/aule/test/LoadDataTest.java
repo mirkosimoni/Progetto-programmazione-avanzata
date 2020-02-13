@@ -13,6 +13,7 @@ import univpm.advprog.aule.model.dao.RoleDao;
 import univpm.advprog.aule.model.dao.UserDao;
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
+import univpm.advprog.aule.model.entities.Role;
 import univpm.advprog.aule.model.entities.User;
 
 import java.time.LocalDate;
@@ -89,6 +90,29 @@ public class LoadDataTest {
 				Duration durata = new Duration(fine, inizio);
 				
 				System.out.println(durata.getStandardHours());
+				
+				
+				// Creazione di un ruolo
+				session.beginTransaction();
+				
+				Role admin = roleDao.create("Admin");
+				
+				Role utente = roleDao.create("User");
+				
+				Set<Role> setRole = new HashSet();
+				
+				setRole.add(admin);
+				setRole.add(utente);
+				
+				session.getTransaction().commit();
+				
+				// Assegnazione ruolo ad un utente
+				session.beginTransaction();
+				
+				user.setRoles(setRole);
+				
+				session.getTransaction().commit();
+				
 			
 			}
 
