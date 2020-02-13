@@ -78,11 +78,19 @@ public class Prenotation implements Serializable{
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "ID", nullable = false)
+	@JoinColumn(name = "AULA_ID", nullable = false)
 	public Aula getAula() {
 		return aula;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public void setAula(Aula aula) {
 		this.aula = aula;
 	}
