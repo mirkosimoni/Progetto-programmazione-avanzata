@@ -113,6 +113,14 @@ public class LoadDataTest {
 				
 				session.getTransaction().commit();
 				
+				// Ricerca aula
+				session.beginTransaction();
+				List<Aula> setAule = aulaDao.findAulePosti(20);
+				for(int i=0; i< setAule.size(); i++) {
+					System.out.println(setAule.get(i).getQuota());
+					System.out.println(setAule.get(i).getNome());
+				}
+				session.getTransaction().commit();
 			
 			}
 
