@@ -24,6 +24,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class LoadDataTest {
@@ -64,7 +65,7 @@ public class LoadDataTest {
 				User user = userDao.create("Mirko", "12345", true);
 				
 				DateTime oraInizio = new DateTime(2005, 3, 26, 12, 0, 0);
-				DateTime oraFine = new DateTime(2005, 3, 26, 13, 0, 0);
+				DateTime oraFine = new DateTime(2005, 3, 26, 15, 0, 0);
 				
 				prenotationDao.create(oraInizio, oraFine, user, aula, "esame spegni", "esame");
 				
@@ -80,6 +81,14 @@ public class LoadDataTest {
 				
 				session.getTransaction().commit();
 				
+				// Prova stampa differenza tra oraFine e oraInizio
+				
+				DateTime fine = prenot.getOraFine();
+				DateTime inizio = prenot.getOraInizio();
+				
+				Duration durata = new Duration(fine, inizio);
+				
+				System.out.println(durata.getStandardHours());
 			
 			}
 
