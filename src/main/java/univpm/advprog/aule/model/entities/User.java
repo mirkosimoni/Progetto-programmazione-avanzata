@@ -23,6 +23,7 @@ public class User implements Serializable{
 	private String password;
 	private boolean enabled;
 	private Profile profile;
+	private Set<Role> roles = new HashSet<Role>();
 	
 	@OneToOne
 	@JoinColumn(name = "profile_id", referencedColumnName = "id")
@@ -34,14 +35,6 @@ public class User implements Serializable{
 		this.profile = profile;
 	}
 
-	@ManyToMany
-	  @JoinTable( 
-	      name = "users_roles", 
-	      joinColumns = @JoinColumn(
-	        name = "username", referencedColumnName = "username"), 
-	      inverseJoinColumns = @JoinColumn(
-	        name = "role_id", referencedColumnName = "id")) 
-	  private Set<Role> roles = new HashSet<Role>();
 	  
 	@Id
 	@Column(name = "USERNAME")
@@ -92,6 +85,13 @@ public class User implements Serializable{
 		  this.roles = roles;
 	  }
 	  
+	  @ManyToMany
+	  @JoinTable( 
+	      name = "users_roles", 
+	       joinColumns = @JoinColumn(
+	        name = "username", referencedColumnName = "username"), 
+	      inverseJoinColumns = @JoinColumn(
+	        name = "role_id", referencedColumnName = "id"))
 	  public Set<Role> getRoles() {
 		  return this.roles;
 	  }
