@@ -20,7 +20,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	
 	@Autowired
 	PrenotationDao prenotationDao;
-
+	
 	@Override
 	public List<Aula> findAll() {
 		return getSession().
