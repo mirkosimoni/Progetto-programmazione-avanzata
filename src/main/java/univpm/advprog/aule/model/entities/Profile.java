@@ -5,15 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "profilo")
+@Table(name = "profile")
 public class Profile {
 	
 	private long id;
 	private String nome;
 	private String cognome;
+	private User user;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +46,14 @@ public class Profile {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	
-	
+
+	@OneToOne(mappedBy = "profile")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }

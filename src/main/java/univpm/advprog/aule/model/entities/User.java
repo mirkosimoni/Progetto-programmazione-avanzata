@@ -4,33 +4,37 @@ import java.util.HashSet;
 import java.util.Set;
 import java.io.Serializable;
 
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="user")
 public class User implements Serializable{
-	@Id
-	@Column(name = "USERNAME")
-	private String username;
-
-	@Column(name = "PASSWORD", nullable = false)
-	private String password;
-
-	@Column(name = "ENABLED", nullable = false)
-	private boolean enabled;
 	
-	@Column(name = "PROFILE", nullable = false)
+	private String username;
+	private String password;
+	private boolean enabled;
 	private Profile profile;
-	  
-	  
-	  @ManyToMany
+	
+	@OneToOne
+	@JoinColumn(name = "profile_id", referencedColumnName = "id")
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	@ManyToMany
 	  @JoinTable( 
 	      name = "users_roles", 
 	      joinColumns = @JoinColumn(
@@ -39,6 +43,8 @@ public class User implements Serializable{
 	        name = "role_id", referencedColumnName = "id")) 
 	  private Set<Role> roles = new HashSet<Role>();
 	  
+	@Id
+	@Column(name = "USERNAME")
 	  public String getUsername() {
 		  return this.username;
 	  }
@@ -47,14 +53,17 @@ public class User implements Serializable{
 		  this.username = username;
 	  }
 	  
+	  @Column(name = "PASSWORD", nullable = false)
 	  public String getPassword() {
 		  return this.password;
 	  }
+	  
 	  
 	  public void setPassword(String password) {
 		  this.password = password;
 	  }
 	  
+	  @Column(name = "ENABLED", nullable = false)
 	  public boolean isEnabled() {
 		  return this.enabled;
 	  }
@@ -79,11 +88,9 @@ public class User implements Serializable{
 		  }
 	  }
 	  
-	  /*
 	  public void setRoles(Set<Role> roles) {
 		  this.roles = roles;
 	  }
-	  */
 	  
 	  public Set<Role> getRoles() {
 		  return this.roles;
