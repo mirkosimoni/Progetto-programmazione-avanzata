@@ -12,6 +12,7 @@ import univpm.advprog.aule.model.dao.ProfileDao;
 import univpm.advprog.aule.model.dao.RoleDao;
 import univpm.advprog.aule.model.dao.UserDao;
 import univpm.advprog.aule.model.entities.Aula;
+import univpm.advprog.aule.model.entities.Prenotation;
 import univpm.advprog.aule.model.entities.User;
 
 import java.time.LocalDate;
@@ -66,6 +67,16 @@ public class LoadDataTest {
 				DateTime oraFine = new DateTime(2005, 3, 26, 13, 0, 0);
 				
 				prenotationDao.create(oraInizio, oraFine, user, aula, "esame spegni", "esame");
+				
+				session.getTransaction().commit();
+				
+				System.out.println("Fine transazione creazione prenotazione");
+				
+				session.beginTransaction();
+				
+				Prenotation prenot = prenotationDao.findById(1L);
+				
+				System.out.println(prenot.getOraFine());
 				
 				session.getTransaction().commit();
 				
