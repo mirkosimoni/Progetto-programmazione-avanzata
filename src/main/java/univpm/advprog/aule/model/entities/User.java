@@ -5,11 +5,16 @@ import java.util.Set;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
+@Entity
+@Table(name="user")
 public class User implements Serializable{
 	@Id
 	@Column(name = "USERNAME")
@@ -25,7 +30,7 @@ public class User implements Serializable{
 	private Profile profile;
 	  
 	  
-	  @ManyToOne
+	  @ManyToMany
 	  @JoinTable( 
 	      name = "users_roles", 
 	      joinColumns = @JoinColumn(
@@ -58,10 +63,6 @@ public class User implements Serializable{
 		  this.enabled = enabled;
 	  } 
 	  
-	  
-	  public Set<Role> roles () {
-		  return this.roles;
-	  }
 
 	  public void addRole(Role role) {
 		  if (this.roles == null) {
@@ -71,12 +72,22 @@ public class User implements Serializable{
 		  this.roles.add(role);
 	  }
 	  
+	  public void removeRole(Role role) {
+		
+		  if(this.roles != null && this.roles.contains(role)) {
+			  this.roles.remove(role);
+		  }
+	  }
+	  
+	  /*
 	  public void setRoles(Set<Role> roles) {
 		  this.roles = roles;
 	  }
+	  */
 	  
 	  public Set<Role> getRoles() {
 		  return this.roles;
 	  }
+	  
 	  
 }
