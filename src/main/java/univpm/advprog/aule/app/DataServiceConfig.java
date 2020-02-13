@@ -34,6 +34,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableTransactionManagement
 public class DataServiceConfig {
 	private static Logger logger = LoggerFactory.getLogger(DataServiceConfig.class);
+	
+	@Bean
+	public SessionFactory sessionFactory() throws IOException {
+		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+		sessionFactoryBean = new LocalSessionFactoryBean();
+		sessionFactoryBean.setDataSource(dataSource());
+		sessionFactoryBean.setPackagesToScan("univpm.advprog.aule.model");
+		sessionFactoryBean.setHibernateProperties(hibernateProperties());
+		System.out.println("Prima di PropertiesSet");
+		sessionFactoryBean.afterPropertiesSet();
+		System.out.println("Dopo PropertiesSet");
+		return sessionFactoryBean.getObject();
+	}
+
 
 	@Bean
 	public DataSource dataSource() {
@@ -84,18 +98,6 @@ public class DataServiceConfig {
 		return hibernateProp;
 	}
 
-	
-	@Bean
-	public SessionFactory sessionFactory() throws IOException {
-		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-		sessionFactoryBean = new LocalSessionFactoryBean();
-		sessionFactoryBean.setDataSource(dataSource());
-		sessionFactoryBean.setPackagesToScan("univpm.advprog.aule.model");
-		sessionFactoryBean.setHibernateProperties(hibernateProperties());
-		sessionFactoryBean.afterPropertiesSet();
-		System.out.println("Dopo PropertiesSet");
-		return sessionFactoryBean.getObject();
-	}
 
 	@Bean
 	public PlatformTransactionManager transactionManager() throws IOException {
