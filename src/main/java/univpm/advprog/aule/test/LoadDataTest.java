@@ -68,7 +68,8 @@ public class LoadDataTest {
 				DateTime oraInizio = new DateTime(2005, 3, 26, 12, 0, 0);
 				DateTime oraFine = new DateTime(2005, 3, 26, 15, 0, 0);
 				
-				prenotationDao.create(oraInizio, oraFine, user, aula, "esame spegni", "esame");
+				Prenotation p1 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame spegni", "esame");
+				aula.addPrenotation(p1);
 				
 				session.getTransaction().commit();
 				
@@ -136,11 +137,14 @@ public class LoadDataTest {
 				//Remove prenotation
 				session.beginTransaction();
 				
-				//prenotationDao.delete(prenot);
 				
-				
-				// Remove aula
-				
+				// Remove aula (funziona)
+				/*
+				for(Prenotation p : aula.getPrenotazioni()) {
+					prenotationDao.delete(p);
+				}
+				aula.getPrenotazioni().clear();
+				*/
 				aulaDao.delete(aula);
 				
 				session.getTransaction().commit();

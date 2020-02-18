@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -79,7 +79,6 @@ public class Aula implements Serializable {
 	
 	//Se l'admin elimina un'aula, venogno eliminate anche tutte le prenotazioni relative a quell'aula
 	@OneToMany(mappedBy="aula", orphanRemoval=true)
-	@Cascade(CascadeType.REMOVE)
 	public Set<Prenotation> getPrenotazioni() {
 		return prenotazioni;
 	}
@@ -100,6 +99,7 @@ public class Aula implements Serializable {
 	
 	public void addPrenotation(Prenotation prenotation) {
 		this.prenotazioni.add(prenotation);
+		prenotation.setAula(this);
 	}
 	
 	public void removePrenotation(Prenotation prenotation) {

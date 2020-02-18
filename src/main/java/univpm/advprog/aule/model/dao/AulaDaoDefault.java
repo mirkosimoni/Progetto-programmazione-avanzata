@@ -1,6 +1,7 @@
 package univpm.advprog.aule.model.dao;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -42,8 +43,16 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public void delete(Aula aula) {
-		this.getSession().delete(aula);
+		Set<Prenotation> prenotazioni = aula.getPrenotazioni();
 		
+		/*
+		for(Iterator<Prenotation> it = prenotazioni.iterator(); it.hasNext();) {
+			Prenotation toRemove = it.next();
+			aula.removePrenotation(toRemove);
+			prenotationDao.delete(toRemove);
+		}
+		*/
+		this.getSession().delete(aula);
 	}
 
 	@Override
