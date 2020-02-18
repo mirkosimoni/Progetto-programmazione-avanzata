@@ -63,7 +63,8 @@ public class DataServiceConfig {
 			DriverManagerDataSource ds = new DriverManagerDataSource();
 			//ds.setDriverClassName(com.mysql.jdbc.Driver.class.getName()); // deprecated
 			ds.setDriverClassName(com.mysql.cj.jdbc.Driver.class.getName());
-			ds.setUrl("jdbc:mysql://localhost:3306/auleDB?createDatabaseIfNotExist=true");
+			//ds.setUrl("jdbc:mysql://localhost:3306/auleDB?createDatabaseIfNotExist=true");
+			ds.setUrl("jdbc:mysql://localhost:3306/auleDB?createDatabaseIfNotExist=true&serverTimezone=UTC");
 			ds.setUsername("root");
 			ds.setPassword("root");
 			return ds;
