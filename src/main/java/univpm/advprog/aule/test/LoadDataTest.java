@@ -59,7 +59,7 @@ public class LoadDataTest {
 				session.beginTransaction();
 				
 				Aula aula = aulaDao.create("D1", 155, 40, true);
-				aulaDao.create("D2", 150, 34, false);
+				Aula aula2 = aulaDao.create("D2", 150, 34, false);
 
 				System.out.println("Qui 2");
 				
@@ -121,7 +121,30 @@ public class LoadDataTest {
 					System.out.println(setAule.get(i).getNome());
 				}
 				session.getTransaction().commit();
-			
+				
+				// Update aula
+				session.beginTransaction();
+				
+				aula.setQuota(160);
+				
+				aula.setNome("D5");
+				
+				aulaDao.update(aula);
+				
+				session.getTransaction().commit();
+				
+				//Remove prenotation
+				session.beginTransaction();
+				
+				//prenotationDao.delete(prenot);
+				
+				
+				// Remove aula
+				
+				aulaDao.delete(aula);
+				
+				session.getTransaction().commit();
+				
 			}
 
 		} catch (Exception e) {
