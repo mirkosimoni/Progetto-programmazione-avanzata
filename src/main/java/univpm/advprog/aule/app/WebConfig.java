@@ -183,6 +183,7 @@ public class WebConfig implements WebMvcConfigurer {
 		configurer.enable();
 	}
 
+	/*
 	// <=> <mvc:view-controller .../>
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -194,6 +195,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addRedirectViewController("/singers/", "/singers/list/");
 
 	}
+	*/
 }
 
 
