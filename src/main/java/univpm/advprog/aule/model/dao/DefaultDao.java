@@ -16,7 +16,6 @@ public abstract class DefaultDao {
 
 	@Resource(name = "sessionFactory")
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		System.out.println("SessionFactory set");
 		this.sessionFactory = sessionFactory;
 	}
 

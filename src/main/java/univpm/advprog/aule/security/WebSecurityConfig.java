@@ -23,8 +23,8 @@ import univpm.advprog.aule.services.UserServiceDefault;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	//@Autowired
-	//private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -49,10 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new UserServiceDefault();
 	};
 
-	/*
+	
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService()).passwordEncoder(this.passwordEncoder);
-	}*/
+	}
 
 }
