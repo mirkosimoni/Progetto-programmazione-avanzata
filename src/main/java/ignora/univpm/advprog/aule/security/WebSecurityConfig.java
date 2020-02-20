@@ -1,4 +1,4 @@
-package univpm.advprog.aule.security;
+package ignora.univpm.advprog.aule.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

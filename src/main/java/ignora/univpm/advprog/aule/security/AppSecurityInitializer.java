@@ -1,4 +1,4 @@
-package univpm.advprog.aule.security;
+package ignora.univpm.advprog.aule.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
