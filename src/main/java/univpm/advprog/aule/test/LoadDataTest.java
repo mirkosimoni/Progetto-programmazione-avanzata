@@ -146,7 +146,9 @@ public class LoadDataTest {
 				}
 				aula.getPrenotazioni().clear();
 				*/
-				aulaDao.delete(aula);
+				
+				
+				//aulaDao.delete(aula);
 				
 				session.getTransaction().commit();
 				

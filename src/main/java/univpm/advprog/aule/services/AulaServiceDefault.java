@@ -1,5 +1,9 @@
 package univpm.advprog.aule.services;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import univpm.advprog.aule.model.dao.AulaDao;
 import univpm.advprog.aule.model.dao.PrenotationDao;
 import univpm.advprog.aule.model.entities.Aula;
+import univpm.advprog.aule.model.entities.Prenotation;
 
 @Transactional
 @Service("aulaService")
@@ -43,7 +48,30 @@ public class AulaServiceDefault implements AulaService {
 
 	@Override
 	public List<Aula> findLibere(DateTime oraInizio) {
-		// TODO Auto-generated method stub
+		
+		List<Aula> aule = aulaRepository.findAll();
+		List<Aula> libere = new ArrayList<Aula>();
+		
+		for(Aula a : aule) {
+			Set<Prenotation> prenotazioni = a.getPrenotazioni();
+			boolean occupato = false;
+			
+			for(Prenotation p : prenotazioni) {
+				
+				//Caso in cui l'orario sia in mezzo ad una prenotazione effettuata
+				if(p.getOraInizio().isBefore(oraInizio) && p.getOraFine().isAfter(oraInizio))
+					occupato = true;
+				
+				//Caso in cui un'altra prenotazione inizia in questo  momento
+				if(p.getOraInizio().equals(oraInizio))
+					occupato = true;
+				
+				//Caso in cui è libera per meno di 30 minuti
+				
+				
+				
+			}
+		}
 		return null;
 	}
 
