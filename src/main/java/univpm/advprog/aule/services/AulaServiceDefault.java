@@ -82,8 +82,39 @@ public class AulaServiceDefault implements AulaService {
 
 	@Override
 	public List<Aula> findLibere(DateTime oraInizio, DateTime oraFine) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Aula> aule = aulaRepository.findAll();
+		List<Aula> libere = new ArrayList<Aula>();
+		
+		for(Aula a : aule) {
+			Set<Prenotation> prenotazioni = a.getPrenotazioni();
+			boolean occupato = false;
+			
+			for(Prenotation p : prenotazioni) {
+				
+				//Caso in cui l'orario sia in mezzo ad una prenotazione effettuata
+				if(p.getOraInizio().isBefore(oraInizio) && p.getOraFine().isAfter(oraInizio))
+					occupato = true;
+				
+				//Caso in cui un'altra prenotazione inizia in questo  momento
+				if(p.getOraInizio().equals(oraInizio))
+					occupato = true;
+				
+				//Caso in cui è libera per meno di 30 minuti
+				Duration durata = new Duration(oraInizio, oraFine);
+				Duration intervallo = new Duration(oraInizio, p.getOraInizio());
+				
+				long durataMinuti = durata.getStandardMinutes();
+				long intervalloMinuti = intervallo.getStandardMinutes();
+				if(intervalloMinuti < durataMinuti)
+					occupato = true;
+			}
+			
+			if(!occupato)
+				libere.add(a);
+		}
+		
+		return libere;
 	}
 
 	@Override
@@ -121,8 +152,39 @@ public class AulaServiceDefault implements AulaService {
 
 	@Override
 	public List<Aula> findLiberePosti(DateTime oraInizio, DateTime oraFine, int minimoPosti) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Aula> aule = aulaRepository.findAulePosti(minimoPosti);
+		List<Aula> libere = new ArrayList<Aula>();
+		
+		for(Aula a : aule) {
+			Set<Prenotation> prenotazioni = a.getPrenotazioni();
+			boolean occupato = false;
+			
+			for(Prenotation p : prenotazioni) {
+				
+				//Caso in cui l'orario sia in mezzo ad una prenotazione effettuata
+				if(p.getOraInizio().isBefore(oraInizio) && p.getOraFine().isAfter(oraInizio))
+					occupato = true;
+				
+				//Caso in cui un'altra prenotazione inizia in questo  momento
+				if(p.getOraInizio().equals(oraInizio))
+					occupato = true;
+				
+				//Caso in cui è libera per meno di 30 minuti
+				Duration durata = new Duration(oraInizio, oraFine);
+				Duration intervallo = new Duration(oraInizio, p.getOraInizio());
+				
+				long durataMinuti = durata.getStandardMinutes();
+				long intervalloMinuti = intervallo.getStandardMinutes();
+				if(intervalloMinuti < durataMinuti)
+					occupato = true;
+			}
+			
+			if(!occupato)
+				libere.add(a);
+		}
+		
+		return libere;
 	}
 
 	@Override
@@ -160,8 +222,39 @@ public class AulaServiceDefault implements AulaService {
 
 	@Override
 	public List<Aula> findLiberePrese(DateTime oraInizio, DateTime oraFine) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Aula> aule = aulaRepository.findAulePrese();
+		List<Aula> libere = new ArrayList<Aula>();
+		
+		for(Aula a : aule) {
+			Set<Prenotation> prenotazioni = a.getPrenotazioni();
+			boolean occupato = false;
+			
+			for(Prenotation p : prenotazioni) {
+				
+				//Caso in cui l'orario sia in mezzo ad una prenotazione effettuata
+				if(p.getOraInizio().isBefore(oraInizio) && p.getOraFine().isAfter(oraInizio))
+					occupato = true;
+				
+				//Caso in cui un'altra prenotazione inizia in questo  momento
+				if(p.getOraInizio().equals(oraInizio))
+					occupato = true;
+				
+				//Caso in cui è libera per meno di 30 minuti
+				Duration durata = new Duration(oraInizio, oraFine);
+				Duration intervallo = new Duration(oraInizio, p.getOraInizio());
+				
+				long durataMinuti = durata.getStandardMinutes();
+				long intervalloMinuti = intervallo.getStandardMinutes();
+				if(intervalloMinuti < durataMinuti)
+					occupato = true;
+			}
+			
+			if(!occupato)
+				libere.add(a);
+		}
+		
+		return libere;
 	}
 
 	@Override
@@ -199,8 +292,39 @@ public class AulaServiceDefault implements AulaService {
 
 	@Override
 	public List<Aula> findLibereQuota(DateTime oraInizio, DateTime oraFine, int quota) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Aula> aule = aulaRepository.findAuleQuota(quota);
+		List<Aula> libere = new ArrayList<Aula>();
+		
+		for(Aula a : aule) {
+			Set<Prenotation> prenotazioni = a.getPrenotazioni();
+			boolean occupato = false;
+			
+			for(Prenotation p : prenotazioni) {
+				
+				//Caso in cui l'orario sia in mezzo ad una prenotazione effettuata
+				if(p.getOraInizio().isBefore(oraInizio) && p.getOraFine().isAfter(oraInizio))
+					occupato = true;
+				
+				//Caso in cui un'altra prenotazione inizia in questo  momento
+				if(p.getOraInizio().equals(oraInizio))
+					occupato = true;
+				
+				//Caso in cui è libera per meno di 30 minuti
+				Duration durata = new Duration(oraInizio, oraFine);
+				Duration intervallo = new Duration(oraInizio, p.getOraInizio());
+				
+				long durataMinuti = durata.getStandardMinutes();
+				long intervalloMinuti = intervallo.getStandardMinutes();
+				if(intervalloMinuti < durataMinuti)
+					occupato = true;
+			}
+			
+			if(!occupato)
+				libere.add(a);
+		}
+		
+		return libere;
 	}
 
 
