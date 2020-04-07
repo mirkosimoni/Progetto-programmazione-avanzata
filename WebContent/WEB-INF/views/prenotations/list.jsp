@@ -23,11 +23,11 @@
   <tbody>
   <c:forEach items="${prenotations}" var="p">
     <tr>
-      <td>${p.user}</td>
-      <td>${p.aula}</td>
+      <td>${p.user.username}</td>
+      <td>${p.aula.nome}</td>
       <td>${p.nomeEvento}</td>
-      <td>${p.oraInizio}</td>
-      <td>${p.oraFine}</td>
+      <td>${p.oraInizio.toDate()}</td>
+      <td>${p.oraFine.toDate()}</td>
       <td>${p.note}</td>
     </tr>
     </c:forEach>
