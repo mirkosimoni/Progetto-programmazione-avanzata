@@ -23,7 +23,6 @@
   <tbody>
   <c:forEach items="${prenotations}" var="p">
     <tr>
-      <th scope="row">1</th>
       <td>${p.user}</td>
       <td>${p.aula}</td>
       <td>${p.nomeEvento}</td>
