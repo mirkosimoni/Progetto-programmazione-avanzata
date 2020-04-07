@@ -20,7 +20,7 @@
     					<label for="exampleInputPassword1">Password</label>
     					<input type="password" class="form-control" id="exampleInputPassword1" name="password">
   					</div>
- 					<button type="submit" class="btn btn-primary">Submit</button>
+ 					<button type="submit" class="btn btn-primary" role="button" aria-pressed="true">Submit</button>
 				</form>
 			</div>
 		</div>
