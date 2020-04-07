@@ -20,17 +20,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
 import univpm.advprog.aule.services.PrenotationService;
+import univpm.advprog.aule.services.PrenotationServiceDefault;
 
 @RequestMapping("/prenotations")
 @Controller
 public class PrenotationController {
-
+	
 	private PrenotationService prenotationService;
+	
+	@Autowired
+	public void setPrenotationService(PrenotationService prenotationService) {
+		this.prenotationService = prenotationService;
+	}
+	
 	
 	@GetMapping(value = "/list")
 	public String list(@RequestParam(value = "message", required=false) String message, Model uiModel) {
 
-		System.out.println("SIZE PRENOTATIONS");
+		System.out.println(prenotationService.toString());
+		System.out.println("AAA");
+		
 		List<Prenotation> allPrenotations = this.prenotationService.findAll();
 		
 		System.out.println(allPrenotations.size());
@@ -43,6 +52,7 @@ public class PrenotationController {
 		
 		return "prenotations/list";
 	}
+	
 	
 	
 	

@@ -65,5 +65,10 @@ public class PrenotationServiceDefault implements PrenotationService {
 		Prenotation p = this.prenotationRepository.findByAulaOra(aula, oraInizio);
 		this.prenotationRepository.delete(p);
 	}
+	
+	@Autowired
+	public void setPrenotationRepository(PrenotationDao prenotationRepository) {
+		this.prenotationRepository = prenotationRepository;
+	}
 
 }
