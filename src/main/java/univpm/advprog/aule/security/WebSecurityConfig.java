@@ -31,17 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().
 			antMatchers("/login").permitAll().
-			antMatchers("/").permitAll().
-			antMatchers("/instruments/**").hasAnyRole("ADMIN").
-			antMatchers("/**").hasAnyRole("USER").
-				and().formLogin().loginPage("/login").defaultSuccessUrl("/")
-					.failureUrl("/login?error=true").permitAll().
-				and().logout().logoutSuccessUrl("/") // NB se commentiamo
-														// questa riga,
-														// viene richiamata
-														// /login?logout
-					.invalidateHttpSession(true).permitAll().
-			and().csrf().disable();
+			antMatchers("/").permitAll();
 	}
 
 	@Bean

@@ -6,13 +6,16 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import univpm.advprog.aule.security.WebSecurityConfig;
+
 public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// NB 1st level config class
 		return new Class<?>[]{
-				DataServiceConfig.class
+				DataServiceConfig.class,
+				WebSecurityConfig.class
 		};
 	}
 
