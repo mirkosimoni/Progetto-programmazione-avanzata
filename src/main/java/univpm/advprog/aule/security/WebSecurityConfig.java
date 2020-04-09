@@ -31,7 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().
 			antMatchers("/login").permitAll().
-			antMatchers("/").permitAll();
+			antMatchers("/").permitAll().
+			and().formLogin().loginPage("/login").defaultSuccessUrl("/");
+			
 	}
 
 	@Bean

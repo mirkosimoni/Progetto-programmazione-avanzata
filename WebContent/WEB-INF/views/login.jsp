@@ -12,6 +12,10 @@
 			<div class="container">
 				<h1 class="display-4">Login</h1>
 				<form name='login' action="<c:url value="/login" />" method='POST'>
+				<c:if test="${not empty errorMessage}">
+					<div style="color: red; font-weight: bold; margin: 30px 0px;">${errorMessage}</div>
+				</c:if>
+				           
   					<div class="form-group">
     					<label for="exampleInputEmail1">Username</label>
     					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">

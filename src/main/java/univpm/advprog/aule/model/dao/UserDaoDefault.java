@@ -11,8 +11,8 @@ import univpm.advprog.aule.model.entities.User;
 @Repository("userDao")
 public class UserDaoDefault extends DefaultDao implements UserDao {
 	
-	//@Autowired
-	//private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public User findUserByUsername(String username) {
@@ -43,8 +43,7 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 
 	@Override
 	public String encryptPassword(String password) {
-		//return this.passwordEncoder.encode(password);
-		return password;
+		return this.passwordEncoder.encode(password);
 	}
 
 }
