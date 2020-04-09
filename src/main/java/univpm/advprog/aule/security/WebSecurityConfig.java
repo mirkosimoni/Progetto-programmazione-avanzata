@@ -3,6 +3,7 @@ package univpm.advprog.aule.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,10 +30,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
+		 //http
+         //.formLogin()
+         //.and()
+         //.authorizeRequests()
+         //.antMatchers("/**").permitAll()
+         //.antMatchers(HttpMethod.POST, "/**").permitAll()
+         //.and()
+         //.csrf().disable();
 		http.authorizeRequests().
-			antMatchers("/login").permitAll().
-			antMatchers("/").permitAll().
-			and().formLogin().loginPage("/login").defaultSuccessUrl("/");
+		antMatchers("/login").permitAll().
+		antMatchers("/").permitAll().
+		and().formLogin().loginPage("/login").defaultSuccessUrl("/"). //pagina dove va quando la login ha successo
+		failureUrl("/login?error=true").permitAll(). //pagina dove va se la login non ha successo
+		and().logout().logoutSuccessUrl("/") //va a / dopo il logout. default path per logout è /logout
+		.invalidateHttpSession(true).permitAll().
+		and().csrf().disable();
 			
 	}
 

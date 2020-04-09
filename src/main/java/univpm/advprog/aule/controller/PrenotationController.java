@@ -1,5 +1,6 @@
 package univpm.advprog.aule.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -53,6 +54,21 @@ public class PrenotationController {
 		return "prenotations/list";
 	}
 	
+	@PostMapping(value = "/search")
+	public String search(@RequestParam(value = "id", required=false) String id, Model uiModel) {
+
+		System.out.println("ciao");
+		System.out.println(prenotationService.findById(Long.parseLong(id)));
+		
+		Prenotation prenotation = prenotationService.findById(Long.parseLong(id));
+		
+		List<Prenotation> prenotations = new ArrayList<>();
+		prenotations.add(prenotation);
+		
+		uiModel.addAttribute("prenotations", prenotations);
+		
+		return "prenotations/list";
+	}
 	
 	
 	

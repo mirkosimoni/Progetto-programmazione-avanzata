@@ -69,6 +69,8 @@ public class LoadDataTest {
 				DateTime oraFine = new DateTime(2005, 3, 26, 15, 0, 0);
 				
 				Prenotation p1 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame spegni", "esame");
+				Prenotation p2 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame1", "aaaa");
+				Prenotation p3 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame2", "bbb");
 				//aula.addPrenotation(p1);
 				session.refresh(aula);
 				

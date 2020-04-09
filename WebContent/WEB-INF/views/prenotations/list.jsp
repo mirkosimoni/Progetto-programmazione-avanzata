@@ -9,6 +9,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+<div class="row">
+<div class="col-7">
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -33,3 +35,27 @@
     </c:forEach>
   </tbody>
 </table>
+</div>
+
+<div class="col-5">
+<c:url value="/prenotations/search" var="action_url" />
+<div class="jumbotron jumbotron-fluid">
+	<div class="container">
+		<h1 class="display-4">Ricerca</h1>
+		<form name='login' action=${action_url} method='POST'>    
+  			<div class="form-group">
+    			<label for="exampleInputEmail1">Id</label>
+    			<input type="text" class="form-control" name="id">
+  			</div>
+  			<button type="submit" class="btn btn-primary" role="button" aria-pressed="true">Submit</button>
+		</form>
+	</div>
+</div>
+
+</div>
+</div>
+
+
+
+
+
