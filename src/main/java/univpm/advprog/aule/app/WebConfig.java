@@ -63,23 +63,24 @@ public class WebConfig implements WebMvcConfigurer {
 		return new StandardServletMultipartResolver();
 	}
 
-//	@Bean
-//	UrlBasedViewResolver tilesViewResolver() {
-//		UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver();
-//		tilesViewResolver.setViewClass(TilesView.class);
-//		return tilesViewResolver;
-//	}
-//
-//	@Bean
-//	TilesConfigurer tilesConfigurer() {
-//		TilesConfigurer tilesConfigurer = new TilesConfigurer();
-//		tilesConfigurer.setDefinitions(
-//				"/WEB-INF/layouts/layouts.xml",
-//				"/WEB-INF/views/**/views.xml"
-//		);
-//		tilesConfigurer.setCheckRefresh(true);
-//		return tilesConfigurer;
-//	}
+	@Bean
+	UrlBasedViewResolver tilesViewResolver() {
+		UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver();
+		tilesViewResolver.setViewClass(TilesView.class);
+		return tilesViewResolver;
+	}
+
+	@Bean
+	TilesConfigurer tilesConfigurer() {
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+	    tilesConfigurer.setDefinitions(
+				"/WEB-INF/layouts/layouts.xml",
+				"/WEB-INF/views/**/views.xml",
+				"/WEB-INF/views/views.xml"
+		);
+		tilesConfigurer.setCheckRefresh(true);
+		return tilesConfigurer;
+	}
 
 //	@Bean
 //	public Validator validator() {
