@@ -83,7 +83,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Profilo</h5>
-        <p class="card-text">Visualizza il tuo profilo utenteà</p>
+        <p class="card-text">Visualizza il tuo profilo utente</p>
         <a href="#" class="btn btn-primary">Visualizza</a>
       </div>
     </div>
