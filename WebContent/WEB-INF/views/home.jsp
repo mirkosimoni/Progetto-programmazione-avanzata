@@ -17,7 +17,7 @@
 <sec:authorize access="isAuthenticated()" var="isAuth" />
 
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">AuleProgram</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -54,50 +54,51 @@
 </nav>
 
 
-
+<body style= "background-color:rgb(52,58,64);">
 
 <div class="row">
 	
-	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%; height: 50%">
+	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%;">
 	
 	
 </div>
 
-	<div class="row">
-  <div class="col-3">
+<div class="row" style="padding-top:0.5em; padding-left:1em; padding-right:1em;">
+  <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Visualizza prenotazioni</h5>
         <p class="card-text">Visualizza tutte le prenotazioni presenti</p>
-        <a href="prenotations/list" class="btn btn-primary">Visualizza</a>
+        <a href="prenotations/list" class="btn btn-danger">Visualizza</a>
       </div>
     </div>
   </div>
-  <div class="col-3">
+  <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Cerca aula</h5>
         <p class="card-text">Cerca una determinata aula della facoltà</p>
-        <a href="#" class="btn btn-primary">Cerca</a>
+        <a href="#" class="btn btn-danger">Cerca</a>
       </div>
     </div>
   </div>
-  <div class="col-3">
+  <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Profilo</h5>
         <p class="card-text">Visualizza il tuo profilo utente</p>
-        <a href="#" class="btn btn-primary">Visualizza</a>
+        <a href="#" class="btn btn-danger">Visualizza</a>
       </div>
     </div>
   </div>
-     <div class="col-3">
+     <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em; padding-bottom:1em;">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Gestione aule</h5>
         <p class="card-text">Aggiungi o cancella un'aula</p>
-        <a href="#" class="btn btn-primary">Gestisci</a>
+        <a href="#" class="btn btn-danger">Gestisci</a>
       </div>
     </div>
   </div>
 </div>
+</body>
