@@ -25,9 +25,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="<c:url value="/login" />">Login <span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
@@ -53,8 +50,51 @@
   </div>
 </nav>
 
+
+
+
 <div class="row">
+	
 	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%; height: 50%">
+	
+	
 </div>
 
-
+	<div class="row">
+  <div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Visualizza prenotazioni</h5>
+        <p class="card-text">Visualizza tutte le prenotazioni presenti</p>
+        <a href="prenotations/list" class="btn btn-primary">Visualizza</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Cerca aula</h5>
+        <p class="card-text">Cerca una determinata aula della facoltà</p>
+        <a href="#" class="btn btn-primary">Cerca</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Profilo</h5>
+        <p class="card-text">Visualizza il tuo profilo utenteà</p>
+        <a href="#" class="btn btn-primary">Visualizza</a>
+      </div>
+    </div>
+  </div>
+     <div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Gestione aule</h5>
+        <p class="card-text">Aggiungi o cancella un'aula</p>
+        <a href="#" class="btn btn-primary">Gestisci</a>
+      </div>
+    </div>
+  </div>
+</div>
