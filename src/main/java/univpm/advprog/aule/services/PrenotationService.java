@@ -11,6 +11,7 @@ public interface PrenotationService {
 	List<Prenotation> findAll();
 	Prenotation findById(Long id);
 	List<Prenotation> findByAula(Aula aula);
+	List<Prenotation> findByDate(DateTime data);
 	Prenotation findByAulaOra(Aula aula, DateTime oraInizio);
 	Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note);
 	Prenotation update(Prenotation prenotation);

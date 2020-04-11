@@ -38,11 +38,18 @@ public class PrenotationServiceDefault implements PrenotationService {
 	}
 
 
+	//Aggiungere controlli sull'orario, inoltre la data di inizio e fine deve essere la stessa
+	//Devono essere rispettati gli orari di apertura dell'università (forse meglio nel controller?)
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
+		
+		
+		
 		return this.prenotationRepository.create(oraInizio, oraFine, user, aula, nomeEvento, note);
 	}
 
+	//Aggiungere controlli sull'orario, inoltre la data di inizio e fine deve essere la stessa
+	//Devono essere rispettati gli orari di apertura dell'università (forse meglio nel controller?)
 	@Override
 	public Prenotation update(Prenotation prenotation) {
 		return this.prenotationRepository.update(prenotation);
@@ -69,6 +76,11 @@ public class PrenotationServiceDefault implements PrenotationService {
 	@Autowired
 	public void setPrenotationRepository(PrenotationDao prenotationRepository) {
 		this.prenotationRepository = prenotationRepository;
+	}
+
+	@Override
+	public List<Prenotation> findByDate(DateTime data) {
+		return this.prenotationRepository.findByDate(data);
 	}
 
 }

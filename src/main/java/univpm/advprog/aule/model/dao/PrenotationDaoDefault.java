@@ -66,4 +66,14 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				setParameter("aula", aula).setParameter("oraInizio", oraInizio).getSingleResult();
 	}
 	
+	@Override
+	public List<Prenotation> findByDate(DateTime data) {
+		
+		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0, 0);
+		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59, 59);
+		
+		return this.getSession().createQuery("FROM Prenotation p Where p.oraInizio between :inizio AND :fine", Prenotation.class).
+				setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
+	}
+	
 }

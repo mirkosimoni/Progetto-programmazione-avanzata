@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,16 @@ public class AulaServiceDefault implements AulaService {
 	
 	AulaDao aulaRepository;
 	PrenotationDao prenotationRepository;
+	
+	@Autowired
+	public void setPrenotationRepository(PrenotationDao prenotationRepository) {
+		this.prenotationRepository = prenotationRepository;
+	}
+	
+	@Autowired
+	public void setAuleRepository(AulaDao auleRepository) {
+		this.aulaRepository = auleRepository;
+	}
 
 	@Override
 	public List<Aula> findAll() {
