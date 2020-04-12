@@ -56,7 +56,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 					overlapped = true;
 		}
 		
-		if(overlapped) {
+		if(!overlapped) {
 			return this.prenotationRepository.create(oraInizio, oraFine, user, aula, nomeEvento, note);
 		}
 		else return null;
@@ -66,7 +66,19 @@ public class PrenotationServiceDefault implements PrenotationService {
 	//Devono essere rispettati gli orari di apertura dell'università (forse meglio nel controller?)
 	@Override
 	public Prenotation update(Prenotation prenotation) {
-		return this.prenotationRepository.update(prenotation);
+		
+		List<Prenotation> prenotazioniData = this.prenotationRepository.findByDate(prenotation.getOraInizio());
+		boolean overlapped = false;
+		
+		for(Prenotation p : prenotazioniData) {
+			if(this.overlapFinder.areOverlapped(prenotation, p))
+					overlapped = true;
+		}
+		
+		if(!overlapped) {
+			return this.prenotationRepository.update(prenotation);
+		}
+		else return null;
 	}
 
 	@Override
