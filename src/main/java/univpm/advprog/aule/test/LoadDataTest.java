@@ -15,6 +15,7 @@ import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
 import univpm.advprog.aule.model.entities.Role;
 import univpm.advprog.aule.model.entities.User;
+import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -31,6 +32,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class LoadDataTest {
 	public static void main(String ...args) {
 		System.out.println("Inizio di load data test");
+		PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
 		
 		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
 			
@@ -65,14 +67,24 @@ public class LoadDataTest {
 				
 				User user = userDao.create("Mirko", "12345", true);
 				
-				DateTime oraInizio = new DateTime(2005, 3, 26, 12, 0, 0);
-				DateTime oraFine = new DateTime(2005, 3, 26, 15, 0, 0);
+				DateTime oraInizio1 = new DateTime(2020, 3, 26, 12, 0, 0);
+				DateTime oraFine1 = new DateTime(2020, 3, 26, 15, 0, 0);
 				
-				Prenotation p1 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame spegni", "esame");
-				Prenotation p2 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame1", "aaaa");
-				Prenotation p3 = prenotationDao.create(oraInizio, oraFine, user, aula, "esame2", "bbb");
+				DateTime oraInizio2 = new DateTime(2020, 3, 26, 11, 0, 0);
+				DateTime oraFine2 = new DateTime(2020, 3, 26, 16, 0, 0);
+				
+				DateTime oraInizio3 = new DateTime(2020, 3, 26, 18, 0, 0);
+				DateTime oraFine3 = new DateTime(2020, 3, 26, 19, 0, 0);
+				
+				Prenotation p1 = prenotationDao.create(oraInizio1, oraFine1, user, aula, "Esame 1", "esame");
+				Prenotation p2 = prenotationDao.create(oraInizio2, oraFine2, user, aula, "Esame 2", "aaaa");
+				Prenotation p3 = prenotationDao.create(oraInizio3, oraFine3, user, aula, "Esame 3", "bbb");
 				//aula.addPrenotation(p1);
 				session.refresh(aula);
+				
+				System.out.println("TEST OVERLAP PRENOTAZIONI");
+				System.out.println("P1 E P2 (SI): " + overlapFinder.areOverlapped(p1, p2));
+				System.out.println("P1 E P3 (NO): " + overlapFinder.areOverlapped(p1, p3));
 				
 				session.getTransaction().commit();
 				

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
 import univpm.advprog.aule.model.entities.User;
-
+import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 import univpm.advprog.aule.model.dao.AulaDao;
 import univpm.advprog.aule.model.dao.PrenotationDao;
 
@@ -21,6 +21,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 	
 	PrenotationDao prenotationRepository;
 	AulaDao aulaRepository;
+	PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
 
 	@Override
 	public List<Prenotation> findAll() {
@@ -43,9 +44,22 @@ public class PrenotationServiceDefault implements PrenotationService {
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
 		
+		List<Prenotation> prenotazioniData = this.prenotationRepository.findByDate(oraInizio);
+		boolean overlapped = false;
 		
+		Prenotation prenotation = new Prenotation();
+		prenotation.setOraInizio(oraInizio);
+		prenotation.setOraFine(oraFine);
 		
-		return this.prenotationRepository.create(oraInizio, oraFine, user, aula, nomeEvento, note);
+		for(Prenotation p : prenotazioniData) {
+			if(this.overlapFinder.areOverlapped(prenotation, p))
+					overlapped = true;
+		}
+		
+		if(overlapped) {
+			return this.prenotationRepository.create(oraInizio, oraFine, user, aula, nomeEvento, note);
+		}
+		else return null;
 	}
 
 	//Aggiungere controlli sull'orario, inoltre la data di inizio e fine deve essere la stessa
