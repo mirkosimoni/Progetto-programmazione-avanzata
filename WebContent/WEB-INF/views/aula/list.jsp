@@ -101,22 +101,23 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
-                <input type="Date" class="form-control" name="prof_surname">
+                <input type="Text" class="form-control" name="prof_surname">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>
-                <input type="Date" class="form-control" name="prof_surname">
+                <input type="Text" class="form-control" name="prof_surname">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Numero posti minimi</label>
-                <input type="Date" class="form-control" name="prof_surname">
+                <input type="Text" class="form-control" name="prof_surname">
               </div>
-              <div class="form-check">
-  				<input class="form-check-input" type="radio" name="presentiPrese" id="exampleRadios1" value="option1" checked>
-  				<label class="form-check-label" for="exampleRadios1">Presenza prese</label>
+              <div class="form-check form-check-inline">
+  				<input class="form-check-input" type="checkbox" id="prese" value="prese">
+ 				<label class="form-check-label" for="inlineCheckbox1">Presenza prese</label>
 			  </div>
-              
+              <div>
               <button type="submit" class="btn btn-danger" role="button" aria-pressed="true"><i class="fas fa-search"></i> Cerca </button>
+           	  </div>
             </form>
           </div>
         </div>
