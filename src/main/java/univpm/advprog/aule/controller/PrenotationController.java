@@ -72,6 +72,7 @@ public class PrenotationController {
 						@RequestParam(value = "data", required=false) String data,
 						@RequestParam(value = "ora_inizio", required=false) String oraInizio,
 						@RequestParam(value = "ora_fine", required=false) String oraFine,
+						@RequestParam(value = "error", required = false) String error, 
 						Model uiModel) {
 		
 		//int int_quota = Integer.parseInt(quota);
@@ -87,16 +88,36 @@ public class PrenotationController {
 		System.out.println(oraInizio);
 		System.out.println(oraFine);
 		
-		
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
-		String data_orainizio = data + ' ' + oraInizio;
-		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
-		System.out.println(dt_inizio.toString());
+		error = null;
 		
-		String data_orafine = data + ' ' + oraFine;
-		DateTime dt_fine = formatter.parseDateTime(data_orafine);
-		System.out.println(dt_fine.toString());
+		if(!data.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")) || (oraInizio.equals("Scegli") || oraFine.equals("Scegli")))) {
+			if(!oraInizio.equals("Scegli")) {
+				String data_orainizio = data + ' ' + oraInizio;
+				DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+				System.out.println(dt_inizio.toString());
+			}else {
+				String data_orainizio = data + ' ' + "01:00";
+				DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+				System.out.println(dt_inizio.toString());
+			}
+		
+			if(!oraFine.equals("Scegli")) {
+				String data_orafine = data + ' ' + oraFine;
+				DateTime dt_fine = formatter.parseDateTime(data_orafine);
+				System.out.println(dt_fine.toString());
+			}else {
+				String data_orafine = data + ' ' + "23:00";
+				DateTime dt_fine = formatter.parseDateTime(data_orafine);
+				System.out.println(dt_fine.toString());
+			}
+		} 
+		if(data.equals("") && (!oraInizio.equals("Scegli") || !oraFine.equals("Scegli"))) {
+			error = "Scegliere un giorno nel calendario";
+		}
+		
+		uiModel.addAttribute("errorMessageData",error);
 		
 		return "prenotations/list";
 	}

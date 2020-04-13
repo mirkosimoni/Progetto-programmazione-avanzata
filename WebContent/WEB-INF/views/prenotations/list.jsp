@@ -8,6 +8,9 @@
 
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
+<c:if test="${not empty errorMessageData}">
+	<div style="color: red; font-weight: bold; margin: 30px 0px;">${errorMessageData}</div>
+</c:if>
 <table class="table">
   <thead class="thead text-center" style="background-color: #696969;">
     <tr>
@@ -56,7 +59,9 @@
       </div>
       <div class="modal-body">
         <c:url value="/prenotations/search" var="action_url" />
-
+			<c:if test="${not empty errorMessageData}">
+				<div style="color: red; font-weight: bold; margin: 30px 0px;">${errorMessageData}</div>
+			</c:if>
             <form name='login' action=${action_url} method='POST'>    
 
               <div class="form-group">
