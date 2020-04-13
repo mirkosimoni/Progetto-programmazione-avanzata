@@ -3,6 +3,9 @@ package univpm.advprog.aule.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
+import univpm.advprog.aule.services.AulaService;
 import univpm.advprog.aule.services.PrenotationService;
 import univpm.advprog.aule.services.PrenotationServiceDefault;
 
@@ -28,6 +32,7 @@ import univpm.advprog.aule.services.PrenotationServiceDefault;
 public class PrenotationController {
 	
 	private PrenotationService prenotationService;
+	private AulaService aulaService;
 	
 	@Autowired
 	public void setPrenotationService(PrenotationService prenotationService) {
@@ -55,17 +60,34 @@ public class PrenotationController {
 	}
 	
 	@PostMapping(value = "/search")
-	public String search(@RequestParam(value = "id", required=false) String id, Model uiModel) {
-
-		System.out.println("ciao");
-		System.out.println(prenotationService.findById(Long.parseLong(id)));
+	public String search(@RequestParam(value = "prof_surname", required=false) String surname, 
+						@RequestParam(value = "prof_name", required=false) String name,
+						@RequestParam(value = "quota", required=false) String quota,
+						@RequestParam(value = "aula", required=false) String aula,
+						@RequestParam(value = "data", required=false) String data,
+						@RequestParam(value = "ora_inizio", required=false) String oraInizio,
+						@RequestParam(value = "ora_fine", required=false) String oraFine,
+						Model uiModel) {
 		
-		Prenotation prenotation = prenotationService.findById(Long.parseLong(id));
+		int int_quota = Integer.parseInt(quota);
 		
-		List<Prenotation> prenotations = new ArrayList<>();
-		prenotations.add(prenotation);
+		//System.out.println("Quota");
+		//System.out.println(quota);
 		
-		uiModel.addAttribute("prenotations", prenotations);
+		//List<Aula> aule = aulaService.findAule(int_quota, -1, null);
+		
+		//System.out.println("Lunghezza aule");
+		//System.out.println(aule.size());
+			
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
+		
+		String data_orainizio = data + oraInizio;
+		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+		System.out.println(dt_inizio);
+		
+		String data_orafine = data + oraFine;
+		DateTime dt_fine = formatter.parseDateTime(data_orafine);
+		System.out.println(dt_fine);
 		
 		return "prenotations/list";
 	}
