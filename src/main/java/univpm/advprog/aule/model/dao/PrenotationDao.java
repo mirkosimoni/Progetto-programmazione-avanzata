@@ -21,6 +21,8 @@ public interface PrenotationDao {
 	
 	List<Prenotation> findByDate(DateTime data);
 	
+	List<Prenotation> findByAulaDate(Aula aula, DateTime data);
+	
 	Prenotation findByAulaOra(Aula aula, DateTime oraInizio);
 	
 	Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note);
