@@ -1,5 +1,6 @@
 package univpm.advprog.aule.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
+import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 
 @Transactional
 @Repository("aulaDao")
@@ -108,21 +110,75 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		Root<Aula> root = cr.from(Aula.class);
 		cr.select(root);
 
-		System.out.println("A QUI CI ARRIVO");
+		if(quota > 0)
+			cr.where(cb.equal(root.get("quota"), quota));
 		
-		if(quota < 0)
-			cr.where(cb.equal(root.get("QUOTA"), quota));
-		
-		if(minimoPosti < 0)
-			cr.where(cb.ge(root.get("NUM_POSTI"), minimoPosti));
+		if(minimoPosti > 0)
+			cr.where(cb.ge(root.get("numeroPosti"), minimoPosti));
 		
 		if(presentiPrese != null) {
 			if(presentiPrese == true)
-				cr.where(cb.isTrue(root.get("PRESE")));
-			else cr.where(cb.isFalse(root.get("PRESE")));
+				cr.where(cb.isTrue(root.get("presentiPrese")));
+			else cr.where(cb.isFalse(root.get("presentiPrese")));
 		}
 		
 		return this.getSession().createQuery(cr).getResultList();
 	}
 
+	@Override
+	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, int minimoPosti, Boolean presentiPrese) {
+		
+		List<Aula> aule = this.findAule(quota, minimoPosti, presentiPrese);
+		List<Aula> auleLibere = new ArrayList<Aula>();
+		PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
+		
+		Prenotation dummyPrenotation = new Prenotation();
+		
+		if(oraInizio != null && oraFine != null) {
+			dummyPrenotation.setOraInizio(oraInizio);
+			dummyPrenotation.setOraFine(oraFine);
+		}
+		else if(oraInizio != null && oraFine == null) {
+			dummyPrenotation.setOraInizio(oraInizio);
+			dummyPrenotation.setOraFine(oraInizio.plusMinutes(30));
+		}
+		else {
+			dummyPrenotation.setOraInizio(DateTime.now());
+			dummyPrenotation.setOraFine(DateTime.now().plusMinutes(30));
+		}
+		
+		for(Aula a : aule){
+			boolean libera = true;
+			//Prenotazioni AulaData
+			List<Prenotation> prenotazioniAula = this.prenotationDao.findByAulaDate(a, dummyPrenotation.getOraInizio());
+			
+			for(Prenotation p : prenotazioniAula) {
+				if(overlapFinder.areOverlapped(p, dummyPrenotation))
+					libera = false;
+			}
+			
+			if(libera)
+				auleLibere.add(a);
+		}
+		
+		return auleLibere;
+		
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

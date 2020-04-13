@@ -20,21 +20,6 @@ public interface AulaService {
 	
 	List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese);
 	
-	List<Aula> findLibere(DateTime oraInizio); //
-	
-	List<Aula> findLibere(DateTime oraInizio, DateTime oraFine);
-	
-	List<Aula> findLiberePosti(DateTime oraInizio, int minimoPosti);
-	
-	List<Aula> findLiberePosti(DateTime oraInizio, DateTime oraFine, int minimoPosti);
-	
-	List<Aula> findLiberePrese(DateTime oraInizio);
-	
-	List<Aula> findLiberePrese(DateTime oraInizio, DateTime oraFine);
-	
-	List<Aula> findLibereQuota(DateTime oraInizio, int quota);
-	
-	List<Aula> findLibereQuota(DateTime oraInizio, DateTime oraFine, int quota);
-	
+	List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, int minimoPosti, Boolean presentiPrese);
 	
 }
