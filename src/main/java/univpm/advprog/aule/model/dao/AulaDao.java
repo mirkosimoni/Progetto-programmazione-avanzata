@@ -34,4 +34,6 @@ public interface AulaDao {
 	
 	List<Aula> findAulePrese();
 	
+	List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese);
+	
 }

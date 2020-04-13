@@ -18,6 +18,8 @@ public interface AulaService {
 	
 	void delete(Aula aula);
 	
+	List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese);
+	
 	List<Aula> findLibere(DateTime oraInizio); //
 	
 	List<Aula> findLibere(DateTime oraInizio, DateTime oraFine);
