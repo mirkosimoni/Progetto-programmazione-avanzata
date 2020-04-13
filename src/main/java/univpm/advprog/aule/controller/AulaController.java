@@ -44,7 +44,7 @@ public class AulaController {
 		
 		List<Aula> aule = new ArrayList<>();
 		
-		aule = aulaService.findLibere((oraInizio);
+		aule = aulaService.findLibere(oraInizio);
 		
 		uiModel.addAttribute("aule", aule);
 		
