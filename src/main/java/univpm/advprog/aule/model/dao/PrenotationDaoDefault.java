@@ -62,7 +62,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 
 	@Override
 	public Prenotation findByAulaOra(Aula aula, DateTime oraInizio) {
-		return this.getSession().createQuery("FROM Prenotation p WHERE p.aula= :aula AND p.oraInizio= :oraInizio", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p WHERE p.aula= :aula AND p.oraInizio >= :oraInizio", Prenotation.class).
 				setParameter("aula", aula).setParameter("oraInizio", oraInizio).getSingleResult();
 	}
 	
@@ -85,6 +85,13 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula AND p.oraInizio between :inizio AND :fine ", Prenotation.class).
 				setParameter("aula", aula).setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
 
+	}
+
+	@Override
+	public List<Prenotation> findPrenotations(String nome, String cognome, Aula aula, DateTime oraInizio,
+			DateTime oraFine) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

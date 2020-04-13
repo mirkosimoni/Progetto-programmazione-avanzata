@@ -75,23 +75,27 @@
                 <label for="exampleInputEmail1">Aula</label>
                 <input type="text" class="form-control" name="aula">
               </div>
+              <div class="form-group">
+    			<label for="exampleInputEmail1">Giorno</label>
+    			<input type="Date" class="form-control" name="data">
+  			  </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Ora Inizio</label>
                 </div>
                 <select class="custom-select" id="inputGroupSelect01" name="ora_inizio">
                   <option selected>Scegli</option>
-                  <option value="1">08:30</option>
-                  <option value="2">09:30</option>
-                  <option value="3">10:30</option>
-                  <option value="3">11:30</option>
-                  <option value="3">12:30</option>
-                  <option value="3">13:30</option>
-                  <option value="3">14:30</option>
-                  <option value="3">15:30</option>
-                  <option value="3">16:30</option>
-                  <option value="3">17:30</option>
-                  <option value="3">18:30</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:30">18:30</option>
                 </select>
               </div>
               <div class="input-group mb-3">
@@ -100,17 +104,17 @@
                 </div>
                 <select class="custom-select" id="inputGroupSelect02" name="ora_fine">
                   <option selected>Scegli</option>
-                  <option value="1">08:30</option>
-                  <option value="2">09:30</option>
-                  <option value="3">10:30</option>
-                  <option value="3">11:30</option>
-                  <option value="3">12:30</option>
-                  <option value="3">13:30</option>
-                  <option value="3">14:30</option>
-                  <option value="3">15:30</option>
-                  <option value="3">16:30</option>
-                  <option value="3">17:30</option>
-                  <option value="3">18:30</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:30">18:30</option>
                 </select>
               </div>
               <button type="submit" class="btn btn-danger" role="button" aria-pressed="true"><i class="fas fa-search"></i> Cerca </button>

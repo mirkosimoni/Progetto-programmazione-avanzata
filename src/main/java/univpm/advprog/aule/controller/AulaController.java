@@ -40,13 +40,16 @@ public class AulaController {
 	
 	
 	@PostMapping(value = "/search")
-	public String search(@RequestParam(value = "oraInizio", required=false) DateTime oraInizio, Model uiModel) {
+	public String search(@RequestParam(value = "giorno", required=false) DateTime giorno, Model uiModel) {
 		
-		List<Aula> aule = new ArrayList<>();
+/*		List<Aula> aule = new ArrayList<>();
 		
 		aule = aulaService.findLibere(oraInizio);
 		
 		uiModel.addAttribute("aule", aule);
+*/
+		System.out.println("Cosa stampa quando immettiamo il giono");
+		System.out.println(giorno.toString());
 		
 		return "aula/list";
 	}

@@ -338,5 +338,10 @@ public class AulaServiceDefault implements AulaService {
 		return libere;
 	}
 
+	@Override
+	public List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese) {
+		return this.aulaRepository.findAule(quota, minimoPosti, presentiPrese);
+	}
+
 
 }
