@@ -1,5 +1,6 @@
 package univpm.advprog.aule.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,18 +50,16 @@ public class PrenotationController {
 	@GetMapping(value = "/list")
 	public String list(@RequestParam(value = "message", required=false) String message, Model uiModel) {
 
-		System.out.println(prenotationService.toString());
-		System.out.println("AAA");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		
 		List<Prenotation> allPrenotations = this.prenotationService.findAll();
 		
 		System.out.println(allPrenotations.size());
 		
-		uiModel.addAttribute("prenotations", allPrenotations);
-		//uiModel.addAttribute("numInstruments", allInstruments.size());
 		
-		// TODO ricevere un parametro via GET (es. per messaggio di esito operazione)
-		//uiModel.addAttribute("message", message);
+		
+		uiModel.addAttribute("formatter", formatter);
+		uiModel.addAttribute("prenotations", allPrenotations);
 		
 		return "prenotations/list";
 	}

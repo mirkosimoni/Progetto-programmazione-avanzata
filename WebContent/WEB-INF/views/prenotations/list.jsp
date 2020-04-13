@@ -27,8 +27,8 @@
       <td>${p.aula.quota}</td>
       <td>${p.aula.nome}</td>
       <td>${p.nomeEvento}</td>
-      <td>${p.oraInizio.toDate()}</td>
-      <td>${p.oraFine.toDate()}</td>
+      <td>${formatter.format(p.oraInizio.toDate())}</td>
+      <td>${formatter.format(p.oraFine.toDate())}</td>
       <td>${p.note}</td>
     </tr>
     </c:forEach>
