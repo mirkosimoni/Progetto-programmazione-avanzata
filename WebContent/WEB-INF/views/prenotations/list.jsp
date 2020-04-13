@@ -8,6 +8,9 @@
 
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
+<c:if test="${not empty errorMessageData}">
+	<div class="alert alert-danger" role="alert">${errorMessageData}</div>
+</c:if>
 <table class="table">
   <thead class="thead text-center" style="background-color: #696969;">
     <tr>
@@ -27,8 +30,8 @@
       <td>${p.aula.quota}</td>
       <td>${p.aula.nome}</td>
       <td>${p.nomeEvento}</td>
-      <td>${p.oraInizio.toDate()}</td>
-      <td>${p.oraFine.toDate()}</td>
+      <td>${formatter.format(p.oraInizio.toDate())}</td>
+      <td>${formatter.format(p.oraFine.toDate())}</td>
       <td>${p.note}</td>
     </tr>
     </c:forEach>
@@ -56,7 +59,6 @@
       </div>
       <div class="modal-body">
         <c:url value="/prenotations/search" var="action_url" />
-
             <form name='login' action=${action_url} method='POST'>    
 
               <div class="form-group">
