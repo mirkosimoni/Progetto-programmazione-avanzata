@@ -78,7 +78,7 @@
       <div class="card-body">
         <h5 class="card-title">Cerca aula</h5>
         <p class="card-text">Cerca una determinata aula della facoltà</p>
-        <a href="#" class="btn btn-danger">Cerca</a>
+        <a href="aula/list" class="btn btn-danger">Cerca</a>
       </div>
     </div>
   </div>
