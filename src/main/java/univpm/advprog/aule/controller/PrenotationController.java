@@ -90,6 +90,8 @@ public class PrenotationController {
 		
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
+		SimpleDateFormat formatter_view = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		
 		error = null;
 		
 		if(!data.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")) || (oraInizio.equals("Scegli") || oraFine.equals("Scegli")))) {
@@ -115,8 +117,11 @@ public class PrenotationController {
 		} 
 		if(data.equals("") && (!oraInizio.equals("Scegli") || !oraFine.equals("Scegli"))) {
 			error = "Scegliere un giorno nel calendario se si desidera effettuare una ricerca per fascia oraria";
+			List<Prenotation> allPrenotations = prenotationService.findAll();
+			uiModel.addAttribute("prenotations", allPrenotations);
 		}
 		
+		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
 		
 		return "prenotations/list";
