@@ -108,14 +108,19 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		Root<Aula> root = cr.from(Aula.class);
 		cr.select(root);
 
+		System.out.println("A QUI CI ARRIVO");
+		
 		if(quota < 0)
 			cr.where(cb.equal(root.get("QUOTA"), quota));
+		
 		if(minimoPosti < 0)
 			cr.where(cb.ge(root.get("NUM_POSTI"), minimoPosti));
-		if(presentiPrese != null)
+		
+		if(presentiPrese != null) {
 			if(presentiPrese == true)
 				cr.where(cb.isTrue(root.get("PRESE")));
 			else cr.where(cb.isFalse(root.get("PRESE")));
+		}
 		
 		return this.getSession().createQuery(cr).getResultList();
 	}

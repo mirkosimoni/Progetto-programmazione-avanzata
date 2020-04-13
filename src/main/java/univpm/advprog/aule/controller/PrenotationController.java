@@ -39,6 +39,12 @@ public class PrenotationController {
 		this.prenotationService = prenotationService;
 	}
 	
+	@Autowired
+	public void setAulaService(AulaService aulaService) {
+		this.aulaService = aulaService;
+	}
+	
+	
 	
 	@GetMapping(value = "/list")
 	public String list(@RequestParam(value = "message", required=false) String message, Model uiModel) {
@@ -71,8 +77,8 @@ public class PrenotationController {
 		
 		int int_quota = Integer.parseInt(quota);
 		
-		//System.out.println("Quota");
-		//System.out.println(quota);
+		System.out.println("Quota");
+		System.out.println(quota);
 		
 		//List<Aula> aule = aulaService.findAule(int_quota, -1, null);
 		
