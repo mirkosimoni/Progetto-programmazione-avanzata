@@ -18,8 +18,8 @@ import univpm.advprog.aule.model.entities.Prenotation;
 @Service("aulaService")
 public class AulaServiceDefault implements AulaService {
 	
-	AulaDao aulaRepository;
 	PrenotationDao prenotationRepository;
+	AulaDao aulaRepository;
 	
 	@Autowired
 	public void setPrenotationRepository(PrenotationDao prenotationRepository) {

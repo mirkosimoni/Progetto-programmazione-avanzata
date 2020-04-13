@@ -37,7 +37,7 @@
       <div class="card-body">
         <h5 class="card-title">Profilo</h5>
         <p class="card-text">Visualizza il tuo profilo utente</p>
-        <a href="#" class="btn btn-danger">Visualizza</a>
+        <a href="myprofile/profile" class="btn btn-danger">Visualizza</a>
       </div>
     </div>
   </div>

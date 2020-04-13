@@ -9,4 +9,7 @@
   <definition extends="default" name="home">
    <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
   </definition>
+   <definition extends="default" name="myprofile">
+   <put-attribute name="body" value="/WEB-INF/views/myprofile.jsp" />
+  </definition>
 </tiles-definitions>
