@@ -114,7 +114,7 @@ public class PrenotationController {
 			}
 		} 
 		if(data.equals("") && (!oraInizio.equals("Scegli") || !oraFine.equals("Scegli"))) {
-			error = "Scegliere un giorno nel calendario";
+			error = "Scegliere un giorno nel calendario se si desidera effettuare una ricerca per fascia oraria";
 		}
 		
 		uiModel.addAttribute("errorMessageData",error);
