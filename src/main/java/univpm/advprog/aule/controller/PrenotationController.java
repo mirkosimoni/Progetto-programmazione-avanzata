@@ -75,25 +75,29 @@ public class PrenotationController {
 						@RequestParam(value = "ora_fine", required=false) String oraFine,
 						Model uiModel) {
 		
-		int int_quota = Integer.parseInt(quota);
+		//int int_quota = Integer.parseInt(quota);
 		
-		System.out.println("Quota");
-		System.out.println(quota);
+		//System.out.println("Quota");
+		//System.out.println(quota);
 		
 		//List<Aula> aule = aulaService.findAule(int_quota, -1, null);
 		
 		//System.out.println("Lunghezza aule");
 		//System.out.println(aule.size());
-			
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
+		System.out.println(data);
+		System.out.println(oraInizio);
+		System.out.println(oraFine);
 		
-		String data_orainizio = data + oraInizio;
+		
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+		
+		String data_orainizio = data + ' ' + oraInizio;
 		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
-		System.out.println(dt_inizio);
+		System.out.println(dt_inizio.toString());
 		
-		String data_orafine = data + oraFine;
+		String data_orafine = data + ' ' + oraFine;
 		DateTime dt_fine = formatter.parseDateTime(data_orafine);
-		System.out.println(dt_fine);
+		System.out.println(dt_fine.toString());
 		
 		return "prenotations/list";
 	}
