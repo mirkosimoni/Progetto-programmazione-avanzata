@@ -23,6 +23,8 @@ public interface PrenotationDao {
 	
 	List<Prenotation> findByAulaDate(Aula aula, DateTime data);
 	
+	List<Prenotation> findPrenotations(String nome, String cognome, Aula aula, DateTime oraInizio, DateTime oraFine);
+	
 	Prenotation findByAulaOra(Aula aula, DateTime oraInizio);
 	
 	Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note);

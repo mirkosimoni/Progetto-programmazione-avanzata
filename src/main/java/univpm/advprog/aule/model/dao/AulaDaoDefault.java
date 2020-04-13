@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +98,29 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	@Override
 	public List<Aula> findAulePrese() {
 		return this.getSession().createQuery("FROM Aula a WHERE a.presentiPrese = TRUE", Aula.class).getResultList();
+	}
+
+	@Override
+	public List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese) {
+		
+		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
+		CriteriaQuery<Aula> cr = cb.createQuery(Aula.class);
+		Root<Aula> root = cr.from(Aula.class);
+		cr.select(root);
+
+		Predicate pd = null;
+		if(quota < 0)
+			pd = cb.equal(root.get("QUOTA"), quota);
+		if(minimoPosti < 0)
+			pd = cb.ge(root.get("NUM_POSTI"), minimoPosti);
+		if(presentiPrese != null)
+			if(presentiPrese == true)
+				pd = cb.isTrue(root.get("PRESE"));
+			else pd = cb.isFalse(root.get("PRESE"));
+			
+		cr.where(pd);
+		
+		return this.getSession().createQuery(cr).getResultList();
 	}
 
 }
