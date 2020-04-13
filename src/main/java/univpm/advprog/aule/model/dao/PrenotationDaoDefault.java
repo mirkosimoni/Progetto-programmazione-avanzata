@@ -72,8 +72,19 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0, 0);
 		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59, 59);
 		
-		return this.getSession().createQuery("FROM Prenotation p Where p.oraInizio between :inizio AND :fine", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p WHERE p.oraInizio between :inizio AND :fine", Prenotation.class).
 				setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
+	}
+
+	@Override
+	public List<Prenotation> findByAulaDate(Aula aula, DateTime data) {
+		
+		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0, 0);
+		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59, 59);
+		
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula AND p.oraInizio between :inizio AND :fine ", Prenotation.class).
+				setParameter("aula", aula).setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
+
 	}
 	
 }
