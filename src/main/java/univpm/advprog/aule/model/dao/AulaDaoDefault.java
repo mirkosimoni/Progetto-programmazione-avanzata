@@ -134,6 +134,10 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		
 		Prenotation dummyPrenotation = new Prenotation();
 		
+		if(oraInizio == null && oraFine == null) {
+			return aule;
+		}
+		
 		if(oraInizio != null && oraFine != null) {
 			dummyPrenotation.setOraInizio(oraInizio);
 			dummyPrenotation.setOraFine(oraFine);

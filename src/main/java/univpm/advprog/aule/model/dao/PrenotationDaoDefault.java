@@ -1,8 +1,12 @@
 package univpm.advprog.aule.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import univpm.advprog.aule.model.entities.Prenotation;
 import univpm.advprog.aule.model.entities.User;
+import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 import univpm.advprog.aule.model.entities.Aula;
 
 @Transactional
@@ -25,16 +30,19 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				getResultList();
 	}
 	
+	//Tutte le prenotazioni
 	@Override
 	public Prenotation findById(Long id) {
 		return getSession().find(Prenotation.class, id);
 	}
 	
+	//Elimina la prenotazione
 	@Override
 	public void delete(Prenotation prenotation) {
 		this.getSession().delete(prenotation);
 	}
 	
+	//Crea prenotazione
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
 		Prenotation prenotation = new Prenotation();
@@ -48,50 +56,139 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		return prenotation;
 	}
 	
+	//Aggiorna prenotazione
 	@Override 
 	public Prenotation update(Prenotation prenotation) {
 		return(Prenotation)this.getSession().merge(prenotation);
 	}
 
+	//Tutte le prenotazioni per quell'aula, ordinate cronologicamente
 	@Override
 	public List<Prenotation> findByAula(Aula aula) {
-		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula ORDER BY p.oraInizio", Prenotation.class).
 				setParameter("aula", aula).getResultList();
 				
 	}
 
+	//Prenotazioni in una data aula dell'ora specificata
 	@Override
-	public Prenotation findByAulaOra(Aula aula, DateTime oraInizio) {
-		return this.getSession().createQuery("FROM Prenotation p WHERE p.aula= :aula AND p.oraInizio >= :oraInizio", Prenotation.class).
-				setParameter("aula", aula).setParameter("oraInizio", oraInizio).getSingleResult();
+	public List<Prenotation> findByAulaOra(Aula aula, DateTime oraInizio) {
+		return this.getSession().createQuery("FROM Prenotation p WHERE p.aula= :aula AND p.oraInizio >= :oraInizio ORDER BY p.oraInizio", Prenotation.class).
+				setParameter("aula", aula).setParameter("oraInizio", oraInizio).getResultList();
 	}
 	
+	//Tutte le prenotazioni in una data, ordinate cronologicamente
 	@Override
 	public List<Prenotation> findByDate(DateTime data) {
 		
 		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0, 0);
 		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59, 59);
 		
-		return this.getSession().createQuery("FROM Prenotation p WHERE p.oraInizio between :inizio AND :fine", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p WHERE p.oraInizio between :inizio AND :fine ORDER BY p.oraInizio", Prenotation.class).
 				setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
 	}
 
+	//Tutte le prenotazioni in un'aula in una data, ordinate cronologicamente
 	@Override
 	public List<Prenotation> findByAulaDate(Aula aula, DateTime data) {
 		
 		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0, 0);
 		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59, 59);
 		
-		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula AND p.oraInizio between :inizio AND :fine ", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula AND p.oraInizio between :inizio AND :fine ORDER BY p.oraInizio ", Prenotation.class).
 				setParameter("aula", aula).setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
 
 	}
 
+	//Lista prenotazioni con date caratteristiche, a partire dall'ora in cui viene fatta la richiesta
 	@Override
-	public List<Prenotation> findPrenotations(String nome, String cognome, Aula aula, DateTime oraInizio,
+	public List<Prenotation> findPrenotations(String cognome, String nome, Aula aula) {
+		
+		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
+		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
+		Root<Prenotation> root = cr.from(Prenotation.class);
+		cr.select(root);
+	
+		if(cognome != null)
+			cr.where(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
+		if(nome != null)
+			cr.where(cb.equal(root.get("user").get("profile").get("nome"), nome));
+		if(aula != null)
+			cr.where(cb.equal(root.get("aula"), aula));
+		
+		DateTime now = DateTime.now();
+		cr.where(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
+		
+		return this.getSession().createQuery(cr).getResultList();
+		
+	}
+
+	//Lista delle prenotazioni con date caratteristiche e in una specifica data
+	@Override
+	public List<Prenotation> findPrenotationsData(String cognome, String nome, Aula aula, DateTime data) {
+		
+		if(data == null)
+			return this.findPrenotations(cognome, cognome, aula);
+		
+		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0);
+		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59);
+		
+		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
+		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
+		Root<Prenotation> root = cr.from(Prenotation.class);
+		cr.select(root);
+	
+		if(cognome != null)
+			cr.where(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
+		if(nome != null)
+			cr.where(cb.equal(root.get("user").get("profile").get("nome"), nome));
+		if(aula != null)
+			cr.where(cb.equal(root.get("aula"), aula));
+		
+		cr.where(cb.between(root.get("oraInizio"), inizio, fine));
+		
+		return this.getSession().createQuery(cr).getResultList();
+	}
+
+	//Lista delle prenotazioni con date caratteristiche in un determinato rage 
+	@Override
+	public List<Prenotation> findPrenotationsRange(String cognome, String nome, Aula aula, DateTime oraInizio,
 			DateTime oraFine) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(oraInizio.getYear() != oraFine.getYear() || oraInizio.getDayOfMonth() != oraFine.getDayOfMonth() || oraInizio.getMonthOfYear() != oraFine.getMonthOfYear()) {
+			this.findPrenotationsData(cognome, nome, aula, oraInizio);
+		}
+		
+		List<Prenotation> prenotazioniData = this.findPrenotationsData(nome, cognome, aula, oraInizio);
+		List<Prenotation> prenotazioniResult = new ArrayList<Prenotation>();
+		PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
+		
+		Prenotation dummyPrenotation = new Prenotation();
+		dummyPrenotation.setOraInizio(oraInizio);
+		dummyPrenotation.setOraFine(oraFine);
+		
+		for(Prenotation p : prenotazioniData) {
+			if(overlapFinder.areOverlapped(dummyPrenotation, p))
+				prenotazioniResult.add(p);
+		}
+		
+		return prenotazioniResult;
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
