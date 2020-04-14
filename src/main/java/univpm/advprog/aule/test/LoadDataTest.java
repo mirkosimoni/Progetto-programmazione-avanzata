@@ -49,7 +49,7 @@ public class LoadDataTest {
 			
 			try (Session session = sf.openSession()) {
 				
-				
+				//set Dao
 				aulaDao.setSession(session);
 				prenotationDao.setSession(session);
 				profileDao.setSession(session);
@@ -57,78 +57,86 @@ public class LoadDataTest {
 				roleDao.setSession(session);
 			
 				// phase 1 : add data to database
-				System.out.println("Qui 1");
 				session.beginTransaction();
 				
-				Aula aula = aulaDao.create("D1", 155, 40, true);
-				Aula aula2 = aulaDao.create("D2", 150, 34, false);
-
-				System.out.println("Qui 2");
+				//Creazione Aule
+				Aula aula1 = aulaDao.create("D1", 155, 40, true);
+				Aula aula2 = aulaDao.create("D2", 155, 34, false);
+				Aula aula3 = aulaDao.create("D3", 155, 70, true);
+				Aula aula4 = aulaDao.create("A3", 155, 30, false);
 				
-				User user = userDao.create("Mirko", "12345", true);
+				Aula aula5 = aulaDao.create("D1", 160, 30, false);
+				Aula aula6 = aulaDao.create("D2", 160, 44, true);
+				Aula aula7 = aulaDao.create("D3", 160, 90, true);
+				Aula aula8 = aulaDao.create("A3", 160, 20, false);
 				
-				DateTime oraInizio1 = new DateTime(2020, 3, 26, 12, 0, 0);
-				DateTime oraFine1 = new DateTime(2020, 3, 26, 15, 0, 0);
+				Aula aula9 = aulaDao.create("D1", 140, 15, false);
+				Aula aula10 = aulaDao.create("D2", 140, 70, true);
+				Aula aula11 = aulaDao.create("D3", 140, 50, false);
+				Aula aula12 = aulaDao.create("A3", 140, 30, true);
 				
-				DateTime oraInizio2 = new DateTime(2020, 3, 26, 11, 0, 0);
-				DateTime oraFine2 = new DateTime(2020, 3, 26, 16, 0, 0);
+				//Creazione utenti
+				User user1 = userDao.create("Mirko", "12345", true);
+				User user2 = userDao.create("Daniele", "12345", true);
+				User user3 = userDao.create("Fabio", "12345", true);
+				User user4 = userDao.create("Lorenzo", "12345", true);
+				User user5 = userDao.create("Alberto", "12345", true);
 				
-				DateTime oraInizio3 = new DateTime(2020, 3, 26, 18, 0, 0);
-				DateTime oraFine3 = new DateTime(2020, 3, 26, 19, 0, 0);
+				//Creazione ruoli
+				Role admin = roleDao.create("Admin");
+				Role utente = roleDao.create("User");
+				Set<Role> setRole = new HashSet();
+				setRole.add(admin);
+				setRole.add(utente);
 				
-				Prenotation p1 = prenotationDao.create(oraInizio1, oraFine1, user, aula, "Esame 1", "esame");
-				Prenotation p2 = prenotationDao.create(oraInizio2, oraFine2, user, aula, "Esame 2", "aaaa");
-				Prenotation p3 = prenotationDao.create(oraInizio3, oraFine3, user, aula, "Esame 3", "bbb");
-				//aula.addPrenotation(p1);
-				session.refresh(aula);
+				user1.setRoles(setRole);
+				user2.setRoles(setRole);
+				user3.setRoles(setRole);
+				user4.setRoles(setRole);
+				user5.setRoles(setRole);
 				
-				System.out.println("TEST OVERLAP PRENOTAZIONI");
-				System.out.println("P1 E P2 (SI): " + overlapFinder.areOverlapped(p1, p2));
-				System.out.println("P1 E P3 (NO): " + overlapFinder.areOverlapped(p1, p3));
+				//Creazione prenotazioni
+				DateTime oraInizio1 = new DateTime(2020, 5, 2, 12, 0, 0);
+				DateTime oraFine1 = new DateTime(2020, 5, 2, 15, 0, 0);
+				Prenotation p1 = prenotationDao.create(oraInizio1, oraFine1, user2, aula10, "Esame 1", "note");
+				session.refresh(aula10);
+				
+				DateTime oraInizio2 = new DateTime(2020, 5, 2, 9, 0, 0);
+				DateTime oraFine2 = new DateTime(2020, 5, 2, 11, 0, 0);
+				Prenotation p2 = prenotationDao.create(oraInizio2, oraFine2, user1, aula10, "Esame 2", "note");
+				session.refresh(aula10);
+				
+				DateTime oraInizio3 = new DateTime(2020, 5, 2, 10, 0, 0);
+				DateTime oraFine3 = new DateTime(2020, 5, 2, 13, 0, 0);
+				Prenotation p3 = prenotationDao.create(oraInizio3, oraFine3, user3, aula3, "Esame 3", "note");
+				session.refresh(aula3);
+				
+				DateTime oraInizio4 = new DateTime(2020, 5, 2, 13, 0, 0);
+				DateTime oraFine4 = new DateTime(2020, 5, 2, 14, 0, 0);
+				Prenotation p4 = prenotationDao.create(oraInizio3, oraFine3, user3, aula3, "Esame 4", "note");
+				session.refresh(aula4);
+				
+				DateTime oraInizio5 = new DateTime(2020, 5, 2, 10, 0, 0);
+				DateTime oraFine5 = new DateTime(2020, 5, 2, 16, 0, 0);
+				Prenotation p5 = prenotationDao.create(oraInizio3, oraFine3, user3, aula6, "Esame 5", "note");
+				session.refresh(aula6);
 				
 				session.getTransaction().commit();
 				
-				System.out.println("Fine transazione creazione prenotazione");
-				
+				//phase 2: test metodi Dao
 				session.beginTransaction();
-				
-				Prenotation prenot = prenotationDao.findById(1L);
-				
-				System.out.println(prenot.getOraFine());
 				
 				session.getTransaction().commit();
 				
+				
+				/*
 				// Prova stampa differenza tra oraFine e oraInizio
 				
 				DateTime fine = prenot.getOraFine();
 				DateTime inizio = prenot.getOraInizio();
-				
 				Duration durata = new Duration(fine, inizio);
-				
-				System.out.println(durata.getStandardHours());
-				
-				
-				// Creazione di un ruolo
-				session.beginTransaction();
-				
-				Role admin = roleDao.create("Admin");
-				
-				Role utente = roleDao.create("User");
-				
-				Set<Role> setRole = new HashSet();
-				
-				setRole.add(admin);
-				setRole.add(utente);
-				
-				session.getTransaction().commit();
-				
-				// Assegnazione ruolo ad un utente
-				session.beginTransaction();
-				
-				user.setRoles(setRole);
-				
-				session.getTransaction().commit();
-				
+			
+
 				// Ricerca aula
 				session.beginTransaction();
 				List<Aula> setAule = aulaDao.findAulePosti(20);
@@ -142,29 +150,24 @@ public class LoadDataTest {
 				session.beginTransaction();
 				
 				aula.setQuota(160);
-				
 				aula.setNome("D5");
-				
 				aulaDao.update(aula);
 				
 				session.getTransaction().commit();
 				
 				//Remove prenotation
 				session.beginTransaction();
-				
-				
+
 				// Remove aula (funziona)
 				/*
 				for(Prenotation p : aula.getPrenotazioni()) {
 					prenotationDao.delete(p);
 				}
 				aula.getPrenotazioni().clear();
-				*/
-				
-				
 				//aulaDao.delete(aula);
 				
 				session.getTransaction().commit();
+				*/
 				
 			}
 
