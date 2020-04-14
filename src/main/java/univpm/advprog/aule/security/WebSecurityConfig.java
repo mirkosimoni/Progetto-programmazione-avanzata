@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		antMatchers("/").permitAll().
 		antMatchers("/prenotations/**").hasAnyRole("User").
 		antMatchers("/myprofile/**").authenticated().
+		antMatchers("/gestione-aule/**").authenticated().
 		and().formLogin().loginPage("/login").defaultSuccessUrl("/"). //pagina dove va quando la login ha successo
 		failureUrl("/login?error=true").permitAll(). //pagina dove va se la login non ha successo
 		and().logout().logoutSuccessUrl("/") //va a / dopo il logout. default path per logout è /logout

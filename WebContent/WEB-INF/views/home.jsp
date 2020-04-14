@@ -46,7 +46,7 @@
       <div class="card-body">
         <h5 class="card-title">Gestione aule</h5>
         <p class="card-text">Aggiungi o cancella un'aula</p>
-        <a href="#" class="btn btn-danger">Gestisci</a>
+        <a href="gestione-aule/gestione" class="btn btn-danger">Gestisci</a>
       </div>
     </div>
   </div>
