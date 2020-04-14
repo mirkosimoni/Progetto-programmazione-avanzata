@@ -13,6 +13,7 @@ import univpm.advprog.aule.model.dao.RoleDao;
 import univpm.advprog.aule.model.dao.UserDao;
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
+import univpm.advprog.aule.model.entities.Profile;
 import univpm.advprog.aule.model.entities.Role;
 import univpm.advprog.aule.model.entities.User;
 import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
@@ -82,6 +83,9 @@ public class LoadDataTest {
 				User user4 = userDao.create("Lorenzo", "12345", true);
 				User user5 = userDao.create("Alberto", "12345", true);
 				
+				Profile profile3 = profileDao.create("Fabio", "Morganti");
+				user3.setProfile(profile3);
+				
 				//Creazione ruoli
 				Role admin = roleDao.create("Admin");
 				Role utente = roleDao.create("User");
@@ -113,18 +117,38 @@ public class LoadDataTest {
 				
 				DateTime oraInizio4 = new DateTime(2020, 5, 2, 13, 0, 0);
 				DateTime oraFine4 = new DateTime(2020, 5, 2, 14, 0, 0);
-				Prenotation p4 = prenotationDao.create(oraInizio3, oraFine3, user3, aula3, "Esame 4", "note");
+				Prenotation p4 = prenotationDao.create(oraInizio4, oraFine4, user3, aula3, "Esame 4", "note");
 				session.refresh(aula4);
 				
 				DateTime oraInizio5 = new DateTime(2020, 5, 2, 10, 0, 0);
 				DateTime oraFine5 = new DateTime(2020, 5, 2, 16, 0, 0);
-				Prenotation p5 = prenotationDao.create(oraInizio3, oraFine3, user3, aula6, "Esame 5", "note");
+				Prenotation p5 = prenotationDao.create(oraInizio5, oraFine5, user3, aula6, "Esame 5", "note");
+				session.refresh(aula6);
+				
+				DateTime oraInizio6 = new DateTime(2020, 5, 3, 10, 0, 0);
+				DateTime oraFine6 = new DateTime(2020, 5, 3, 16, 0, 0);
+				Prenotation p6 = prenotationDao.create(oraInizio6, oraFine6, user3, aula6, "Esame 6", "note");
 				session.refresh(aula6);
 				
 				session.getTransaction().commit();
 				
 				//phase 2: test metodi Dao
 				session.beginTransaction();
+				
+				System.out.println("INIZIO TEST");
+				
+				DateTime testData1 = new DateTime(2020, 5, 2, 10, 50, 0);
+				DateTime testData2 = new DateTime(2020, 5, 2, 14, 0, 0);
+				List<Prenotation> test = prenotationDao.findPrenotationsRange(null, null, null, testData1, testData2);
+				
+				for(Prenotation p : test) {
+					System.out.println(p.getNomeEvento());
+				}
+				System.out.println("qui");
+				System.out.println(test.size());
+				
+				System.out.println("FINE TEST");
+				
 				
 				session.getTransaction().commit();
 				

@@ -28,9 +28,9 @@ public class MyProfileServiceDefault implements MyProfileService {
 	
 	
 	@Override
-	public Profile create(String id, String nome, String cognome) {
+	public Profile create(String nome, String cognome) {
 		
-		return profilerepository.create(id, nome, cognome);
+		return profilerepository.create(nome, cognome);
 	}
 	
 

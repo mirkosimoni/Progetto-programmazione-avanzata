@@ -86,20 +86,6 @@ public class PrenotationServiceDefault implements PrenotationService {
 		Prenotation p = this.prenotationRepository.findById(id);
 		this.prenotationRepository.delete(p);
 	}
-
-
-	@Override
-	public List<Prenotation> findByAulaOra(Aula aula, DateTime oraInizio) {
-		return this.prenotationRepository.findByAulaOra(aula, oraInizio);
-	}
-
-	/*
-	@Override
-	public void delete(Aula aula, DateTime oraInizio) {
-		Prenotation p = this.prenotationRepository.findByAulaOra(aula, oraInizio);
-		this.prenotationRepository.delete(p);
-	}
-	*/
 	
 	@Autowired
 	public void setPrenotationRepository(PrenotationDao prenotationRepository) {
@@ -133,6 +119,12 @@ public class PrenotationServiceDefault implements PrenotationService {
 			DateTime oraFine) {
 		
 		return this.prenotationRepository.findPrenotationsRange(cognome, nome, aula, oraInizio, oraFine);
+	}
+
+	@Override
+	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, Aula aula, DateTime dataOra) {
+		
+		return this.prenotationRepository.findPrenotationsDataOra(cognome, nome, aula, dataOra);
 	}
 
 }

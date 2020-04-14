@@ -10,5 +10,5 @@ import univpm.advprog.aule.model.entities.User;;
 
 public interface MyProfileService {
 
-	public Profile create(String id, String nome, String cognome);
+	public Profile create(String nome, String cognome);
 }

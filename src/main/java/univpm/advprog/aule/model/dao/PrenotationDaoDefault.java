@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -69,13 +70,6 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				setParameter("aula", aula).getResultList();
 				
 	}
-
-	//Prenotazioni in una data aula dell'ora specificata
-	@Override
-	public List<Prenotation> findByAulaOra(Aula aula, DateTime oraInizio) {
-		return this.getSession().createQuery("FROM Prenotation p WHERE p.aula= :aula AND p.oraInizio >= :oraInizio ORDER BY p.oraInizio", Prenotation.class).
-				setParameter("aula", aula).setParameter("oraInizio", oraInizio).getResultList();
-	}
 	
 	//Tutte le prenotazioni in una data, ordinate cronologicamente
 	@Override
@@ -109,16 +103,25 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		Root<Prenotation> root = cr.from(Prenotation.class);
 		cr.select(root);
 	
-		if(cognome != null)
-			cr.where(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
-		if(nome != null)
-			cr.where(cb.equal(root.get("user").get("profile").get("nome"), nome));
-		if(aula != null)
-			cr.where(cb.equal(root.get("aula"), aula));
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		if(cognome != null) {
+			predicates.add(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
+			System.out.println("Cognome != null");
+		}
+		if(nome != null) {
+			predicates.add(cb.equal(root.get("user").get("profile").get("nome"), nome));
+			System.out.println("Nome != null");
+		}
+		if(aula != null) {
+			predicates.add(cb.equal(root.get("aula"), aula));
+			System.out.println("Aula != null");
+		}
 		
 		DateTime now = DateTime.now();
-		cr.where(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
+		predicates.add(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
 		
+		cr.where(predicates.toArray(new Predicate[]{}));
 		return this.getSession().createQuery(cr).getResultList();
 		
 	}
@@ -130,6 +133,8 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		if(data == null)
 			return this.findPrenotations(cognome, cognome, aula);
 		
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
 		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0);
 		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59);
 		
@@ -139,14 +144,15 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		cr.select(root);
 	
 		if(cognome != null)
-			cr.where(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
+			predicates.add(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
 		if(nome != null)
-			cr.where(cb.equal(root.get("user").get("profile").get("nome"), nome));
+			predicates.add(cb.equal(root.get("user").get("profile").get("nome"), nome));
 		if(aula != null)
-			cr.where(cb.equal(root.get("aula"), aula));
+			predicates.add(cb.equal(root.get("aula"), aula));
 		
-		cr.where(cb.between(root.get("oraInizio"), inizio, fine));
+		predicates.add(cb.between(root.get("oraInizio"), inizio, fine));
 		
+		cr.where(predicates.toArray(new Predicate[]{}));
 		return this.getSession().createQuery(cr).getResultList();
 	}
 
@@ -154,6 +160,9 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	@Override
 	public List<Prenotation> findPrenotationsRange(String cognome, String nome, Aula aula, DateTime oraInizio,
 			DateTime oraFine) {
+		
+		if(oraFine == null)
+			return this.findPrenotationsData(cognome, nome, aula, oraInizio);
 		
 		if(oraInizio.getYear() != oraFine.getYear() || oraInizio.getDayOfMonth() != oraFine.getDayOfMonth() || oraInizio.getMonthOfYear() != oraFine.getMonthOfYear()) {
 			this.findPrenotationsData(cognome, nome, aula, oraInizio);
@@ -173,6 +182,34 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		}
 		
 		return prenotazioniResult;
+	}
+
+	@Override
+	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, Aula aula, DateTime dataOra) {
+		
+		if(dataOra == null)
+			return this.findPrenotations(cognome, cognome, aula);
+		
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		DateTime fine = new DateTime(dataOra.getYear(), dataOra.getMonthOfYear(), dataOra.getDayOfMonth(), 23, 59);
+		
+		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
+		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
+		Root<Prenotation> root = cr.from(Prenotation.class);
+		cr.select(root);
+	
+		if(cognome != null)
+			predicates.add(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
+		if(nome != null)
+			predicates.add(cb.equal(root.get("user").get("profile").get("nome"), nome));
+		if(aula != null)
+			predicates.add(cb.equal(root.get("aula"), aula));
+		
+		predicates.add(cb.between(root.get("oraInizio"), dataOra, fine));
+		
+		cr.where(predicates.toArray(new Predicate[]{}));
+		return this.getSession().createQuery(cr).getResultList();
 	}
 	
 }

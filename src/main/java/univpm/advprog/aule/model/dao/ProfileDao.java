@@ -22,6 +22,6 @@ public interface ProfileDao {
 
 	void delete(Profile contact);
 	
-	Profile create(String id, String nome, String cognome);
+	Profile create(String nome, String cognome);
 	
 }

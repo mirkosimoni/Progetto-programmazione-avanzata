@@ -13,6 +13,7 @@ import univpm.advprog.aule.model.entities.Profile;
 public class ProfileDaoDefault extends DefaultDao implements ProfileDao  {
 
 	
+	
 		@Override
 		public Profile findByName(String name) {
 			return this.getSession().createQuery("FROM Profile pr WHERE pr.name = :name", Profile.class).setParameter("name", name).getSingleResult();
@@ -40,7 +41,7 @@ public class ProfileDaoDefault extends DefaultDao implements ProfileDao  {
 		}
 
 		@Override
-		public Profile create(String id, String nome, String cognome) {
+		public Profile create(String nome, String cognome) {
 			Profile pr = new Profile();
 			pr.setNome(nome);
 			pr.setCognome(cognome);

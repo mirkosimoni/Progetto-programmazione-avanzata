@@ -23,9 +23,9 @@ public interface PrenotationService {
 	
 	List<Prenotation> findPrenotationsData(String cognome, String nome, Aula aula, DateTime data);
 	
-	List<Prenotation> findPrenotationsRange(String cognome, String nome, Aula aula, DateTime oraInizio, DateTime oraFine);
+	List<Prenotation> findPrenotationsDataOra(String cognome, String nome, Aula aula, DateTime dataOra);
 	
-	List<Prenotation> findByAulaOra(Aula aula, DateTime oraInizio);
+	List<Prenotation> findPrenotationsRange(String cognome, String nome, Aula aula, DateTime oraInizio, DateTime oraFine);
 	
 	Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note);
 	
