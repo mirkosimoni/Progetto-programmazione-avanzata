@@ -137,15 +137,15 @@ public class LoadDataTest {
 				
 				System.out.println("INIZIO TEST");
 				
-				DateTime testData1 = new DateTime(2020, 5, 2, 10, 50, 0);
-				DateTime testData2 = new DateTime(2020, 5, 2, 14, 0, 0);
-				List<Prenotation> test = prenotationDao.findPrenotationsRange(null, null, null, testData1, testData2);
+				DateTime testData1 = new DateTime(2020, 5, 2, 14, 0, 0);
+				DateTime testData2 = new DateTime(2020, 5, 2, 15, 0, 0);
+				List<Aula> aule = aulaDao.findAuleLibere(testData1, testData2, -1, -1, null);
 				
-				for(Prenotation p : test) {
-					System.out.println(p.getNomeEvento());
+				for(Aula a : aule) {
+					System.out.println(a.getQuota()+ "   "+a.getNome()+"   "+a.isPresentiPrese());
 				}
-				System.out.println("qui");
-				System.out.println(test.size());
+				
+				System.out.println(aule.size());
 				
 				System.out.println("FINE TEST");
 				

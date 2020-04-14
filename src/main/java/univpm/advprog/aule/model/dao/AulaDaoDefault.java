@@ -109,19 +109,22 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		CriteriaQuery<Aula> cr = cb.createQuery(Aula.class);
 		Root<Aula> root = cr.from(Aula.class);
 		cr.select(root);
+		
+		List<Predicate> predicates = new ArrayList<Predicate>();
 
 		if(quota > 0)
-			cr.where(cb.equal(root.get("quota"), quota));
+			predicates.add(cb.equal(root.get("quota"), quota));
 		
 		if(minimoPosti > 0)
-			cr.where(cb.ge(root.get("numeroPosti"), minimoPosti));
+			predicates.add(cb.ge(root.get("numeroPosti"), minimoPosti));
 		
 		if(presentiPrese != null) {
 			if(presentiPrese == true)
-				cr.where(cb.isTrue(root.get("presentiPrese")));
-			else cr.where(cb.isFalse(root.get("presentiPrese")));
+				predicates.add(cb.isTrue(root.get("presentiPrese")));
+			else predicates.add(cb.isFalse(root.get("presentiPrese")));
 		}
 		
+		cr.where(predicates.toArray(new Predicate[]{}));
 		return this.getSession().createQuery(cr).getResultList();
 	}
 
