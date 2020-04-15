@@ -43,11 +43,18 @@ public class AulaServiceDefault implements AulaService {
 
 	@Override
 	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {
+		
+		if(nome == null || quota < 0 || numeroPosti < 0)
+			return null;
+		
 		return aulaRepository.create(nome, quota, numeroPosti, presentiPrese);
 	}
 
 	@Override
 	public Aula update(Aula aula) {
+		if(aula.getNome() == null || aula.getQuota() < 0 || aula.getNumeroPosti() < 0)
+			return null;
+		
 		return aulaRepository.update(aula);
 	}
 

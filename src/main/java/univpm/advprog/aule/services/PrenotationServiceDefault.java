@@ -39,10 +39,17 @@ public class PrenotationServiceDefault implements PrenotationService {
 	}
 
 
-	//Aggiungere controlli sull'orario, inoltre la data di inizio e fine deve essere la stessa
-	//Devono essere rispettati gli orari di apertura dell'università (forse meglio nel controller?)
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
+		
+		//oraInizio e oraFine devono essere nello stesso giorno
+		if(oraInizio.getYear() != oraFine.getYear() || oraInizio.getMonthOfYear() != oraFine.getMonthOfYear() ||
+				oraInizio.getDayOfMonth() != oraFine.getDayOfMonth())
+			return null;
+		
+		//oraInizio deve precedere oraFine
+		if(oraInizio.isAfter(oraFine))
+			return null;
 		
 		List<Prenotation> prenotazioniData = this.prenotationRepository.findByDate(oraInizio);
 		boolean overlapped = false;
@@ -66,6 +73,16 @@ public class PrenotationServiceDefault implements PrenotationService {
 	//Devono essere rispettati gli orari di apertura dell'università (forse meglio nel controller?)
 	@Override
 	public Prenotation update(Prenotation prenotation) {
+		
+		//oraInizio e oraFine devono essere nello stesso giorno
+		if(prenotation.getOraInizio().getYear() != prenotation.getOraFine().getYear() ||
+				prenotation.getOraInizio().getMonthOfYear() != prenotation.getOraFine().getMonthOfYear() ||
+				prenotation.getOraInizio().getDayOfMonth() != prenotation.getOraFine().getDayOfMonth())
+			return null;
+		
+		//oraInizio deve precedere oraFine
+		if(prenotation.getOraInizio().isAfter(prenotation.getOraFine()))
+			return null;
 		
 		List<Prenotation> prenotazioniData = this.prenotationRepository.findByDate(prenotation.getOraInizio());
 		boolean overlapped = false;
