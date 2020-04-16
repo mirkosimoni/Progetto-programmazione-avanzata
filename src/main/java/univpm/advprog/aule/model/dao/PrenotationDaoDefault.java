@@ -46,6 +46,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	//Crea prenotazione
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
+		
 		Prenotation prenotation = new Prenotation();
 		prenotation.setOraInizio(oraInizio);
 		prenotation.setOraFine(oraFine);

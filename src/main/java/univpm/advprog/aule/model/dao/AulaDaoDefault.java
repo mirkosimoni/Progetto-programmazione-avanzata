@@ -25,8 +25,12 @@ import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 @Repository("aulaDao")
 public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	
-	@Autowired
 	PrenotationDao prenotationDao;
+	
+	@Autowired
+	public void setPrenotationDao (PrenotationDao prenotationDao) {
+		this.prenotationDao = prenotationDao;
+	}
 	
 	@Override
 	public List<Aula> findAll() {
@@ -43,6 +47,15 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public Aula update(Aula aula) {
+		
+		List<Aula> aule = this.findAll();
+		
+		for(Aula a : aule) {
+			if(a.getId() != aula.getId())
+				if(a.getQuota() == aula.getQuota() && a.getNome() == a.getNome())
+					return null;
+		}
+		
 		Aula merged = (Aula)this.getSession().merge(aula);
 		return merged;
 	}
@@ -76,6 +89,14 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	
 	@Override
 	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {
+		
+		List<Aula> aule = this.findAll();
+		
+		for(Aula a : aule) {
+			if(a.getQuota() == quota && a.getNome() == nome)
+				return null;
+		}
+		
 		Aula a = new Aula();
 		a.setNome(nome);
 		a.setQuota(quota);

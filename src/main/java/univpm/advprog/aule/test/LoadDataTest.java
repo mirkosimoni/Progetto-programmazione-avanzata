@@ -51,17 +51,17 @@ public class LoadDataTest {
 			try (Session session = sf.openSession()) {
 				
 				//set Dao
-				aulaDao.setSession(session);
-				prenotationDao.setSession(session);
-				profileDao.setSession(session);
-				userDao.setSession(session);
-				roleDao.setSession(session);
+				//aulaDao.setSession(session);
+				//prenotationDao.setSession(session);
+				//profileDao.setSession(session);
+				//userDao.setSession(session);
+				//roleDao.setSession(session);
 			
 				// phase 1 : add data to database
 				session.beginTransaction();
 				
 				//Creazione Aule
-				Aula aula1 = aulaDao.create("D1", 155, 40, true);
+				Aula aula1 = aulaDao.create("Z1", 155, 40, true);
 				Aula aula2 = aulaDao.create("D2", 155, 34, false);
 				Aula aula3 = aulaDao.create("D3", 155, 70, true);
 				Aula aula4 = aulaDao.create("A3", 155, 30, false);
