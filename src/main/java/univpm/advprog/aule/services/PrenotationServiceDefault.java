@@ -115,11 +115,6 @@ public class PrenotationServiceDefault implements PrenotationService {
 	}
 
 	@Override
-	public List<Prenotation> findByAulaDate(Aula aula, DateTime data) {
-		return this.prenotationRepository.findByAulaDate(aula, data);
-	}
-
-	@Override
 	public List<Prenotation> findPrenotations(String cognome, String nome, Aula aula) {
 		
 		return this.prenotationRepository.findPrenotations(cognome, nome, aula);

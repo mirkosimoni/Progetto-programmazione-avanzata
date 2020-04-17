@@ -22,8 +22,6 @@ public interface PrenotationDao {
 	
 	List<Prenotation> findByDate(DateTime data);
 	
-	List<Prenotation> findByAulaDate(Aula aula, DateTime data);
-	
 	List<Prenotation> findPrenotations(String cognome, String nome, Aula aula);
 	
 	List<Prenotation> findPrenotationsData(String cognome, String nome, Aula aula, DateTime data);

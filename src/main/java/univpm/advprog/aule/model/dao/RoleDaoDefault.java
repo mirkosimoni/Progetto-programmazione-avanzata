@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Transactional
-@Repository
+@Repository("roleDao")
 public class RoleDaoDefault extends DefaultDao implements RoleDao {
 	
 

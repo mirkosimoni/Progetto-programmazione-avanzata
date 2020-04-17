@@ -178,8 +178,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		for(Aula a : aule){
 			boolean libera = true;
 			//Prenotazioni AulaData
-			List<Prenotation> prenotazioniAula = this.prenotationDao.findByAulaDate(a, dummyPrenotation.getOraInizio());
-			
+			List<Prenotation> prenotazioniAula = this.prenotationDao.findPrenotationsData(null, null, a, dummyPrenotation.getOraInizio());			
 			for(Prenotation p : prenotazioniAula) {
 				if(overlapFinder.areOverlapped(p, dummyPrenotation))
 					libera = false;

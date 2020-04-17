@@ -83,18 +83,6 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
 	}
 
-	//Tutte le prenotazioni in un'aula in una data, ordinate cronologicamente
-	@Override
-	public List<Prenotation> findByAulaDate(Aula aula, DateTime data) {
-		
-		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0, 0);
-		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59, 59);
-		
-		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula AND p.oraInizio between :inizio AND :fine ORDER BY p.oraInizio ", Prenotation.class).
-				setParameter("aula", aula).setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
-
-	}
-
 	//Lista prenotazioni con date caratteristiche, a partire dall'ora in cui viene fatta la richiesta
 	@Override
 	public List<Prenotation> findPrenotations(String cognome, String nome, Aula aula) {

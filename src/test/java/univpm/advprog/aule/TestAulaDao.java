@@ -2,11 +2,14 @@ package univpm.advprog.aule;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
@@ -35,6 +38,7 @@ public class TestAulaDao {
 		}
 	}
 	
+	
 	//@Test
 	void testBeginWithoutSpecifyingSession() {
 		
@@ -43,9 +47,14 @@ public class TestAulaDao {
 			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
 			AulaDao aulaDao = ctx.getBean("aulaDao", AulaDao.class);
 
-			aulaDao.create("NomeProva1", 100, 15, true);
-			Session s1 = aulaDao.getSession();
+			aulaDao.create("NomeProva1", 100, 15, true); //Funziona
+			
+			//Non funziona
+			Session s1 = aulaDao.getSession(); //Problemi in questo metodo, anche se la create funziona
 			assertFalse(s1.isOpen());
+			
+			List<Aula> aule = aulaDao.findAll(); //Funziona
+			assertEquals(aule.size(), 1); //Funziona
 			
 			//aulaDao.create("NomeProva2", 130, 15, true);
 			//Session s2 = aulaDao.getSession();
@@ -103,6 +112,7 @@ public class TestAulaDao {
 		}
 	}
 	
+	
 	@Test
 	void searchAulaParameters() {
 		
@@ -146,7 +156,83 @@ public class TestAulaDao {
 		}
 	}
 	
+	@Test
+	void searchAuleLibere(){
+		try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)){
+			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
+			AulaDao aulaDao = ctx.getBean("aulaDao", AulaDao.class);
+			PrenotationDao prenotationDao = ctx.getBean("prenotationDao", PrenotationDao.class);
+			UserDao userDao = ctx.getBean("userDao", UserDao.class);
+			ProfileDao profileDao = ctx.getBean("profileDao", ProfileDao.class);
+			RoleDao roleDao = ctx.getBean("roleDao", RoleDao.class);
+			
+			Session s = sf.openSession();
+			aulaDao.setSession(s);
+			prenotationDao.setSession(s);
+			userDao.setSession(s);
+			profileDao.setSession(s);
+			roleDao.setSession(s);
+			
+			//Creazione aule
+			s.beginTransaction();
+			Aula aula1 = aulaDao.create("Aula1", 150, 10, true);
+			Aula aula2 = aulaDao.create("Aula2", 150, 15, true);
+			s.getTransaction().commit();
+			
+			//Creazione utente con ruoli
+			s.beginTransaction();
+			Role admin = roleDao.create("Admin");
+			Role utente = roleDao.create("User");
+			Set<Role> setRole = new HashSet();
+			setRole.add(admin);
+			setRole.add(utente);
+			
+			Profile profile1 = profileDao.create("Nome1", "Cognome1");
+			User user1 = userDao.create("username1", "12345", true);
+			user1.setProfile(profile1);
+			user1.setRoles(setRole);
+			s.getTransaction().commit();
+			
+			//Creazione prenotazioni
+			s.beginTransaction();
+			
+			DateTime inizio1 = new DateTime(2020, 7, 1, 10, 0, 0);
+			DateTime fine1 = new DateTime(2020, 7, 1, 13, 0, 0);
+			prenotationDao.create(inizio1, fine1, user1, aula1, "evento1", "note1");
+			
+			DateTime inizio2 = new DateTime(2020, 7, 1, 15, 0, 0);
+			DateTime fine2 = new DateTime(2020, 7, 1, 17, 0, 0);
+			prenotationDao.create(inizio2, fine2, user1, aula1, "evento2", "note2");
+			
+			prenotationDao.create(inizio2, fine2, user1, aula2, "evento3", "note3");
+			s.getTransaction().commit();
+			
+			//Ricerca aule libere
+			s.beginTransaction();
+			
+			DateTime inizio = new DateTime(2020, 7, 1, 10, 0, 0);
+			List<Aula> auleLibere = aulaDao.findAuleLibere(inizio, null, -1, -1, null);
+			assertEquals(auleLibere.size(), 1);
+			
+			inizio = new DateTime(2020, 7, 1, 13, 0, 0);
+			auleLibere = aulaDao.findAuleLibere(inizio, null, -1, -1, null);
+			assertEquals(auleLibere.size(), 2);
+			
+			DateTime fine = new DateTime(2020, 7, 1, 16, 0, 0);
+			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, -1, null);
+			assertEquals(auleLibere.size(), 0);
+			
+			inizio = new DateTime(2020, 7, 1, 9, 0, 0);
+			fine = new DateTime(2020, 7, 1, 15, 0, 0);
+			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, -1, null);
+			assertEquals(auleLibere.size(), 1);
+			
+			s.getTransaction().commit();
+			
+		}
+	}
 	
+	@Test
 	void deleteAula() {
 		
 		try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)){
