@@ -11,6 +11,7 @@
 <c:if test="${not empty errorMessageData}">
 	<div class="alert alert-danger" role="alert">${errorMessageData}</div>
 </c:if>
+
 <table class="table">
   <thead class="thead text-center" style="background-color: #696969;">
     <tr>
@@ -21,6 +22,8 @@
       <th scope="col">Ora inizio</th>
       <th scope="col">Ora fine</th>
       <th scope="col">Note</th>
+      <th scope="col">Modifica</th>
+      <th scope="col">Elimina</th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +36,8 @@
       <td>${formatter.format(p.oraInizio.toDate())}</td>
       <td>${formatter.format(p.oraFine.toDate())}</td>
       <td>${p.note}</td>
+      <td><i class="far fa-hand-paper"> </i></td>
+      <td><a href="<c:url value="/prenotations/delete/${p.id}"/>"><i class="fas fa-trash"></i></a></td>
     </tr>
     </c:forEach>
   </tbody>

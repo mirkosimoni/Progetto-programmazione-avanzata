@@ -127,6 +127,11 @@ public class PrenotationController {
 		return "prenotations/list";
 	}
 	
+	@GetMapping("/delete/{prenotationId}")
+	public String jobofferdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
+		this.prenotationService.delete(prenotationId);
+		return "redirect:/prenotations/list";
+	}
 	
 	
 }
