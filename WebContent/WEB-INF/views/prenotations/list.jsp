@@ -71,7 +71,12 @@
         <c:url value="/prenotations/create" var="action_url2" />
             <form name='login' action=${action_url2} method='POST'>    
 
-              
+
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nome Evento</label>
+                <input type="text" class="form-control" name="nome_evento">
+              </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
                 <input type="text" class="form-control" name="quota">
