@@ -19,6 +19,7 @@ import univpm.advprog.aule.model.entities.User;
 import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,28 +77,34 @@ public class LoadDataTest {
 				Aula aula11 = aulaDao.create("D3", 140, 50, false);
 				Aula aula12 = aulaDao.create("A3", 140, 30, true);
 				
-				//Creazione utenti
-				User user1 = userDao.create("Mirko", "12345", true);
-				User user2 = userDao.create("Daniele", "12345", true);
-				User user3 = userDao.create("Fabio", "12345", true);
-				User user4 = userDao.create("Lorenzo", "12345", true);
-				User user5 = userDao.create("Alberto", "12345", true);
-				
-				Profile profile3 = profileDao.create("Fabio", "Morganti");
-				user3.setProfile(profile3);
-				
-				//Creazione ruoli
 				Role admin = roleDao.create("Admin");
-				Role utente = roleDao.create("User");
+				Role utente = roleDao.create("Student");
 				Set<Role> setRole = new HashSet();
 				setRole.add(admin);
 				setRole.add(utente);
 				
+				User user1 = userDao.create("Mirko", "12345", true, setRole);
+				User user2 = userDao.create("Daniele", "12345", true, setRole);
+				User user3 = userDao.create("Fabio", "12345", true, setRole);
+				User user4 = userDao.create("Lorenzo", "12345", true, setRole);
+				User user5 = userDao.create("Alberto", "12345", true, setRole);
+				
+				Profile profile3 = profileDao.create("Fabio", "Morganti");
+				user3.setProfile(profile3);
+				
+				session.getTransaction().commit();
+				
+				session.beginTransaction();
+
 				user1.setRoles(setRole);
 				user2.setRoles(setRole);
 				user3.setRoles(setRole);
 				user4.setRoles(setRole);
 				user5.setRoles(setRole);
+				
+				session.getTransaction().commit();
+				
+				session.beginTransaction();
 				
 				//Creazione prenotazioni
 				DateTime oraInizio1 = new DateTime(2020, 5, 2, 12, 0, 0);
@@ -131,27 +138,6 @@ public class LoadDataTest {
 				session.refresh(aula6);
 				
 				session.getTransaction().commit();
-				
-				//phase 2: test metodi Dao
-				session.beginTransaction();
-				
-				System.out.println("INIZIO TEST");
-				
-				DateTime testData1 = new DateTime(2020, 5, 2, 14, 0, 0);
-				DateTime testData2 = new DateTime(2020, 5, 2, 15, 0, 0);
-				List<Aula> aule = aulaDao.findAuleLibere(testData1, testData2, -1, -1, null);
-				
-				for(Aula a : aule) {
-					System.out.println(a.getQuota()+ "   "+a.getNome()+"   "+a.isPresentiPrese());
-				}
-				
-				System.out.println(aule.size());
-				
-				System.out.println("FINE TEST");
-				
-				
-				session.getTransaction().commit();
-				
 				
 				/*
 				// Prova stampa differenza tra oraFine e oraInizio

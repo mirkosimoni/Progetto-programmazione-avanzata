@@ -85,7 +85,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 
 	//Lista prenotazioni con date caratteristiche, a partire dall'ora in cui viene fatta la richiesta
 	@Override
-	public List<Prenotation> findPrenotations(String cognome, String nome, Aula aula) {
+	public List<Prenotation> findPrenotations(String cognome, String nome, String quota, String nomeAula) {
 		
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
@@ -96,19 +96,19 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		
 		if(cognome != null) {
 			predicates.add(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
-			System.out.println("Cognome != null");
 		}
 		if(nome != null) {
 			predicates.add(cb.equal(root.get("user").get("profile").get("nome"), nome));
-			System.out.println("Nome != null");
 		}
-		if(aula != null) {
-			predicates.add(cb.equal(root.get("aula"), aula));
-			System.out.println("Aula != null");
+		if(quota != null) {
+			predicates.add(cb.equal(root.get("aula").get("quota"), quota));
+		}
+		if(nomeAula != null) {
+			predicates.add(cb.equal(root.get("aula").get("nome"), nomeAula));
 		}
 		
-		DateTime now = DateTime.now();
-		predicates.add(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
+		//DateTime now = DateTime.now();
+		//predicates.add(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
 		
 		cr.where(predicates.toArray(new Predicate[]{}));
 		return this.getSession().createQuery(cr).getResultList();
@@ -117,10 +117,10 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 
 	//Lista delle prenotazioni con date caratteristiche e in una specifica data
 	@Override
-	public List<Prenotation> findPrenotationsData(String cognome, String nome, Aula aula, DateTime data) {
+	public List<Prenotation> findPrenotationsData(String cognome, String nome, String quota, String nomeAula, DateTime data) {
 		
 		if(data == null)
-			return this.findPrenotations(cognome, cognome, aula);
+			return this.findPrenotations(cognome, cognome, quota, nomeAula);
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
@@ -136,8 +136,10 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 			predicates.add(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
 		if(nome != null)
 			predicates.add(cb.equal(root.get("user").get("profile").get("nome"), nome));
-		if(aula != null)
-			predicates.add(cb.equal(root.get("aula"), aula));
+		if(quota != null) 
+			predicates.add(cb.equal(root.get("aula").get("quota"), quota));
+		if(nomeAula != null) 
+			predicates.add(cb.equal(root.get("aula").get("nome"), nomeAula));
 		
 		predicates.add(cb.between(root.get("oraInizio"), inizio, fine));
 		
@@ -147,17 +149,17 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 
 	//Lista delle prenotazioni con date caratteristiche in un determinato rage 
 	@Override
-	public List<Prenotation> findPrenotationsRange(String cognome, String nome, Aula aula, DateTime oraInizio,
+	public List<Prenotation> findPrenotationsRange(String cognome, String nome, String quota, String nomeAula, DateTime oraInizio,
 			DateTime oraFine) {
 		
 		if(oraFine == null)
-			return this.findPrenotationsData(cognome, nome, aula, oraInizio);
+			return this.findPrenotationsData(cognome, nome, quota, nomeAula, oraInizio);
 		
 		if(oraInizio.getYear() != oraFine.getYear() || oraInizio.getDayOfMonth() != oraFine.getDayOfMonth() || oraInizio.getMonthOfYear() != oraFine.getMonthOfYear()) {
-			this.findPrenotationsData(cognome, nome, aula, oraInizio);
+			this.findPrenotationsData(cognome, nome, quota, nomeAula, oraInizio);
 		}
 		
-		List<Prenotation> prenotazioniData = this.findPrenotationsData(nome, cognome, aula, oraInizio);
+		List<Prenotation> prenotazioniData = this.findPrenotationsData(nome, cognome, quota, nomeAula, oraInizio);
 		List<Prenotation> prenotazioniResult = new ArrayList<Prenotation>();
 		PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
 		
@@ -174,10 +176,10 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	}
 
 	@Override
-	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, Aula aula, DateTime dataOra) {
+	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, String quota, String nomeAula, DateTime dataOra) {
 		
 		if(dataOra == null)
-			return this.findPrenotations(cognome, cognome, aula);
+			return this.findPrenotations(cognome, cognome, quota, nomeAula);
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
@@ -192,8 +194,10 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 			predicates.add(cb.equal(root.get("user").get("profile").get("cognome"), cognome));
 		if(nome != null)
 			predicates.add(cb.equal(root.get("user").get("profile").get("nome"), nome));
-		if(aula != null)
-			predicates.add(cb.equal(root.get("aula"), aula));
+		if(quota != null) 
+			predicates.add(cb.equal(root.get("aula").get("quota"), quota));
+		if(nomeAula != null) 
+			predicates.add(cb.equal(root.get("aula").get("nome"), nomeAula));
 		
 		predicates.add(cb.between(root.get("oraInizio"), dataOra, fine));
 		

@@ -124,7 +124,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese) {
+	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {
 		
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Aula> cr = cb.createQuery(Aula.class);
@@ -135,6 +135,9 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 		if(quota > 0)
 			predicates.add(cb.equal(root.get("quota"), quota));
+		
+		if(nome != null)
+			predicates.add(cb.equal(root.get("nome"), nome));
 		
 		if(minimoPosti > 0)
 			predicates.add(cb.ge(root.get("numeroPosti"), minimoPosti));
@@ -150,9 +153,9 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, int minimoPosti, Boolean presentiPrese) {
+	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, String nome, int minimoPosti, Boolean presentiPrese) {
 		
-		List<Aula> aule = this.findAule(quota, minimoPosti, presentiPrese);
+		List<Aula> aule = this.findAule(quota, nome, minimoPosti, presentiPrese);
 		List<Aula> auleLibere = new ArrayList<Aula>();
 		PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
 		
@@ -178,7 +181,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		for(Aula a : aule){
 			boolean libera = true;
 			//Prenotazioni AulaData
-			List<Prenotation> prenotazioniAula = this.prenotationDao.findPrenotationsData(null, null, a, dummyPrenotation.getOraInizio());			
+			List<Prenotation> prenotazioniAula = this.prenotationDao.findPrenotationsData(null, null, String.valueOf(a.getQuota()) , a.getNome(), dummyPrenotation.getOraInizio());			
 			for(Prenotation p : prenotazioniAula) {
 				if(overlapFinder.areOverlapped(p, dummyPrenotation))
 					libera = false;

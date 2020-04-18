@@ -64,15 +64,15 @@ public class AulaServiceDefault implements AulaService {
 	}
 
 	@Override
-	public List<Aula> findAule(int quota, int minimoPosti, Boolean presentiPrese) {
-		return this.aulaRepository.findAule(quota, minimoPosti, presentiPrese);
+	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {
+		return this.aulaRepository.findAule(quota, nome, minimoPosti, presentiPrese);
 	}
 
 	@Override
-	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, int minimoPosti,
+	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, String nome, int minimoPosti,
 			Boolean presentiPrese) {
 		
-		return this.aulaRepository.findAuleLibere(oraInizio, oraFine, quota, minimoPosti, presentiPrese);
+		return this.aulaRepository.findAuleLibere(oraInizio, oraFine, quota, nome, minimoPosti, presentiPrese);
 	}
 
 

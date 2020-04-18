@@ -115,28 +115,28 @@ public class PrenotationServiceDefault implements PrenotationService {
 	}
 
 	@Override
-	public List<Prenotation> findPrenotations(String cognome, String nome, Aula aula) {
+	public List<Prenotation> findPrenotations(String cognome, String nome, String quota, String nomeAula) {
 		
-		return this.prenotationRepository.findPrenotations(cognome, nome, aula);
+		return this.prenotationRepository.findPrenotations(cognome, nome, quota, nomeAula);
 	}
 
 	@Override
-	public List<Prenotation> findPrenotationsData(String cognome, String nome, Aula aula, DateTime data) {
+	public List<Prenotation> findPrenotationsData(String cognome, String nome, String quota, String nomeAula, DateTime data) {
 		
-		return this.prenotationRepository.findPrenotationsData(cognome, nome, aula, data);
+		return this.prenotationRepository.findPrenotationsData(cognome, nome, quota, nomeAula, data);
 	}
 
 	@Override
-	public List<Prenotation> findPrenotationsRange(String cognome, String nome, Aula aula, DateTime oraInizio,
+	public List<Prenotation> findPrenotationsRange(String cognome, String nome, String quota, String nomeAula, DateTime oraInizio,
 			DateTime oraFine) {
 		
-		return this.prenotationRepository.findPrenotationsRange(cognome, nome, aula, oraInizio, oraFine);
+		return this.prenotationRepository.findPrenotationsRange(cognome, nome, quota, nomeAula, oraInizio, oraFine);
 	}
 
 	@Override
-	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, Aula aula, DateTime dataOra) {
+	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, String quota, String nomeAula, DateTime dataOra) {
 		
-		return this.prenotationRepository.findPrenotationsDataOra(cognome, nome, aula, dataOra);
+		return this.prenotationRepository.findPrenotationsDataOra(cognome, nome, quota, nomeAula, dataOra);
 	}
 
 }
