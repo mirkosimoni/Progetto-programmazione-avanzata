@@ -45,8 +45,102 @@
 </div>
 
 
+
+
+
+
+
 <!-- Button trigger modal -->
-<div class="col-12 col-md-2" style="text-align: center; margin-bottom: 2em;">
+<div class="col-12 col-md-1" style="text-align: center; margin-bottom: 2em;">
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate">
+    <i class="fas fa-plus-circle"></i> Crea
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style= "background-color: #696969; color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Creazione Prenotazione</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <c:url value="/prenotations/create" var="action_url2" />
+            <form name='login' action=${action_url2} method='POST'>    
+
+              
+              <div class="form-group">
+                <label for="exampleInputEmail1">Quota</label>
+                <input type="text" class="form-control" name="quota">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Aula</label>
+                <input type="text" class="form-control" name="aula">
+              </div>
+              <div class="form-group">
+    			<label for="exampleInputEmail1">Giorno</label>
+    			<input type="Date" class="form-control" name="data">
+  			  </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Ora Inizio</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="ora_inizio">
+                  <option selected>Scegli</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:30">18:30</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect02">Ora Fine</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect02" name="ora_fine">
+                  <option selected>Scegli</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:30">18:30</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-danger" role="button" aria-pressed="true"><i class="fas fa-plus-circle"></i> Crea </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Button trigger modal -->
+<div class="col-12 col-md-1" style="text-align: center; margin-bottom: 2em;">
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch">
     <i class="fas fa-search"></i> Cerca
   </button>
@@ -132,6 +226,9 @@
     </div>
   
   </div>
+
+
+
 
   <div class="row">
     <div class="col-md-10 col-0"></div>

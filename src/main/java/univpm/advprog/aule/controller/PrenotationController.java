@@ -127,6 +127,25 @@ public class PrenotationController {
 		return "prenotations/list";
 	}
 	
+	
+	@PostMapping(value = "/create")
+	public String create(@RequestParam(value = "prof_surname", required=false) String surname, 
+						@RequestParam(value = "prof_name", required=false) String name,
+						@RequestParam(value = "quota", required=false) String quota,
+						@RequestParam(value = "aula", required=false) String aula,
+						@RequestParam(value = "data", required=false) String data,
+						@RequestParam(value = "ora_inizio", required=false) String oraInizio,
+						@RequestParam(value = "ora_fine", required=false) String oraFine,
+						@RequestParam(value = "error", required = false) String error, 
+						Model uiModel) {
+		
+		
+		return "prenotations/list";
+	}
+	
+	
+	
+	
 	@GetMapping("/delete/{prenotationId}")
 	public String jobofferdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
 		this.prenotationService.delete(prenotationId);
