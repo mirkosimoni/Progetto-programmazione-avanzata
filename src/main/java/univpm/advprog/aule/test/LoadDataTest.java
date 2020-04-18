@@ -19,6 +19,7 @@ import univpm.advprog.aule.model.entities.User;
 import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,7 +88,6 @@ public class LoadDataTest {
 				User user3 = userDao.create("Fabio", "12345", true, setRole);
 				User user4 = userDao.create("Lorenzo", "12345", true, setRole);
 				User user5 = userDao.create("Alberto", "12345", true, setRole);
-				
 				
 				Profile profile3 = profileDao.create("Fabio", "Morganti");
 				user3.setProfile(profile3);
