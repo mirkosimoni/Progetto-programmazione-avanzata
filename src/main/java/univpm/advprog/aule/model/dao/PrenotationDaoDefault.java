@@ -107,8 +107,8 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 			predicates.add(cb.equal(root.get("aula").get("nome"), nomeAula));
 		}
 		
-		DateTime now = DateTime.now();
-		predicates.add(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
+		//DateTime now = DateTime.now();
+		//predicates.add(cb.greaterThanOrEqualTo(root.get("oraInizio"), now));
 		
 		cr.where(predicates.toArray(new Predicate[]{}));
 		return this.getSession().createQuery(cr).getResultList();

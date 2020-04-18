@@ -121,20 +121,8 @@ public class PrenotationController {
 				dt_fine = formatter.parseDateTime(data_orafine);
 				System.out.println(dt_fine.toString());
 			}
-			int quota_int = -1;
-			if(quota != null) {
-				quota_int = Integer.parseInt(quota);
-			}
-			List<Aula> aule = this.aulaService.findAule(quota_int, nome_aula, -1, null);
-			Aula aula = new Aula();
-			if(aule.size() == 0) {
-				aula = null;
-			} else {
-				aula = aule.get(0);
-			}
-			System.out.println(aule.size());
-			
-			List<Prenotation> prenotations = this.prenotationService.findPrenotationsRange(surname, name, aula, dt_inizio, dt_fine);
+	
+			List<Prenotation> prenotations = this.prenotationService.findPrenotationsRange(surname, name, quota, nome_aula, dt_inizio, dt_fine);
 			System.out.println("prenotations size");
 			System.out.println(prenotations.size());
 			uiModel.addAttribute("prenotations",prenotations);
@@ -143,23 +131,22 @@ public class PrenotationController {
 		if(!data.equals("") && (oraInizio.equals("Scegli") && oraFine.equals("Scegli"))) {
 			String data_0 = data + ' ' + "00:00";
 			DateTime data_datetime = formatter.parseDateTime(data_0);
-			int quota_int = Integer.parseInt(quota);
-			List<Aula> aule = this.aulaService.findAule(quota_int, nome_aula, -1, null);
-			Aula aula = new Aula();
-			if(aule.size() == 0) {
-				aula = null;
-			} else {
-				aula = aule.get(0);
-			}
-			List<Prenotation> prenotations = this.prenotationService.findPrenotationsData(surname, name, aula, data_datetime);
+			List<Prenotation> prenotations = this.prenotationService.findPrenotationsData(surname, name, quota, nome_aula, data_datetime);
 			uiModel.addAttribute("prenotations",prenotations);
 		}
 		
-		if(data.equals("") && (!oraInizio.equals("Scegli") || !oraFine.equals("Scegli"))) {
-			error = "Scegliere un giorno nel calendario se si desidera effettuare una ricerca per fascia oraria";
-			List<Prenotation> allPrenotations = prenotationService.findAll();
-			uiModel.addAttribute("prenotations", allPrenotations);
+		
+		if(data.equals("")) {
+			List <Prenotation> prenotations = this.prenotationService.findPrenotations(surname, name, quota, nome_aula);
+			uiModel.addAttribute("prenotations", prenotations);
 		}
+		
+		
+		//if(data.equals("") && (!oraInizio.equals("Scegli") || !oraFine.equals("Scegli"))) {
+		//	error = "Scegliere un giorno nel calendario se si desidera effettuare una ricerca per fascia oraria";
+		//	List<Prenotation> allPrenotations = prenotationService.findAll();
+		//	uiModel.addAttribute("prenotations", allPrenotations);
+		//}
 		
 		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
