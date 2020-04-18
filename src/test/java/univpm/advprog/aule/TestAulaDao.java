@@ -132,22 +132,22 @@ public class TestAulaDao {
 			
 			s.beginTransaction();
 			
-			List<Aula> l1 = aulaDao.findAule(150, -1, null);
+			List<Aula> l1 = aulaDao.findAule(150, null, -1, null);
 			assertEquals(l1.size(), 3);
 			
-			l1 = aulaDao.findAule(150, -1, true);
+			l1 = aulaDao.findAule(150, null, -1, true);
 			assertEquals(l1.size(), 2);
 			
-			l1 = aulaDao.findAule(-1, 15, true);
+			l1 = aulaDao.findAule(-1, null, 15, true);
 			assertEquals(l1.size(), 3);
 			
-			l1 = aulaDao.findAule(150, 15, null);
+			l1 = aulaDao.findAule(150, null, 15, null);
 			assertEquals(l1.size(), 2);
 			
-			l1 = aulaDao.findAule(-1, -1, true);
+			l1 = aulaDao.findAule(-1, null, -1, true);
 			assertEquals(l1.size(), 4);
 			
-			l1 = aulaDao.findAule(150, 10, true);
+			l1 = aulaDao.findAule(150, null, 10, true);
 			assertEquals(l1.size(), 2);
 			
 			s.getTransaction().commit();
@@ -211,20 +211,20 @@ public class TestAulaDao {
 			s.beginTransaction();
 			
 			DateTime inizio = new DateTime(2020, 7, 1, 10, 0, 0);
-			List<Aula> auleLibere = aulaDao.findAuleLibere(inizio, null, -1, -1, null);
+			List<Aula> auleLibere = aulaDao.findAuleLibere(inizio, null, -1, null, -1, null);
 			assertEquals(auleLibere.size(), 1);
 			
 			inizio = new DateTime(2020, 7, 1, 13, 0, 0);
-			auleLibere = aulaDao.findAuleLibere(inizio, null, -1, -1, null);
+			auleLibere = aulaDao.findAuleLibere(inizio, null, -1, null, -1, null);
 			assertEquals(auleLibere.size(), 2);
 			
 			DateTime fine = new DateTime(2020, 7, 1, 16, 0, 0);
-			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, -1, null);
+			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, null, -1, null);
 			assertEquals(auleLibere.size(), 0);
 			
 			inizio = new DateTime(2020, 7, 1, 9, 0, 0);
 			fine = new DateTime(2020, 7, 1, 15, 0, 0);
-			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, -1, null);
+			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, null, -1, null);
 			assertEquals(auleLibere.size(), 1);
 			
 			s.getTransaction().commit();

@@ -147,30 +147,33 @@ public class TestPrenotationDao {
 			prenotazioni = prenotationDao.findByDate(inizio1);
 			assertEquals(prenotazioni.size(), 3);
 			
-			prenotazioni = prenotationDao.findPrenotations(null, null, aula1);
+			prenotazioni = prenotationDao.findPrenotations(null, null, null, aula1.getNome());
 			assertEquals(prenotazioni.size(), 2);
 			
-			prenotazioni = prenotationDao.findPrenotations("Cognome1", null, null);
+			prenotazioni = prenotationDao.findPrenotations(null, null, String.valueOf(aula1.getQuota()), null);
+			assertEquals(prenotazioni.size(), 4);
+			
+			prenotazioni = prenotationDao.findPrenotations("Cognome1", null, null, null);
 			assertEquals(prenotazioni.size(), 3);
 			
-			prenotazioni = prenotationDao.findPrenotations(null, "Nome1", null);
+			prenotazioni = prenotationDao.findPrenotations(null, "Nome1", null, null);
 			assertEquals(prenotazioni.size(), 3);
 			
-			prenotazioni = prenotationDao.findPrenotations("Cognome2", null, null);
+			prenotazioni = prenotationDao.findPrenotations("Cognome2", null, null, null);
 			assertEquals(prenotazioni.size(), 1);
 			
-			prenotazioni = prenotationDao.findPrenotations(null, "Nome2", null);
+			prenotazioni = prenotationDao.findPrenotations(null, "Nome2", null, null);
 			assertEquals(prenotazioni.size(), 1);
 			
-			prenotazioni = prenotationDao.findPrenotationsData(null, null, null, inizio3);
+			prenotazioni = prenotationDao.findPrenotationsData(null, null, null, null, inizio3);
 			assertEquals(prenotazioni.size(), 1);
 			
-			prenotazioni = prenotationDao.findPrenotationsDataOra(null, null, null, inizio1);
+			prenotazioni = prenotationDao.findPrenotationsDataOra(null, null, null, null, inizio1);
 			assertEquals(prenotazioni.size(), 3);
 			
 			DateTime range1 = new DateTime(2020, 7, 1, 11, 0, 0);
 			DateTime range2 = new DateTime(2020, 7, 1, 13, 0, 0);
-			prenotazioni = prenotationDao.findPrenotationsRange(null, null, null, range1, range2);
+			prenotazioni = prenotationDao.findPrenotationsRange(null, null, null, null, range1, range2);
 			assertEquals(prenotazioni.size(), 2);
 			
 			s.getTransaction().commit();
