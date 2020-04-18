@@ -11,4 +11,6 @@ import univpm.advprog.aule.model.entities.User;;
 public interface MyProfileService {
 
 	public Profile create(String nome, String cognome);
+	
+	public User findByUsername(String username);
 }

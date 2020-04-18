@@ -1,5 +1,6 @@
 package univpm.advprog.aule.controller;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
 import univpm.advprog.aule.services.AulaService;
+import univpm.advprog.aule.services.MyProfileService;
 import univpm.advprog.aule.services.PrenotationService;
 import univpm.advprog.aule.services.PrenotationServiceDefault;
 
@@ -34,6 +38,8 @@ public class PrenotationController {
 	
 	private PrenotationService prenotationService;
 	private AulaService aulaService;
+	private MyProfileService profileService;
+	
 	
 	@Autowired
 	public void setPrenotationService(PrenotationService prenotationService) {
@@ -43,6 +49,11 @@ public class PrenotationController {
 	@Autowired
 	public void setAulaService(AulaService aulaService) {
 		this.aulaService = aulaService;
+	}
+	
+	@Autowired
+	public void setProfileRepository(MyProfileService userRepository) {
+		this.profileService = userRepository;
 	}
 	
 	
@@ -167,6 +178,11 @@ public class PrenotationController {
 						Model uiModel) {
 		
 		
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		uiModel.addAttribute("variabile_view", auth.getName());
+		User user = this.profileService.findByUsername(auth.getName());
+		System.out.println(user);
 		return "prenotations/list";
 	}
 	

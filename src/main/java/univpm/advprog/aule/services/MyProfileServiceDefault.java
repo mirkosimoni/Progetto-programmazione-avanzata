@@ -26,6 +26,10 @@ public class MyProfileServiceDefault implements MyProfileService {
 	ProfileDao profilerepository;
 	UserDao userRepository;
 	
+	@Autowired
+	public void setProfileRepository(UserDao userRepository) {
+		this.userRepository = userRepository;
+	}
 	
 	@Override
 	public Profile create(String nome, String cognome) {
@@ -33,5 +37,9 @@ public class MyProfileServiceDefault implements MyProfileService {
 		return profilerepository.create(nome, cognome);
 	}
 	
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findUserByUsername(username);
+	}
 
 }
