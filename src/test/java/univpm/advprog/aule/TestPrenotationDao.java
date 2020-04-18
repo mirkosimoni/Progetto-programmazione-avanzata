@@ -57,7 +57,7 @@ public class TestPrenotationDao {
 			setRole.add(admin);
 			setRole.add(utente);
 			Profile profile1 = profileDao.create("Nome1", "Cognome1");
-			User user1 = userDao.create("username1", "12345", true);
+			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
 				
@@ -105,7 +105,7 @@ public class TestPrenotationDao {
 			setRole.add(admin);
 			setRole.add(utente);
 			Profile profile1 = profileDao.create("Nome1", "Cognome1");
-			User user1 = userDao.create("username1", "12345", true);
+			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
 				
@@ -193,7 +193,7 @@ public class TestPrenotationDao {
 			setRole.add(admin);
 			setRole.add(utente);
 			Profile profile1 = profileDao.create("Nome1", "Cognome1");
-			User user1 = userDao.create("username1", "12345", true);
+			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
 				
@@ -268,7 +268,7 @@ public class TestPrenotationDao {
 			setRole.add(admin);
 			setRole.add(utente);
 			Profile profile1 = profileDao.create("Nome1", "Cognome1");
-			User user1 = userDao.create("username1", "12345", true);
+			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
 				

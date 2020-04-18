@@ -1,10 +1,13 @@
 package univpm.advprog.aule.model.dao;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import univpm.advprog.aule.model.entities.Role;
 import univpm.advprog.aule.model.entities.User;
 
 @Transactional
@@ -20,11 +23,12 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 	}
 
 	@Override
-	public User create(String username, String password, boolean isEnabled) {
+	public User create(String username, String password, boolean isEnabled, Set<Role> roles) {
 		User u = new User();
 		u.setUsername(username);
 		u.setPassword(this.encryptPassword(password));
 		u.setEnabled(isEnabled);
+		u.setRoles(roles);
 		this.getSession().save(u);
 		
 		return u;
