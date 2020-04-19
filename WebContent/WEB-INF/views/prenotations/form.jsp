@@ -102,7 +102,12 @@
             success : function(data) {
             	console.log("Data: "+data);
             	alert(data);
-                $("#ciao").css("background-color", "red");
+            	if(data == "false") {
+                	$("#ciao").css("background-color", "red");
+            	}
+            	if(data == "true") {
+                	$("#ciao").css("background-color", "green");
+            	}
             },
             error: function(e) {console.log(e);}
         });
