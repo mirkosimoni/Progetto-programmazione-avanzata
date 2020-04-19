@@ -36,8 +36,8 @@
       <td>${formatter.format(p.oraInizio.toDate())}</td>
       <td>${formatter.format(p.oraFine.toDate())}</td>
       <td>${p.note}</td>
-      <td><i class="far fa-hand-paper"> </i></td>
-      <td><a href="<c:url value="/prenotations/delete/${p.id}"/>"><i class="fas fa-trash"></i></a></td>
+      <td><a href="<c:url value="/prenotations/${p.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
+      <td><a href="<c:url value="/prenotations/delete/${p.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
     </tr>
     </c:forEach>
   </tbody>
@@ -47,15 +47,16 @@
 
 
 
-
-
-
 <!-- Button trigger modal -->
-<div class="col-12 col-md-1" style="text-align: center; margin-bottom: 2em;">
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate">
+<div class="col-12 col-md-1" style="text-align: center; margin-bottom: 1em;">
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-plus-circle"></i> Crea
   </button>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch" style="width: 6em; margin-bottom: 1em;">
+    <i class="fas fa-search"></i> Cerca
+  </button>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -69,7 +70,7 @@
       </div>
       <div class="modal-body">
         <c:url value="/prenotations/create" var="action_url2" />
-            <form name='login' action=${action_url2} method='POST'>    
+            <form name='login' action="${action_url2}" method='POST'>    
 
 
 
@@ -136,21 +137,6 @@
 
 
 
-
-
-
-
-
-
-
-
-<!-- Button trigger modal -->
-<div class="col-12 col-md-1" style="text-align: center; margin-bottom: 2em;">
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch">
-    <i class="fas fa-search"></i> Cerca
-  </button>
-</div>
-
 <!-- Modal -->
 <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -163,7 +149,7 @@
       </div>
       <div class="modal-body">
         <c:url value="/prenotations/search" var="action_url" />
-            <form name='login' action=${action_url} method='POST'>    
+            <form name='login' action="${action_url}" method='POST'>    
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Cognome Professore</label>
@@ -182,9 +168,9 @@
                 <input type="text" class="form-control" name="aula">
               </div>
               <div class="form-group">
-    			<label for="exampleInputEmail1">Giorno</label>
-    			<input type="Date" class="form-control" name="data">
-  			  </div>
+    			     <label for="exampleInputEmail1">Giorno</label>
+    			     <input type="Date" class="form-control" name="data">
+  			      </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Ora Inizio</label>
@@ -231,7 +217,6 @@
     </div>
   
   </div>
-
 
 
 

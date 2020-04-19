@@ -1,6 +1,7 @@
 package univpm.advprog.aule.controller;
 
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
@@ -194,6 +196,57 @@ public class PrenotationController {
 		this.prenotationService.delete(prenotationId);
 		return "redirect:/prenotations/list";
 	}
+	
+	
+	@GetMapping("/{prenotationId}/edit")
+	public String edit(@PathVariable("prenotationId") Long prenotationId, Model uiModel) {
+		SimpleDateFormat formatter_ora = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat formatter_giorno = new SimpleDateFormat("yyyy-MM-dd");
+		Prenotation p = this.prenotationService.findById(prenotationId);
+		uiModel.addAttribute("prenot", p);
+		uiModel.addAttribute("formatter_ora", formatter_ora);
+		uiModel.addAttribute("formatter_giorno", formatter_giorno);
+		return "prenotations/form";
+	}
+	
+	
+	@PostMapping(value = "/save")
+	public String save(@RequestParam(value = "nome_evento", required=false) String nome_evento, 
+						@RequestParam(value = "note", required=false) String note,
+						@RequestParam(value = "quota", required=false) String quota,
+						@RequestParam(value = "aula", required=false) String aula_nome,
+						@RequestParam(value = "data", required=false) String data,
+						@RequestParam(value = "ora_inizio", required=false) String oraInizio,
+						@RequestParam(value = "ora_fine", required=false) String oraFine,
+						@RequestParam(value = "error", required = false) String error, 
+						Model uiModel) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = this.profileService.findByUsername(auth.getName());
+		System.out.println(user);
+		
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+		String data_orainizio = data + ' ' + oraInizio;
+		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+		String data_orafine = data + ' ' + oraFine;
+		DateTime dt_fine = formatter.parseDateTime(data_orafine);
+		
+		int quota_int = Integer.parseInt(quota);
+		Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
+		
+		Prenotation p = new Prenotation();
+		p.setUser(user);
+		p.setNomeEvento(nome_evento);
+		p.setNote(note);
+		p.setOraInizio(dt_inizio);
+		p.setOraFine(dt_fine);
+		p.setAula(aula);
+		
+		this.prenotationService.update(p);
+		
+		return "prenotations/list";
+	}
+	
 	
 	
 }
