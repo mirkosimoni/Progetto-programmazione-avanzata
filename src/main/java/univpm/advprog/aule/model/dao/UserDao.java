@@ -1,5 +1,6 @@
 package univpm.advprog.aule.model.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -12,6 +13,7 @@ public interface UserDao {
 	Session getSession();
 	public void setSession(Session session);
 
+	List<User> findAll();
 	
 	User findUserByUsername(String username);
 	
