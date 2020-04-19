@@ -210,8 +210,9 @@ public class PrenotationController {
 	}
 	
 	
-	@PostMapping(value = "/save")
-	public String save(@RequestParam(value = "nome_evento", required=false) String nome_evento, 
+	@PostMapping(value = "/save/{prenotationId}")
+	public String save(	@PathVariable("prenotationId") Long prenotationId,
+						@RequestParam(value = "nome_evento", required=false) String nome_evento, 
 						@RequestParam(value = "note", required=false) String note,
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "aula", required=false) String aula_nome,
@@ -234,7 +235,7 @@ public class PrenotationController {
 		int quota_int = Integer.parseInt(quota);
 		Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
 		
-		Prenotation p = new Prenotation();
+		Prenotation p = this.prenotationService.findById(prenotationId);
 		p.setUser(user);
 		p.setNomeEvento(nome_evento);
 		p.setNote(note);
@@ -244,7 +245,7 @@ public class PrenotationController {
 		
 		this.prenotationService.update(p);
 		
-		return "prenotations/list";
+		return "redirect:/prenotations/list";
 	}
 	
 	

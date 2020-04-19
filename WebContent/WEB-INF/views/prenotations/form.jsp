@@ -4,7 +4,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <body style="background-color: rgb(52,58,64);">
-	<c:url value="/prenotations/save" var="action_url" />
+	<c:url value="/prenotations/save/${prenot.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
 			<form name='edit' action="${action_url}" method='POST'>    
