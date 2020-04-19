@@ -6,4 +6,7 @@
   <definition extends="default" name="prenotations/list">
    	<put-attribute name="body" value="/WEB-INF/views/prenotations/list.jsp" />
   </definition>
+  <definition extends="default" name="prenotations/form">
+   	<put-attribute name="body" value="/WEB-INF/views/prenotations/form.jsp" />
+  </definition>
 </tiles-definitions>
