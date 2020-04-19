@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -187,10 +188,12 @@ public class TestAulaDao {
 			setRole.add(admin);
 			setRole.add(utente);
 			
-			Profile profile1 = profileDao.create("Nome1", "Cognome1");
+			Profile profile1 = new Profile(); 
+			profile1.setCognome("Simoni"); profile1.setNome("Mirko"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
+			profile1 = profileDao.create(profile1);
 			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
-			user1.setRoles(setRole);
+			userDao.update(user1);
 			s.getTransaction().commit();
 			
 			//Creazione prenotazioni

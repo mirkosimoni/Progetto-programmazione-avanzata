@@ -41,12 +41,9 @@ public class ProfileDaoDefault extends DefaultDao implements ProfileDao  {
 		}
 
 		@Override
-		public Profile create(String nome, String cognome) {
-			Profile pr = new Profile();
-			pr.setNome(nome);
-			pr.setCognome(cognome);
-			this.getSession().save(pr);
-			return pr;
+		public Profile create(Profile profile) {
+			this.getSession().save(profile);
+			return profile;
 		}
 
 	

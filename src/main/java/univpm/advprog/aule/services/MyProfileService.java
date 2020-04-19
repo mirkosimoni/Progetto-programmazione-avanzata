@@ -10,7 +10,7 @@ import univpm.advprog.aule.model.entities.User;;
 
 public interface MyProfileService {
 
-	public Profile create(String nome, String cognome);
+	public Profile create(Profile profile);
 	
 	public User findByUsername(String username);
 }

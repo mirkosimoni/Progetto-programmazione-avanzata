@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,10 +57,13 @@ public class TestPrenotationDao {
 			Set<Role> setRole = new HashSet();
 			setRole.add(admin);
 			setRole.add(utente);
-			Profile profile1 = profileDao.create("Nome1", "Cognome1");
+			Profile profile1 = new Profile(); 
+			profile1.setCognome("Simoni"); profile1.setNome("Mirko"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
+			profile1 = profileDao.create(profile1);
 			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
+			userDao.update(user1);
 				
 			//Creazione aula
 			Aula aula = aulaDao.create("D1", 155, 20, true);
@@ -105,15 +109,21 @@ public class TestPrenotationDao {
 			setRole.add(admin);
 			setRole.add(utente);
 			
-			Profile profile1 = profileDao.create("Nome1", "Cognome1");
+			Profile profile1 = new Profile(); 
+			profile1.setCognome("Cognome1"); profile1.setNome("Nome1"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
+			profile1 = profileDao.create(profile1);
 			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
+			userDao.update(user1);
 			
-			Profile profile2 = profileDao.create("Nome2", "Cognome2");
+			Profile profile2 = new Profile(); 
+			profile2.setCognome("Cognome2"); profile2.setNome("Nome2"); profile2.setDataNascita(LocalDate.of(1990, 1, 1));
+			profile2 = profileDao.create(profile2);
 			User user2 = userDao.create("username2", "12345", true, setRole);
 			user2.setProfile(profile2);
 			user2.setRoles(setRole);
+			userDao.update(user2);
 				
 			//Creazione aula
 			Aula aula1 = aulaDao.create("D1", 155, 20, true);
@@ -146,6 +156,12 @@ public class TestPrenotationDao {
 			
 			prenotazioni = prenotationDao.findByDate(inizio1);
 			assertEquals(prenotazioni.size(), 3);
+			
+			prenotazioni = prenotationDao.findByUser(user1);
+			assertEquals(prenotazioni.size(), 3);
+			
+			for(Prenotation p: prenotazioni)
+				System.out.println(p.getOraInizio());
 			
 			prenotazioni = prenotationDao.findPrenotations(null, null, null, aula1.getNome());
 			assertEquals(prenotazioni.size(), 2);
@@ -207,7 +223,9 @@ public class TestPrenotationDao {
 			Set<Role> setRole = new HashSet();
 			setRole.add(admin);
 			setRole.add(utente);
-			Profile profile1 = profileDao.create("Nome1", "Cognome1");
+			Profile profile1 = new Profile(); 
+			profile1.setCognome("Simoni"); profile1.setNome("Mirko"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
+			profile1 = profileDao.create(profile1);
 			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
@@ -282,7 +300,9 @@ public class TestPrenotationDao {
 			Set<Role> setRole = new HashSet();
 			setRole.add(admin);
 			setRole.add(utente);
-			Profile profile1 = profileDao.create("Nome1", "Cognome1");
+			Profile profile1 = new Profile(); 
+			profile1.setCognome("Simoni"); profile1.setNome("Mirko"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
+			profile1 = profileDao.create(profile1);
 			User user1 = userDao.create("username1", "12345", true, setRole);
 			user1.setProfile(profile1);
 			user1.setRoles(setRole);
@@ -310,27 +330,5 @@ public class TestPrenotationDao {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

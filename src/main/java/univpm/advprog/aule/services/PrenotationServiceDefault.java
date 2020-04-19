@@ -37,7 +37,10 @@ public class PrenotationServiceDefault implements PrenotationService {
 	public List<Prenotation> findByAula(Aula aula) {
 		return  this.prenotationRepository.findByAula(aula);
 	}
-
+	
+	public List<Prenotation> findByUser(User user){
+		return this.prenotationRepository.findByUser(user);
+	}
 
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
@@ -51,7 +54,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 		if(oraInizio.isAfter(oraFine))
 			return null;
 		
-		List<Prenotation> prenotazioniData = this.prenotationRepository.findByDate(oraInizio);
+		List<Prenotation> prenotazioniData = this.prenotationRepository.findPrenotationsData(null, null, String.valueOf(aula.getQuota()), aula.getNome(), oraInizio);
 		boolean overlapped = false;
 		
 		Prenotation prenotation = new Prenotation();
@@ -84,7 +87,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 		if(prenotation.getOraInizio().isAfter(prenotation.getOraFine()))
 			return null;
 		
-		List<Prenotation> prenotazioniData = this.prenotationRepository.findByDate(prenotation.getOraInizio());
+		List<Prenotation> prenotazioniData = this.prenotationRepository.findPrenotationsData(null, null, String.valueOf(prenotation.getAula().getQuota()), prenotation.getAula().getNome(), prenotation.getOraInizio());
 		boolean overlapped = false;
 		
 		for(Prenotation p : prenotazioniData) {

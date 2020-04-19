@@ -67,9 +67,15 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	//Tutte le prenotazioni per quell'aula, ordinate cronologicamente
 	@Override
 	public List<Prenotation> findByAula(Aula aula) {
-		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula ORDER BY p.oraInizio", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula ORDER BY p.oraInizio DESC", Prenotation.class).
 				setParameter("aula", aula).getResultList();
 				
+	}
+	
+	@Override
+	public List<Prenotation> findByUser(User user){
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.user WHERE p.user= :user ORDER BY p.oraInizio DESC", Prenotation.class).
+				setParameter("user", user).getResultList();
 	}
 	
 	//Tutte le prenotazioni in una data, ordinate cronologicamente

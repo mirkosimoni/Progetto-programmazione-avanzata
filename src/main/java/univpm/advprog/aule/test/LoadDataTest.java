@@ -89,22 +89,37 @@ public class LoadDataTest {
 				User user4 = userDao.create("Lorenzo", "12345", true, setRole);
 				User user5 = userDao.create("Alberto", "12345", true, setRole);
 				
-				Profile profile1 = profileDao.create("Mirko", "Simoni");
+				
+				Profile profile1 = new Profile(); 
+				profile1.setCognome("Simoni"); profile1.setNome("Mirko"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
+				profile1 = profileDao.create(profile1);
 				user1.setProfile(profile1);
 				userDao.update(user1);
-				Profile profile2 = profileDao.create("Daniele", "Delli Rocili");
+				
+				Profile profile2 = new Profile(); 
+				profile2.setCognome("Delli Rocili"); profile2.setNome("Daniele"); profile2.setDataNascita(LocalDate.of(1990, 1, 1));
+				profile2 = profileDao.create(profile2);
 				user2.setProfile(profile2);
 				userDao.update(user2);
-				Profile profile3 = profileDao.create("Fabio", "Morganti");
+				
+				Profile profile3 = new Profile(); 
+				profile3.setCognome("Morganti"); profile3.setNome("Fabio"); profile3.setDataNascita(LocalDate.of(1990, 1, 1));
+				profile3 = profileDao.create(profile3);
 				user3.setProfile(profile3);
 				userDao.update(user3);
-				Profile profile4 = profileDao.create("Lorenzo", "Medici");
+				
+				Profile profile4 = new Profile(); 
+				profile4.setCognome("Medici"); profile4.setNome("Lorenzo"); profile4.setDataNascita(LocalDate.of(1990, 1, 1));
+				profile4 = profileDao.create(profile4);
 				user4.setProfile(profile4);
 				userDao.update(user4);
-				Profile profile5 = profileDao.create("Alberto", "Pierini");
+				
+				Profile profile5 = new Profile(); 
+				profile5.setCognome("Pierini"); profile5.setNome("Alberto"); profile5.setDataNascita(LocalDate.of(1990, 1, 1));
+				profile5 = profileDao.create(profile5);
 				user5.setProfile(profile5);
 				userDao.update(user5);
-				
+
 				session.getTransaction().commit();
 				
 				session.beginTransaction();

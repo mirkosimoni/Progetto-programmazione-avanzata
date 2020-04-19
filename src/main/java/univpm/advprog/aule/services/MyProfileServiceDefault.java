@@ -32,9 +32,9 @@ public class MyProfileServiceDefault implements MyProfileService {
 	}
 	
 	@Override
-	public Profile create(String nome, String cognome) {
+	public Profile create(Profile profilo) {
 		
-		return profilerepository.create(nome, cognome);
+		return profilerepository.create(profilo);
 	}
 	
 	@Override
