@@ -6,9 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.google.gson.Gson;
 
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
@@ -264,7 +268,9 @@ public class PrenotationController {
 	
 	@PostMapping(value= "/ajaxtest", headers = "Accept=*/*",produces = "application/text", consumes="application/json")
     public @ResponseBody String validate(@RequestBody String oggetto) {
- 
+		Gson gson = new Gson();  
+		AjaxObject obj = gson.fromJson(oggetto, AjaxObject.class); 
+		System.out.println(obj.nome_evento);
         return "ciao";
     }
 	
