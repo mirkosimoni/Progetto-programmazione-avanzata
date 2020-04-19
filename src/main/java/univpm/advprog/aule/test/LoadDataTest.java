@@ -89,18 +89,21 @@ public class LoadDataTest {
 				User user4 = userDao.create("Lorenzo", "12345", true, setRole);
 				User user5 = userDao.create("Alberto", "12345", true, setRole);
 				
+				Profile profile1 = profileDao.create("Mirko", "Simoni");
+				user1.setProfile(profile1);
+				userDao.update(user1);
+				Profile profile2 = profileDao.create("Daniele", "Delli Rocili");
+				user2.setProfile(profile2);
+				userDao.update(user2);
 				Profile profile3 = profileDao.create("Fabio", "Morganti");
 				user3.setProfile(profile3);
-				
-				session.getTransaction().commit();
-				
-				session.beginTransaction();
-
-				user1.setRoles(setRole);
-				user2.setRoles(setRole);
-				user3.setRoles(setRole);
-				user4.setRoles(setRole);
-				user5.setRoles(setRole);
+				userDao.update(user3);
+				Profile profile4 = profileDao.create("Lorenzo", "Medici");
+				user4.setProfile(profile4);
+				userDao.update(user4);
+				Profile profile5 = profileDao.create("Alberto", "Pierini");
+				user5.setProfile(profile5);
+				userDao.update(user5);
 				
 				session.getTransaction().commit();
 				
