@@ -59,54 +59,54 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Ora Inizio</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01" name="ora_inizio">
+                <select class="custom-select" id="inputGroupSelect01" name="oraInizio">
                   <option selected>Scegli</option>
-                  <option value="1">08:30</option>
-                  <option value="2">09:30</option>
-                  <option value="3">10:30</option>
-                  <option value="3">11:30</option>
-                  <option value="3">12:30</option>
-                  <option value="3">13:30</option>
-                  <option value="3">14:30</option>
-                  <option value="3">15:30</option>
-                  <option value="3">16:30</option>
-                  <option value="3">17:30</option>
-                  <option value="3">18:30</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:30">18:30</option>
                 </select>
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect02">Ora Fine</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect02" name="ora_fine">
+                <select class="custom-select" id="inputGroupSelect02" name="oraFine">
                   <option selected>Scegli</option>
-                  <option value="1">08:30</option>
-                  <option value="2">09:30</option>
-                  <option value="3">10:30</option>
-                  <option value="3">11:30</option>
-                  <option value="3">12:30</option>
-                  <option value="3">13:30</option>
-                  <option value="3">14:30</option>
-                  <option value="3">15:30</option>
-                  <option value="3">16:30</option>
-                  <option value="3">17:30</option>
-                  <option value="3">18:30</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:30">18:30</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
-                <input type="Text" class="form-control" name="prof_surname">
+                <input type="Text" class="form-control" name="quota">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>
-                <input type="Text" class="form-control" name="prof_surname">
+                <input type="Text" class="form-control" name="nome">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Numero posti minimi</label>
-                <input type="Text" class="form-control" name="prof_surname">
+                <input type="Text" class="form-control" name="numPosti">
               </div>
               <div class="form-check form-check-inline">
-  				<input class="form-check-input" type="checkbox" id="prese" value="prese">
+  				<input class="form-check-input" type="checkbox" name="prese">
  				<label class="form-check-label" for="inlineCheckbox1">Presenza prese</label>
 			  </div>
               <div>

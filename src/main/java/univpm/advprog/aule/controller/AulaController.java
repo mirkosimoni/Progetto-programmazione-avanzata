@@ -1,9 +1,12 @@
 package univpm.advprog.aule.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,24 +43,74 @@ public class AulaController {
 	
 	
 	@PostMapping(value = "/search")
-	public String search(@RequestParam(value = "giorno", required=false) DateTime giorno, Model uiModel) {
+	public String search(@RequestParam(value = "giorno", required=false) String giorno, 
+						@RequestParam(value = "oraInizio", required=false) String oraInizio,
+						@RequestParam(value = "oraFine", required=false) String oraFine,
+						@RequestParam(value = "quota", required=false) String quota,
+						@RequestParam(value = "nome", required=false) String nome,
+						@RequestParam(value = "numPosti", required=false) String numPosti,
+						@RequestParam(value = "prese", required=false) Boolean prese,
+						@RequestParam(value = "error", required = false) String error, 
+						Model uiModel) {
 		
-/*		List<Aula> aule = new ArrayList<>();
 		
-		aule = aulaService.findLibere(oraInizio);
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
-		uiModel.addAttribute("aule", aule);
-*/
-		System.out.println("Cosa stampa quando immettiamo il giono");
-		System.out.println(giorno.toString());
+		SimpleDateFormat formatter_view = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		
-		return "aula/list";
+		
+		System.out.println("__________________________________________________________________");
+		System.out.println(prese);
+		System.out.println(String.valueOf(prese));
+		
+		
+		
+	
+		error = null;
+		
+		if(quota == "") quota = "-1";
+		
+		if(nome == "") nome = null;
+		if(numPosti == "") numPosti = "-1";
+		if(prese == null) prese = false;	
+
+		
+		if(!giorno.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")))) {
+			DateTime dt_inizio = new DateTime();
+			DateTime dt_fine = new DateTime();
+			if(!oraInizio.equals("Scegli")) {
+				String data_orainizio = giorno + ' ' + oraInizio;
+				dt_inizio = formatter.parseDateTime(data_orainizio);
+			}else {
+				String data_orainizio = giorno + ' ' + "01:00";
+				dt_inizio = formatter.parseDateTime(data_orainizio);
+			}
+		
+			if(!oraFine.equals("Scegli")) {
+				String data_orafine = giorno + ' ' + oraFine;
+				dt_fine = formatter.parseDateTime(data_orafine);
+			}else {
+				String data_orafine = giorno + ' ' + "23:00";
+				dt_fine = formatter.parseDateTime(data_orafine);
+			}
+			
+			int quotaInt = Integer.parseInt(quota);
+			int numPostiInt = Integer.parseInt(numPosti);
+			
+			List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
+		
+			uiModel.addAttribute("aula", auleLibere);
+			
+			uiModel.addAttribute("formatter",formatter_view);
+			uiModel.addAttribute("errorMessageData",error);
 	}
 	
 	
 
 	
-	
-
+		return "aula/list";
+	}
 	
 }
+
+
