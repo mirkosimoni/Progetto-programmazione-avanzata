@@ -1,5 +1,6 @@
 package univpm.advprog.aule.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +29,11 @@ import univpm.advprog.aule.services.PrenotationServiceDefault;
 @RequestMapping("/myprofile")
 @Controller
 public class MyProfileController {
-private MyProfileService myprofileservice;
+private MyProfileService myprofileService;
 	
 	@Autowired
 	public void setMyProfileService(MyProfileService myprofileService) {
-		this.myprofileservice = myprofileService;
+		this.myprofileService = myprofileService;
 	}
 	
 	@GetMapping(value = "/profile")
