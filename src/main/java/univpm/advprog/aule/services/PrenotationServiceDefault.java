@@ -91,7 +91,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 		boolean overlapped = false;
 		
 		for(Prenotation p : prenotazioniData) {
-			if(this.overlapFinder.areOverlapped(prenotation, p))
+			if(this.overlapFinder.areOverlapped(prenotation, p) && prenotation.getId() != p.getId())
 					overlapped = true;
 		}
 		
