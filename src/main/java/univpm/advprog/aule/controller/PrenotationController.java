@@ -6,9 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.google.gson.Gson;
 
 import univpm.advprog.aule.model.dao.*;
 import univpm.advprog.aule.model.entities.*;
@@ -210,8 +216,9 @@ public class PrenotationController {
 	}
 	
 	
-	@PostMapping(value = "/save")
-	public String save(@RequestParam(value = "nome_evento", required=false) String nome_evento, 
+	@PostMapping(value = "/save/{prenotationId}")
+	public String save(	@PathVariable("prenotationId") Long prenotationId,
+						@RequestParam(value = "nome_evento", required=false) String nome_evento, 
 						@RequestParam(value = "note", required=false) String note,
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "aula", required=false) String aula_nome,
@@ -234,7 +241,7 @@ public class PrenotationController {
 		int quota_int = Integer.parseInt(quota);
 		Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
 		
-		Prenotation p = new Prenotation();
+		Prenotation p = this.prenotationService.findById(prenotationId);
 		p.setUser(user);
 		p.setNomeEvento(nome_evento);
 		p.setNote(note);
@@ -244,8 +251,54 @@ public class PrenotationController {
 		
 		this.prenotationService.update(p);
 		
-		return "prenotations/list";
+		return "redirect:/prenotations/list";
 	}
+	
+	
+	public class AjaxObject {
+		  String nome_evento;
+		  String note;
+		  String quota;
+		  String nome_aula;
+		  String giorno;
+		  String oraInizio;
+		  String oraFine;
+		}
+	
+	
+	@PostMapping(value= "/ajaxtest", headers = "Accept=*/*",produces = "application/text", consumes="application/json")
+    public @ResponseBody String validate(@RequestBody String oggetto) {
+		Gson gson = new Gson();  
+		AjaxObject obj = gson.fromJson(oggetto, AjaxObject.class); 
+		System.out.println(obj.nome_evento);
+		
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+		String data_orainizio = obj.giorno + ' ' + obj.oraInizio;
+		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+		String data_orafine = obj.giorno + ' ' + obj.oraFine;
+		DateTime dt_fine = formatter.parseDateTime(data_orafine);
+		
+		Aula aula = this.aulaService.findByNameQuota(obj.nome_aula, Integer.parseInt(obj.quota));
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = this.profileService.findByUsername(auth.getName());
+		
+		Prenotation p = new Prenotation();
+		p.setAula(aula);
+		p.setNomeEvento(obj.nome_evento);
+		p.setNote(obj.note);
+		p.setOraInizio(dt_inizio);
+		p.setOraFine(dt_fine);
+		p.setUser(user);
+		
+		Prenotation p_update = this.prenotationService.update(p);
+		if(p_update == null) {
+			return "false";
+		} else {
+			return "true";
+		}
+		
+    }
 	
 	
 	

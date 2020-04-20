@@ -3,30 +3,32 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
 <body style="background-color: rgb(52,58,64);">
-	<c:url value="/prenotations/save" var="action_url" />
+	<c:url value="/prenotations/save/${prenot.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
-			<form name='edit' action="${action_url}" method='POST'>    
+			<form id="my-form" name='edit' action="${action_url}" method='POST'>    
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Nome Evento</label>
-		            <input type="text" class="form-control" name="nome_evento" value="${prenot.nomeEvento}">
+		            <input type="text" id="nomeve" class="form-control" name="nome_evento" value="${prenot.nomeEvento}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Note</label>
-		            <input type="text" class="form-control" name="note" value="${prenot.note}">
+		            <input type="text" id="not" class="form-control" name="note" value="${prenot.note}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Quota</label>
-		            <input type="text" class="form-control" name="quota" value="${prenot.aula.quota}">
+		            <input type="text" id="quot" class="form-control" name="quota" value="${prenot.aula.quota}">
 		         </div>
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Aula</label>
-		            <input type="text" class="form-control" name="aula" value="${prenot.aula.nome}">
+		            <input type="text" id="aul" class="form-control" name="aula" value="${prenot.aula.nome}">
 		         </div>
 		         <div class="form-group">
 		    		<label for="exampleInputEmail1">Giorno</label>
-		    		<input type="Date" class="form-control" name="data" value="${formatter_giorno.format(prenot.oraInizio.toDate())}">
+		    		<input type="Date" id="gio" class="form-control" name="data" value="${formatter_giorno.format(prenot.oraInizio.toDate())}">
 		  		</div>
 		            <div class="input-group mb-3">
 		            	<div class="input-group-prepend">
@@ -66,8 +68,48 @@
 		                  <option value="18:30">18:30</option>
 		                </select>
 		            </div>
+		            <div id="ciao" style="width:200px;height:200px; background-color:white;"></div>
 		            <button type="submit" class="btn btn-danger" role="button" aria-pressed="true"><i class="far fa-hand-paper"></i> Modifica </button>
 		     </form>
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+	$("input").change(function(){
+		var form = {
+			"nome_evento": document.getElementById("nomeve").value,
+			"note": document.getElementById("not").value,
+			"quota": document.getElementById("quot").value,
+			"nome_aula": document.getElementById("aul").value,
+			"giorno": document.getElementById("gio").value,
+			"oraInizio": document.getElementById("inputGroupSelect01").value,
+			"oraFine": document.getElementById("inputGroupSelect02").value,
+		}
+		console.log(JSON.stringify(form)),
+  		 $.ajax({
+  			headers: { 
+        		'Accept': 'application/json',
+        		'Content-Type': 'application/json' 
+    		},
+            dataType: "text", // and this
+  		 	type: 'POST',
+            url : '${pageContext.request.contextPath}/prenotations/ajaxtest',
+            data: JSON.stringify(form),
+            async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+    		cache: false,    //This will force requested pages not to be cached by the browser          
+    		processData:false, //To avoid making query String instead of JSON
+            success : function(data) {
+            	console.log("Data: "+data);
+            	alert(data);
+            	if(data == "false") {
+                	$("#ciao").css("background-color", "red");
+            	}
+            	if(data == "true") {
+                	$("#ciao").css("background-color", "green");
+            	}
+            },
+            error: function(e) {console.log(e);}
+        });
+	});
+</script>
