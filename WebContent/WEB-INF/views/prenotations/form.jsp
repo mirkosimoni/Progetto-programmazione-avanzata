@@ -9,32 +9,34 @@
 	<c:url value="/prenotations/save/${prenot.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
+  			<div id="div_error" class="alert alert-secondary" role="alert" style="height: 3em; color: black;"><span id="span_error"></span></div>
+  			<p hidden id="id_prenotazione">${prenot.id}</p>
 			<form id="my-form" name='edit' action="${action_url}" method='POST'>    
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Nome Evento</label>
-		            <input type="text" id="nomeve" class="form-control" name="nome_evento" value="${prenot.nomeEvento}">
+		            <input type="text" id="nomeve" class="form-control controllo" name="nome_evento" value="${prenot.nomeEvento}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Note</label>
-		            <input type="text" id="not" class="form-control" name="note" value="${prenot.note}">
+		            <input type="text" id="not" class="form-control controllo" name="note" value="${prenot.note}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Quota</label>
-		            <input type="text" id="quot" class="form-control" name="quota" value="${prenot.aula.quota}">
+		            <input type="text" id="quot" class="form-control controllo" name="quota" value="${prenot.aula.quota}">
 		         </div>
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Aula</label>
-		            <input type="text" id="aul" class="form-control" name="aula" value="${prenot.aula.nome}">
+		            <input type="text" id="aul" class="form-control controllo" name="aula" value="${prenot.aula.nome}">
 		         </div>
 		         <div class="form-group">
 		    		<label for="exampleInputEmail1">Giorno</label>
-		    		<input type="Date" id="gio" class="form-control" name="data" value="${formatter_giorno.format(prenot.oraInizio.toDate())}">
+		    		<input type="Date" id="gio" class="form-control controllo" name="data" value="${formatter_giorno.format(prenot.oraInizio.toDate())}">
 		  		</div>
 		            <div class="input-group mb-3">
 		            	<div class="input-group-prepend">
 		                	<label class="input-group-text" for="inputGroupSelect01">Ora Inizio</label>
 		                </div>
-		                <select class="custom-select" id="inputGroupSelect01" name="ora_inizio">
+		                <select class="custom-select controllo" id="inputGroupSelect01" name="ora_inizio">
 		                  <option selected>${formatter_ora.format(prenot.oraInizio.toDate())}</option>
 		                  <option value="08:30">08:30</option>
 		                  <option value="09:30">09:30</option>
@@ -53,7 +55,7 @@
 		             	<div class="input-group-prepend">
 		                  <label class="input-group-text" for="inputGroupSelect02">Ora Fine</label>
 		                </div>
-		                <select class="custom-select" id="inputGroupSelect02" name="ora_fine">
+		                <select class="custom-select controllo" id="inputGroupSelect02" name="ora_fine">
 		                  <option selected>${formatter_ora.format(prenot.oraFine.toDate())}</option>
 		                  <option value="08:30">08:30</option>
 		                  <option value="09:30">09:30</option>
@@ -68,7 +70,6 @@
 		                  <option value="18:30">18:30</option>
 		                </select>
 		            </div>
-		            <div id="ciao" style="width:200px;height:200px; background-color:white;"></div>
 		            <button type="submit" class="btn btn-danger" role="button" aria-pressed="true"><i class="far fa-hand-paper"></i> Modifica </button>
 		     </form>
 		</div>
@@ -76,8 +77,9 @@
 </body>
 
 <script type="text/javascript">
-	$("input").change(function(){
+	$(".controllo").change(function(){
 		var form = {
+			"id": document.getElementById("id_prenotazione").value, 
 			"nome_evento": document.getElementById("nomeve").value,
 			"note": document.getElementById("not").value,
 			"quota": document.getElementById("quot").value,
@@ -102,11 +104,23 @@
             success : function(data) {
             	console.log("Data: "+data);
             	alert(data);
-            	if(data == "false") {
-                	$("#ciao").css("background-color", "red");
+            	if(data == 1) {
+                	$("#span_error").text("Aula non trovata");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-success');
+                	$("#div_error").addClass('alert-danger');
             	}
-            	if(data == "true") {
-                	$("#ciao").css("background-color", "green");
+            	if(data == 2) {
+                	$("#span_error").text("Scegli valori diversi");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-success');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            	if(data == 3) {
+                	$("#span_error").text("Modifica possibile premi il testo modifica");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-danger');
+                	$("#div_error").addClass('alert-success');
             	}
             },
             error: function(e) {console.log(e);}

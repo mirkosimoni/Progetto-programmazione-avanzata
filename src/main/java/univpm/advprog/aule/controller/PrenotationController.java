@@ -39,6 +39,7 @@ import univpm.advprog.aule.services.AulaService;
 import univpm.advprog.aule.services.MyProfileService;
 import univpm.advprog.aule.services.PrenotationService;
 import univpm.advprog.aule.services.PrenotationServiceDefault;
+import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 
 @RequestMapping("/prenotations")
 @Controller
@@ -256,6 +257,7 @@ public class PrenotationController {
 	
 	
 	public class AjaxObject {
+		  String id;
 		  String nome_evento;
 		  String note;
 		  String quota;
@@ -267,7 +269,7 @@ public class PrenotationController {
 	
 	
 	@PostMapping(value= "/ajaxtest", headers = "Accept=*/*",produces = "application/text", consumes="application/json")
-    public @ResponseBody String validate(@RequestBody String oggetto) {
+    public @ResponseBody Integer validate(@RequestBody String oggetto) {
 		Gson gson = new Gson();  
 		AjaxObject obj = gson.fromJson(oggetto, AjaxObject.class); 
 		System.out.println(obj.nome_evento);
@@ -280,6 +282,10 @@ public class PrenotationController {
 		
 		Aula aula = this.aulaService.findByNameQuota(obj.nome_aula, Integer.parseInt(obj.quota));
 		
+		if(aula == null) {
+			return 1;
+		}
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = this.profileService.findByUsername(auth.getName());
 		
@@ -290,14 +296,23 @@ public class PrenotationController {
 		p.setOraInizio(dt_inizio);
 		p.setOraFine(dt_fine);
 		p.setUser(user);
+		p.setId(Long.parseLong(obj.id));
 		
-		Prenotation p_update = this.prenotationService.update(p);
-		if(p_update == null) {
-			return "false";
-		} else {
-			return "true";
+		Prenotation p_vecchia = this.prenotationService.findById(Long.parseLong(obj.id));
+
+		PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
+
+		List<Prenotation> prenotazioniData = this.prenotationService.findPrenotationsData(null, null, String.valueOf(p.getAula().getQuota()), p.getAula().getNome(), p.getOraInizio());
+		boolean overlapped = false;
+		for(Prenotation pr : prenotazioniData) {
+			if(overlapFinder.areOverlapped(pr, p) && pr.getId() != p_vecchia.getId())
+				overlapped = true;
 		}
-		
+		 if(overlapped) {
+			 return 2;
+		} else {
+			return 3;
+		}	
     }
 	
 	
