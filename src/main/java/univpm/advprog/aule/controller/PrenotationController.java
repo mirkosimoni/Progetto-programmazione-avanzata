@@ -176,8 +176,7 @@ public class PrenotationController {
 	
 	
 	@PostMapping(value = "/create")
-	public String create(@RequestParam(value = "prof_surname", required=false) String surname, 
-						@RequestParam(value = "prof_name", required=false) String name,
+	public String create(@RequestParam(value = "nome_evento", required=false) String nome_evento,
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "aula", required=false) String aula,
 						@RequestParam(value = "data", required=false) String data,
@@ -187,11 +186,11 @@ public class PrenotationController {
 						Model uiModel) {
 		
 		
-		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		uiModel.addAttribute("variabile_view", auth.getName());
 		User user = this.profileService.findByUsername(auth.getName());
 		System.out.println(user);
+		
 		return "prenotations/list";
 	}
 	

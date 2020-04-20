@@ -72,7 +72,7 @@
       </div>
       <div class="modal-body">
         <c:url value="/prenotations/create" var="action_url2" />
-            <form name='login' action="${action_url2}" method='POST'>    
+            <form name='create' action="${action_url2}" method='POST'>    
 
 
 
