@@ -13,9 +13,10 @@
 </c:if>
 
 <table class="table">
-  <thead class="thead text-center" style="background-color: #696969;">
+  <thead class="thead text-center" style="background-color: #DCDCDC;">
     <tr>
-      <th scope="col">Utente</th>
+      <th scope="col">Cognome</th>
+      <th scope="col">Nome</th>
       <th scope="col">Quota</th>
       <th scope="col">Aula</th>
       <th scope="col">Nome evento</th>
@@ -29,7 +30,8 @@
   <tbody>
   <c:forEach items="${prenotations}" var="p">
     <tr class="text-center" style="color: white;">
-      <td>${p.user.username}</td>
+      <td>${p.user.profile.cognome}</td>
+      <td>${p.user.profile.nome}</td>
       <td>${p.aula.quota}</td>
       <td>${p.aula.nome}</td>
       <td>${p.nomeEvento}</td>

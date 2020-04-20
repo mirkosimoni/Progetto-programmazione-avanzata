@@ -72,7 +72,7 @@ public class PrenotationController {
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		
-		List<Prenotation> allPrenotations = this.prenotationService.findAll();
+		List<Prenotation> allPrenotations = this.prenotationService.findAllFromToday();
 		
 		System.out.println(allPrenotations.size());
 		
@@ -286,6 +286,10 @@ public class PrenotationController {
 			return 1;
 		}
 		
+		if(dt_fine.isBefore(dt_inizio.toInstant()) || dt_fine.equals(dt_inizio)) {
+			return 2;
+		}
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = this.profileService.findByUsername(auth.getName());
 		
@@ -305,7 +309,7 @@ public class PrenotationController {
 		List<Prenotation> prenotazioniData = this.prenotationService.findPrenotationsData(null, null, String.valueOf(p.getAula().getQuota()), p.getAula().getNome(), p.getOraInizio());
 		boolean overlapped = false;
 		for(Prenotation pr : prenotazioniData) {
-			if(overlapFinder.areOverlapped(pr, p) && pr.getId() != p_vecchia.getId())
+			if(overlapFinder.areOverlapped(pr, p) && pr.getId() != p.getId())
 				overlapped = true;
 		}
 		 if(overlapped) {

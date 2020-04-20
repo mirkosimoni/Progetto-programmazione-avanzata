@@ -10,15 +10,15 @@
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
   			<div id="div_error" class="alert alert-secondary" role="alert" style="height: 3em; color: black;"><span id="span_error"></span></div>
-  			<p hidden id="id_prenotazione">${prenot.id}</p>
+  			<input hidden ="" id="id_prenotazione" value="${prenot.id}"> 
 			<form id="my-form" name='edit' action="${action_url}" method='POST'>    
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Nome Evento</label>
-		            <input type="text" id="nomeve" class="form-control controllo" name="nome_evento" value="${prenot.nomeEvento}">
+		            <input type="text" id="nomeve" class="form-control controllo" name="nome_evento" maxlength="100" value="${prenot.nomeEvento}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Note</label>
-		            <input type="text" id="not" class="form-control controllo" name="note" value="${prenot.note}">
+		            <input type="text" id="not" class="form-control controllo" name="note" maxlength="100" value="${prenot.note}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Quota</label>
@@ -103,7 +103,7 @@
     		processData:false, //To avoid making query String instead of JSON
             success : function(data) {
             	console.log("Data: "+data);
-            	alert(data);
+            	//alert(data);
             	if(data == 1) {
                 	$("#span_error").text("Aula non trovata");
                 	$("#div_error").removeClass('alert-secondary');

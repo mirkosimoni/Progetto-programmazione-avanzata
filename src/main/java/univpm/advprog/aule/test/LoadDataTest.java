@@ -125,6 +125,11 @@ public class LoadDataTest {
 				session.beginTransaction();
 				
 				//Creazione prenotazioni
+				DateTime oraInizio0 = new DateTime(2020, 4, 2, 12, 0, 0);
+				DateTime oraFine0 = new DateTime(2020, 4, 2, 15, 0, 0);
+				Prenotation p0 = prenotationDao.create(oraInizio0, oraFine0, user2, aula10, "Esame 0", "note");
+				session.refresh(aula10);
+				
 				DateTime oraInizio1 = new DateTime(2020, 5, 2, 12, 0, 0);
 				DateTime oraFine1 = new DateTime(2020, 5, 2, 15, 0, 0);
 				Prenotation p1 = prenotationDao.create(oraInizio1, oraFine1, user2, aula10, "Esame 1", "note");

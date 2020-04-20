@@ -142,4 +142,10 @@ public class PrenotationServiceDefault implements PrenotationService {
 		return this.prenotationRepository.findPrenotationsDataOra(cognome, nome, quota, nomeAula, dataOra);
 	}
 
+	@Override
+	public List<Prenotation> findAllFromToday() {
+		return this.prenotationRepository.findAllFromToday();
+		
+	}
+
 }
