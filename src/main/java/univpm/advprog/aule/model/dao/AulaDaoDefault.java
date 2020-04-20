@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -82,8 +83,12 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public Aula findByNomeQuota(String nome, int quota) {
+		try {
 		return this.getSession().createQuery("FROM Aula a  WHERE a.nome= :nome AND a.quota = :quota", Aula.class).setParameter("nome",nome).
 				setParameter("quota", quota).getSingleResult();
+		} catch(NoResultException nre) {
+			return null;
+		}
 	}
 	
 	
