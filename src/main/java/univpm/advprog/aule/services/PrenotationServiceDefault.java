@@ -91,7 +91,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 		boolean overlapped = false;
 		
 		for(Prenotation p : prenotazioniData) {
-			if(this.overlapFinder.areOverlapped(prenotation, p))
+			if(this.overlapFinder.areOverlapped(prenotation, p) && prenotation.getId() != p.getId())
 					overlapped = true;
 		}
 		
@@ -140,6 +140,12 @@ public class PrenotationServiceDefault implements PrenotationService {
 	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, String quota, String nomeAula, DateTime dataOra) {
 		
 		return this.prenotationRepository.findPrenotationsDataOra(cognome, nome, quota, nomeAula, dataOra);
+	}
+
+	@Override
+	public List<Prenotation> findAllFromToday() {
+		return this.prenotationRepository.findAllFromToday();
+		
 	}
 
 }

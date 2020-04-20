@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -39,6 +41,7 @@ public class User implements Serializable{
 
 	  
 	@Id
+	@NotBlank
 	@Column(name = "USERNAME")
 	  public String getUsername() {
 		  return this.username;
@@ -48,6 +51,7 @@ public class User implements Serializable{
 		  this.username = username;
 	  }
 	  
+	  @NotBlank
 	  @Column(name = "PASSWORD", nullable = false)
 	  public String getPassword() {
 		  return this.password;

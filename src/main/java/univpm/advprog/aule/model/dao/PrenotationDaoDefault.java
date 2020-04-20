@@ -210,6 +210,13 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		cr.where(predicates.toArray(new Predicate[]{}));
 		return this.getSession().createQuery(cr).getResultList();
 	}
+
+	@Override
+	public List<Prenotation> findAllFromToday() {
+		DateTime now = DateTime.now();
+		DateTime oggi = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 7, 0);
+		return this.getSession().createQuery("FROM Prenotation p  WHERE p.oraInizio >= :oggi", Prenotation.class).setParameter("oggi", oggi).getResultList();
+	}
 	
 }
 

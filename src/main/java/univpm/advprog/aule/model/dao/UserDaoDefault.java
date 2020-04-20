@@ -1,5 +1,6 @@
 package univpm.advprog.aule.model.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,13 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 		return this.getSession().get(User.class, username);
 	}
 
+	@Override
+	public List<User> findAll(){
+		return getSession().
+				createQuery("from User u", User.class).
+				getResultList();
+	}
+	
 	@Override
 	public User create(String username, String password, boolean isEnabled, Set<Role> roles) {
 		User u = new User();
