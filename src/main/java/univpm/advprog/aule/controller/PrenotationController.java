@@ -320,4 +320,82 @@ public class PrenotationController {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//controllo in tempo reale per creazione prenotazione
+	@PostMapping(value= "/ajaxtestcreate", headers = "Accept=*/*",produces = "application/text", consumes="application/json")
+    public @ResponseBody Integer validatecreate(@RequestBody String oggetto) {
+		Gson gson = new Gson();  //trasforma stringa json in un json in background
+		AjaxObject obj = gson.fromJson(oggetto, AjaxObject.class); 
+		System.out.println(obj.nome_evento);
+		System.out.println(obj.note);
+		System.out.println(obj.quota);
+		System.out.println(obj.nome_aula);
+		System.out.println(obj.giorno);
+		System.out.println(obj.oraInizio);
+		System.out.println(obj.oraFine);
+		
+		if (obj.nome_evento != "" && obj.note != "" && obj.quota != "" && obj.nome_aula != "" && obj.giorno != "" && obj.oraInizio != "Scegli" && obj.oraFine != "Scegli") {
+			
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+			String data_orainizio = obj.giorno + ' ' + obj.oraInizio;
+			DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+			String data_orafine = obj.giorno + ' ' + obj.oraFine;
+			DateTime dt_fine = formatter.parseDateTime(data_orafine);
+			
+			Aula aula = this.aulaService.findByNameQuota(obj.nome_aula, Integer.parseInt(obj.quota));
+			
+			if(aula == null) {
+				return 1;
+			}
+			
+			if(dt_fine.isBefore(dt_inizio.toInstant()) || dt_fine.equals(dt_inizio)) {
+				return 2;
+			}
+			
+			//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			//User user = this.profileService.findByUsername(auth.getName());
+			
+			Prenotation p = new Prenotation();
+			p.setAula(aula);
+			p.setNomeEvento(obj.nome_evento);
+			p.setNote(obj.note);
+			p.setOraInizio(dt_inizio);
+			p.setOraFine(dt_fine);
+			
+			
+			
+	
+			PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
+	
+			List<Prenotation> prenotazioniData = this.prenotationService.findPrenotationsData(null, null, obj.quota, obj.nome_aula, dt_inizio);
+			boolean overlapped = false;
+			for(Prenotation pr : prenotazioniData) {
+				if(overlapFinder.areOverlapped(pr, p) )
+					overlapped = true;
+			}
+			 if(overlapped) {
+				 return 2;
+			} else {
+				return 3;
+			}
+			 
+		} 
+			return 4;
+		
+		
+    }
+	
+	
+	
 }
