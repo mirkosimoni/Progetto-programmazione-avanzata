@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,10 +59,6 @@ public class AulaController {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
 		SimpleDateFormat formatter_view = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		
-		
-		
-		
 	
 		error = null;
 		
@@ -109,11 +106,16 @@ public class AulaController {
 		
 		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
-	
-
-	
 		return "aula/list";
 	}
+	
+	@GetMapping("/delete/{aulaId}")
+	public String jobofferdelete (@PathVariable("aulaId") Long aulaId, Model model) {
+		this.aulaService.delete(aulaId);
+		return "redirect:/aula/list";
+	}
+	
+	
 	
 	
 	

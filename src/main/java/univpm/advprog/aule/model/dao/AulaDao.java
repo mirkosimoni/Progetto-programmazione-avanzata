@@ -26,6 +26,8 @@ public interface AulaDao {
 	
 	void delete(Aula aula);
 	
+	void delete(Long id);
+	
 	Set<Prenotation> getPrenotazioni(Aula aula);
 	
 	List<Aula> findAulePosti(int minimoPosti);
