@@ -178,6 +178,8 @@ public class TestAulaDao {
 			s.beginTransaction();
 			Aula aula1 = aulaDao.create("Aula1", 150, 10, true);
 			Aula aula2 = aulaDao.create("Aula2", 150, 15, true);
+			Aula aula3 = aulaDao.create("Aula3", 155, 10, true);
+			Aula aula4 = aulaDao.create("Aula4", 155, 15, true);
 			s.getTransaction().commit();
 			
 			//Creazione utente con ruoli
@@ -215,22 +217,40 @@ public class TestAulaDao {
 			
 			DateTime inizio = new DateTime(2020, 7, 1, 10, 0, 0);
 			List<Aula> auleLibere = aulaDao.findAuleLibere(inizio, null, -1, null, -1, null);
-			assertEquals(auleLibere.size(), 1);
+			assertEquals(auleLibere.size(), 3);
 			
 			inizio = new DateTime(2020, 7, 1, 13, 0, 0);
 			auleLibere = aulaDao.findAuleLibere(inizio, null, -1, null, -1, null);
-			assertEquals(auleLibere.size(), 2);
+			assertEquals(auleLibere.size(), 4);
 			
 			DateTime fine = new DateTime(2020, 7, 1, 16, 0, 0);
 			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, null, -1, null);
-			assertEquals(auleLibere.size(), 0);
+			assertEquals(auleLibere.size(), 2);
 			
 			inizio = new DateTime(2020, 7, 1, 9, 0, 0);
 			fine = new DateTime(2020, 7, 1, 15, 0, 0);
 			auleLibere = aulaDao.findAuleLibere(inizio, fine, -1, null, -1, null);
-			assertEquals(auleLibere.size(), 1);
+			assertEquals(auleLibere.size(), 3);
+			
+			auleLibere = aulaDao.findAuleLibere(null, null, -1, null, -1, null);
+			assertEquals(auleLibere.size(), 4);
 			
 			s.getTransaction().commit();
+			s.beginTransaction();
+			
+			DateTime inizio3 = DateTime.now();
+			DateTime fine3 = DateTime.now().plusMinutes(60);
+			prenotationDao.create(inizio3, fine3, user1, aula1, "evento3", "note3");
+			
+			s.getTransaction().commit();
+			
+			s.beginTransaction();
+			
+			auleLibere = aulaDao.findAuleLibere(null, null, -1, null, -1, null);
+			assertEquals(auleLibere.size(), 3);
+			
+			s.getTransaction().commit();
+			
 			
 		}
 	}
@@ -262,19 +282,4 @@ public class TestAulaDao {
 			
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
