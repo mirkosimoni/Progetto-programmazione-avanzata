@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import univpm.advprog.aule.model.dao.AulaDao;
 import univpm.advprog.aule.model.entities.Aula;
 import univpm.advprog.aule.model.entities.Prenotation;
 import univpm.advprog.aule.services.AulaService;
@@ -59,10 +60,6 @@ public class AulaController {
 		SimpleDateFormat formatter_view = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		
 		
-		System.out.println("__________________________________________________________________");
-		System.out.println(prese);
-		System.out.println(String.valueOf(prese));
-		
 		
 		
 	
@@ -71,13 +68,14 @@ public class AulaController {
 		if(quota == "") quota = "-1";
 		
 		if(nome == "") nome = null;
-		if(numPosti == "") numPosti = "-1";
-		if(prese == null) prese = false;	
+		if(numPosti == "") numPosti = "-1";	
+		
+		DateTime dt_inizio = new DateTime();
+		DateTime dt_fine = new DateTime();
 
 		
 		if(!giorno.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")))) {
-			DateTime dt_inizio = new DateTime();
-			DateTime dt_fine = new DateTime();
+			
 			if(!oraInizio.equals("Scegli")) {
 				String data_orainizio = giorno + ' ' + oraInizio;
 				dt_inizio = formatter.parseDateTime(data_orainizio);
@@ -94,22 +92,34 @@ public class AulaController {
 				dt_fine = formatter.parseDateTime(data_orafine);
 			}
 			
-			int quotaInt = Integer.parseInt(quota);
-			int numPostiInt = Integer.parseInt(numPosti);
+
 			
-			List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
-		
-			uiModel.addAttribute("aula", auleLibere);
-			
-			uiModel.addAttribute("formatter",formatter_view);
-			uiModel.addAttribute("errorMessageData",error);
-	}
+	}	
 	
+		int quotaInt = Integer.parseInt(quota);
+		int numPostiInt = Integer.parseInt(numPosti);
+		
+		if(giorno=="") {dt_inizio=null; dt_fine=null;}
+		
+
+		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
+		
+	
+		uiModel.addAttribute("aula", auleLibere);
+		
+		uiModel.addAttribute("formatter",formatter_view);
+		uiModel.addAttribute("errorMessageData",error);
 	
 
 	
 		return "aula/list";
 	}
+	
+	
+	
+	
+	
+	
 	
 }
 
