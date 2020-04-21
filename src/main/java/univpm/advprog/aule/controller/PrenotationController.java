@@ -320,17 +320,7 @@ public class PrenotationController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	//controllo in tempo reale per creazione prenotazione
 	@PostMapping(value= "/ajaxtestcreate", headers = "Accept=*/*",produces = "application/text", consumes="application/json")
@@ -345,7 +335,7 @@ public class PrenotationController {
 		System.out.println(obj.oraInizio);
 		System.out.println(obj.oraFine);
 		
-		if (obj.nome_evento != "" && obj.note != "" && obj.quota != "" && obj.nome_aula != "" && obj.giorno != "" && obj.oraInizio != "Scegli" && obj.oraFine != "Scegli") {
+		if (!"".equals(obj.nome_evento) && !"".equals(obj.note) && !"".equals(obj.quota) && !"".equals(obj.nome_aula) && !"".equals(obj.giorno) && !"Scegli".equals(obj.oraInizio) && !"Scegli".equals(obj.oraFine)) {
 			
 			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 			String data_orainizio = obj.giorno + ' ' + obj.oraInizio;
@@ -362,10 +352,7 @@ public class PrenotationController {
 			if(dt_fine.isBefore(dt_inizio.toInstant()) || dt_fine.equals(dt_inizio)) {
 				return 2;
 			}
-			
-			//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			//User user = this.profileService.findByUsername(auth.getName());
-			
+
 			Prenotation p = new Prenotation();
 			p.setAula(aula);
 			p.setNomeEvento(obj.nome_evento);
@@ -373,9 +360,6 @@ public class PrenotationController {
 			p.setOraInizio(dt_inizio);
 			p.setOraFine(dt_fine);
 			
-			
-			
-	
 			PrenotationsOverlapFinder overlapFinder = new PrenotationsOverlapFinder();
 	
 			List<Prenotation> prenotazioniData = this.prenotationService.findPrenotationsData(null, null, obj.quota, obj.nome_aula, dt_inizio);
@@ -391,9 +375,7 @@ public class PrenotationController {
 			}
 			 
 		} 
-			return 4;
-		
-		
+		return 4;
     }
 	
 	
