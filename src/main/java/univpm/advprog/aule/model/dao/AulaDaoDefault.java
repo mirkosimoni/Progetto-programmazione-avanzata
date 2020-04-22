@@ -100,7 +100,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	public List <Aula> findByNome() {
 		try {
 		//List<String> nomiAule= new ArrayList<String>();
-		List<Aula> nomiAule = this.getSession().createQuery("FROM Aula a DISTINCT a.nome", Aula.class).getResultList();
+		List<Aula> nomiAule = this.getSession().createQuery("SELECT DISTINCT (a.nome) FROM Aula a", Aula.class).getResultList();
 		
 		//for(Aula aula: a)
 			//nomiAule.add(aula.getNome());
@@ -115,11 +115,11 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	public List <String> findByQuota() {
 		try {
 			List<String> quote= new ArrayList<String>();
-			List<Aula> quoteAule = this.getSession().createQuery("FROM Aula a DISTINCT a.quota", Aula.class).getResultList();
+			List<Integer> quoteAule = this.getSession().createQuery("SELECT DISTINCT (a.quota) FROM Aula a", Integer.class).getResultList();
 		
-			for(Aula aula: quoteAule)
+			for(int a: quoteAule)
 			
-				quote.add(String.valueOf(aula.getQuota()));
+				quote.add(String.valueOf(a));
 				
 			return quote;
 		
