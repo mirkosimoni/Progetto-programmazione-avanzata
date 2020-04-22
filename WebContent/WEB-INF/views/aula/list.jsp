@@ -8,12 +8,14 @@
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
 <table class="table">
-  <thead class="thead text-center" style="background-color: #696969;">
+  <thead class="thead text-center" style="background-color: #DCDCDC;">
     <tr>
       <th scope="col">Quota</th>
       <th scope="col">Nome</th>
       <th scope="col">Numero posti</th>
       <th scope="col">Prese</th>
+      <th scope="col">Modifica</th>
+      <th scope="col">Elimina</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +25,8 @@
       <td>${a.nome}</td>
       <td>${a.numeroPosti}</td>
       <td>${a.presentiPrese}</td>
-
+      <td><a href="<c:url value="/aula/${a.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
+      <td><a href="<c:url value="/aula/delete/${a.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
     </tr>
     </c:forEach>
   </tbody>

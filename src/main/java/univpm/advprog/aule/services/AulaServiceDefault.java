@@ -87,5 +87,8 @@ public class AulaServiceDefault implements AulaService {
 		return this.aulaRepository.findAuleLibere(oraInizio, oraFine, quota, nome, minimoPosti, presentiPrese);
 	}
 
+	public void delete(Long id) {
+		this.aulaRepository.delete(id);
+	}
 
 }

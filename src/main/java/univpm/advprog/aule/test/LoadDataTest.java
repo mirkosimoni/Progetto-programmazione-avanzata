@@ -125,38 +125,38 @@ public class LoadDataTest {
 				session.beginTransaction();
 				
 				//Creazione prenotazioni
-				DateTime oraInizio0 = new DateTime(2020, 4, 2, 12, 0, 0);
-				DateTime oraFine0 = new DateTime(2020, 4, 2, 15, 0, 0);
+				DateTime oraInizio0 = new DateTime(2020, 4, 2, 12, 30, 0);
+				DateTime oraFine0 = new DateTime(2020, 4, 2, 15, 30, 0);
 				Prenotation p0 = prenotationDao.create(oraInizio0, oraFine0, user2, aula10, "Esame 0", "note");
 				session.refresh(aula10);
 				
-				DateTime oraInizio1 = new DateTime(2020, 5, 2, 12, 0, 0);
-				DateTime oraFine1 = new DateTime(2020, 5, 2, 15, 0, 0);
+				DateTime oraInizio1 = new DateTime(2020, 5, 2, 12, 30, 0);
+				DateTime oraFine1 = new DateTime(2020, 5, 2, 15, 30, 0);
 				Prenotation p1 = prenotationDao.create(oraInizio1, oraFine1, user2, aula10, "Esame 1", "note");
 				session.refresh(aula10);
 				
-				DateTime oraInizio2 = new DateTime(2020, 5, 2, 9, 0, 0);
-				DateTime oraFine2 = new DateTime(2020, 5, 2, 11, 0, 0);
+				DateTime oraInizio2 = new DateTime(2020, 5, 2, 9, 30, 0);
+				DateTime oraFine2 = new DateTime(2020, 5, 2, 11, 30, 0);
 				Prenotation p2 = prenotationDao.create(oraInizio2, oraFine2, user1, aula10, "Esame 2", "note");
 				session.refresh(aula10);
 				
-				DateTime oraInizio3 = new DateTime(2020, 5, 2, 10, 0, 0);
-				DateTime oraFine3 = new DateTime(2020, 5, 2, 13, 0, 0);
+				DateTime oraInizio3 = new DateTime(2020, 5, 2, 10, 30, 0);
+				DateTime oraFine3 = new DateTime(2020, 5, 2, 13, 30, 0);
 				Prenotation p3 = prenotationDao.create(oraInizio3, oraFine3, user3, aula3, "Esame 3", "note");
 				session.refresh(aula3);
 				
-				DateTime oraInizio4 = new DateTime(2020, 5, 2, 13, 0, 0);
-				DateTime oraFine4 = new DateTime(2020, 5, 2, 14, 0, 0);
+				DateTime oraInizio4 = new DateTime(2020, 5, 2, 13, 30, 0);
+				DateTime oraFine4 = new DateTime(2020, 5, 2, 14, 30, 0);
 				Prenotation p4 = prenotationDao.create(oraInizio4, oraFine4, user3, aula3, "Esame 4", "note");
 				session.refresh(aula4);
 				
-				DateTime oraInizio5 = new DateTime(2020, 5, 2, 10, 0, 0);
-				DateTime oraFine5 = new DateTime(2020, 5, 2, 16, 0, 0);
+				DateTime oraInizio5 = new DateTime(2020, 5, 2, 10, 30, 0);
+				DateTime oraFine5 = new DateTime(2020, 5, 2, 16, 30, 0);
 				Prenotation p5 = prenotationDao.create(oraInizio5, oraFine5, user3, aula6, "Esame 5", "note");
 				session.refresh(aula6);
 				
-				DateTime oraInizio6 = new DateTime(2020, 5, 3, 10, 0, 0);
-				DateTime oraFine6 = new DateTime(2020, 5, 3, 16, 0, 0);
+				DateTime oraInizio6 = new DateTime(2020, 5, 3, 10, 30, 0);
+				DateTime oraFine6 = new DateTime(2020, 5, 3, 16, 30, 0);
 				Prenotation p6 = prenotationDao.create(oraInizio6, oraFine6, user3, aula6, "Esame 6", "note");
 				session.refresh(aula6);
 				

@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
 <body style="background-color: rgb(52,58,64);">
 
@@ -60,7 +61,12 @@
 </div>
 
 
-<!-- Modal -->
+
+
+
+
+
+<!-- Modal Create-->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content" style= "background-color: #696969; color: white;">
@@ -71,6 +77,7 @@
         </button>
       </div>
       <div class="modal-body">
+      <div id="div_error" class="alert alert-secondary" role="alert" style="height: 3em; color: black;"><span id="span_error"></span></div>
         <c:url value="/prenotations/create" var="action_url2" />
             <form name='create' action="${action_url2}" method='POST'>    
 
@@ -78,25 +85,29 @@
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Nome Evento</label>
-                <input type="text" class="form-control" name="nome_evento">
+                <input id = "nomeve" type="text" class="form-control controllo" name="nome_evento">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Note</label>
+                <input  id = "not" type="text" class="form-control controllo" name="note">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
-                <input type="text" class="form-control" name="quota">
+                <input  id = "quot" type="text" class="form-control controllo" name="quota">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Aula</label>
-                <input type="text" class="form-control" name="aula">
+                <input  id = "aul" type="text" class="form-control controllo" name="aula">
               </div>
               <div class="form-group">
     			<label for="exampleInputEmail1">Giorno</label>
-    			<input type="Date" class="form-control" name="data">
+    			<input  id = "gio" type="Date" class="form-control controllo" name="data">
   			  </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Ora Inizio</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01" name="ora_inizio">
+                <select class="custom-select controllo" id="inputGroupSelect01" name="ora_inizio">
                   <option selected>Scegli</option>
                   <option value="08:30">08:30</option>
                   <option value="09:30">09:30</option>
@@ -115,7 +126,7 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect02">Ora Fine</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect02" name="ora_fine">
+                <select class="custom-select controllo" id="inputGroupSelect02" name="ora_fine">
                   <option selected>Scegli</option>
                   <option value="08:30">08:30</option>
                   <option value="09:30">09:30</option>
@@ -136,6 +147,107 @@
         </div>
       </div>
     </div>
+
+
+<script type="text/javascript">
+	$(".controllo").change(function(){
+		var form2 = {
+			
+			"nome_evento": document.getElementById("nomeve").value,
+			"note": document.getElementById("not").value,
+			"quota": document.getElementById("quot").value,
+			"nome_aula": document.getElementById("aul").value,
+			"giorno": document.getElementById("gio").value,
+			"oraInizio": document.getElementById("inputGroupSelect01").value,
+			"oraFine": document.getElementById("inputGroupSelect02").value,
+		}
+		console.log(JSON.stringify(form2)),
+  		 $.ajax({
+  			headers: { 
+        		'Accept': 'application/json',
+        		'Content-Type': 'application/json' 
+    		},
+            dataType: "text", // and this
+  		 	type: 'POST',
+            url : '${pageContext.request.contextPath}/prenotations/ajaxtestcreate',
+            data: JSON.stringify(form2),
+            async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+    		cache: false,    //This will force requested pages not to be cached by the browser          
+    		processData:false, //To avoid making query String instead of JSON
+            success : function(data) {
+            	console.log("Data: "+data);
+            	//alert(data);
+            	if(data == 1) {
+                	$("#span_error").text("Aula non trovata");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-success');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            	if(data == 2) {
+                	$("#span_error").text("Scegliere orario corretto");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-success');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            	if(data == 3) {
+                	$("#span_error").text("Crezione possibile premi il testo crea");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-danger');
+                	$("#div_error").addClass('alert-success');
+            	}
+            	if(data == 4) {
+            		$("#span_error").text("Prenotazione già esistente");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-succes');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            	if(data == 5) {
+            		$("#span_error").text("Riempi tutti i campi");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-succes');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            },
+            error: function(e) {console.log(e);}
+        });
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
