@@ -177,6 +177,7 @@ public class PrenotationController {
 	
 	@PostMapping(value = "/create")
 	public String create(@RequestParam(value = "nome_evento", required=false) String nome_evento,
+						@RequestParam(value = "note", required=false) String note,
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "aula", required=false) String aula,
 						@RequestParam(value = "data", required=false) String data,
@@ -189,10 +190,23 @@ public class PrenotationController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		uiModel.addAttribute("variabile_view", auth.getName());
 		User user = this.profileService.findByUsername(auth.getName());
-		System.out.println(user);
 		
-		return "prenotations/list";
+		
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+		String data_orainizio = data + ' ' + oraInizio;
+		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+		String data_orafine = data + ' ' + oraFine;
+		DateTime dt_fine = formatter.parseDateTime(data_orafine);
+		
+		Aula aulanuova = this.aulaService.findByNameQuota(aula, Integer.parseInt(quota));
+		
+		this.prenotationService.create(dt_inizio, dt_fine, user, aulanuova, nome_evento, note);
+		
+		return "redirect:/prenotations/list";
 	}
+	
+	
+	
 	
 	
 	
