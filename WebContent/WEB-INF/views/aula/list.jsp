@@ -98,7 +98,12 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
-                <input type="Text" class="form-control" name="quota">
+				<select class="custom-select" id="inputGroupSelect03" name="quota">
+                  <option selected>Scegli</option>
+                  <c:forEach items="${quote}" var="q">
+                  <option value=${q}>${q}</option>
+                  </c:forEach>
+                </select>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>

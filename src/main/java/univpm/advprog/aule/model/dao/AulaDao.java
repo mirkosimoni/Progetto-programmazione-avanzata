@@ -40,4 +40,6 @@ public interface AulaDao {
 	
 	List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, String nome, int minimoPosti, Boolean presentiPrese);
 	
+	List <Aula> findByNome();
+	List <String> findByQuota();
 }
