@@ -41,8 +41,12 @@ public class AulaController {
 	public String list(@RequestParam(value = "message", required=false) String message, Model uiModel) {
 
 		List<Aula> allAule = this.aulaService.findAll();
+		List<String> quote = this.aulaService.findQuota();
+		
+		System.out.println(quote.size());
 		
 		uiModel.addAttribute("aula", allAule);
+		uiModel.addAttribute("quote", quote);
 		
 		return "aula/list";
 	}
@@ -63,11 +67,6 @@ public class AulaController {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
 		SimpleDateFormat formatter_view = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		
-		
-		
-		
-	
 		
 		error = null;
 		
@@ -110,18 +109,10 @@ public class AulaController {
 
 		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
 		
-		List<String> quote = this.aulaService.findQuota();
-		//List<String> nomi = this.aulaService.findName();
-		
-		System.out.println("__________________________________________________________________________________");
-		System.out.println(quote.size());
 	
 		uiModel.addAttribute("aula", auleLibere);
-		uiModel.addAttribute("quote", quote);
 		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
-		
-		
 		
 		return "aula/list";
 	}

@@ -43,6 +43,22 @@
   </button>
 </div>
 
+</div>
+
+<div class="row">
+    <div class="col-md-10 col-0"></div>
+    <div class="col-12 col-md-2 text-center">
+      <div class="rounded-circle text-center" style="border-color: white; width: 3em; height: 3em; border-style: solid; display: inline-block; vertical-align: middle;">
+        <div style="display: inline-block; vertical-align: middle; padding-top: 0.65em;">
+          <a href="#" data-attribute="back-to-top" class="back-to-top">
+            <i class="fas fa-arrow-up back-to-top"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
 
 
 <!-- Modal Create--------------------------------------------------------------------------------------->
@@ -62,7 +78,7 @@
       <div class="modal-body">
         <c:url value="/aula/create" var="action_url" />
 
-            <form name='create' action=${action_url} method='POST'>    
+            <form name='create' action="${action_url}" method='POST'>    
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
@@ -91,26 +107,6 @@
   
 
 
-  <div class="row">
-    <div class="col-md-10 col-0"></div>
-    <div class="col-12 col-md-2 text-center">
-      <div class="rounded-circle text-center" style="border-color: white; width: 3em; height: 3em; border-style: solid; display: inline-block; vertical-align: middle;">
-        <div style="display: inline-block; vertical-align: middle; padding-top: 0.65em;">
-          <a href="#" data-attribute="back-to-top" class="back-to-top">
-            <i class="fas fa-arrow-up back-to-top"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-
-
-
-
-
-
 
 
 <!-- Modal ----------------------------------------------------------------------------------------------------->
@@ -126,7 +122,7 @@
       <div class="modal-body">
         <c:url value="/aula/search" var="action_url" />
 
-            <form name='login' action=${action_url} method='POST'>    
+            <form name='login' action="${action_url}" method='POST'>    
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Giorno</label>
@@ -202,20 +198,7 @@
   
 
 
-  <div class="row">
-    <div class="col-md-10 col-0"></div>
-    <div class="col-12 col-md-2 text-center">
-      <div class="rounded-circle text-center" style="border-color: white; width: 3em; height: 3em; border-style: solid; display: inline-block; vertical-align: middle;">
-        <div style="display: inline-block; vertical-align: middle; padding-top: 0.65em;">
-          <a href="#" data-attribute="back-to-top" class="back-to-top">
-            <i class="fas fa-arrow-up back-to-top"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</body>
+  
 
 
 
