@@ -33,13 +33,87 @@
 </table>
 </div>
 
-<div class="col-12 col-md-2" style="text-align: center; margin-bottom: 2em;">
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch">
+<div class="col-12 col-md-2" style="text-align: center; margin-bottom: 1em;">
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
+    <i class="fas fa-plus-circle"></i> Crea
+  </button>
+  
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-search"></i> Cerca
   </button>
 </div>
 
-<!-- Modal -->
+
+
+<!-- Modal Create--------------------------------------------------------------------------------------->
+
+
+
+
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style= "background-color: #696969; color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Creazione nuova aula</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <c:url value="/aula/create" var="action_url" />
+
+            <form name='create' action=${action_url} method='POST'>    
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">Quota</label>
+                <input type="Text" class="form-control" name="quota">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nome</label>
+                <input type="Text" class="form-control" name="nome">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Numero posti</label>
+                <input type="Text" class="form-control" name="numPosti">
+              </div>
+              <div class="form-check form-check-inline">
+  				<input class="form-check-input" type="checkbox" name="prese">
+ 				<label class="form-check-label" for="inlineCheckbox1">Presenza prese</label>
+			  </div>
+              <div>
+              <button type="submit" class="btn btn-danger" role="button" aria-pressed="true"><i class="fas fa-plus-circle"></i> Crea </button>
+           	  </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+  <div class="row">
+    <div class="col-md-10 col-0"></div>
+    <div class="col-12 col-md-2 text-center">
+      <div class="rounded-circle text-center" style="border-color: white; width: 3em; height: 3em; border-style: solid; display: inline-block; vertical-align: middle;">
+        <div style="display: inline-block; vertical-align: middle; padding-top: 0.65em;">
+          <a href="#" data-attribute="back-to-top" class="back-to-top">
+            <i class="fas fa-arrow-up back-to-top"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+
+
+
+
+
+
+
+<!-- Modal ----------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content" style= "background-color: #696969; color: white;">
@@ -126,7 +200,7 @@
       </div>
     </div>
   
-  </div>
+
 
   <div class="row">
     <div class="col-md-10 col-0"></div>

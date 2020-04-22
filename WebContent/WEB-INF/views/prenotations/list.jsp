@@ -56,10 +56,11 @@
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-plus-circle"></i> Crea
   </button>
+
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-search"></i> Cerca
   </button>
-</div>
+
 
 </div>
 </div>

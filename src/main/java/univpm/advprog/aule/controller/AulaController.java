@@ -71,7 +71,7 @@ public class AulaController {
 		
 		error = null;
 		
-		if(quota == "") quota = "-1";
+		if(quota.equals("Scegli")) quota = "-1";
 		
 		if(nome == "") nome = null;
 		if(numPosti == "") numPosti = "-1";	
@@ -111,15 +111,17 @@ public class AulaController {
 		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
 		
 		List<String> quote = this.aulaService.findQuota();
-		List<String> nomi = this.aulaService.findName();
+		//List<String> nomi = this.aulaService.findName();
+		
+		System.out.println("__________________________________________________________________________________");
+		System.out.println(quote.size());
 	
 		uiModel.addAttribute("aula", auleLibere);
 		uiModel.addAttribute("quote", quote);
 		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
 		
-		System.out.println("__________________________________________________________________________________");
-		System.out.println(quote.size());
+		
 		
 		return "aula/list";
 	}
@@ -177,6 +179,30 @@ public class AulaController {
 		return "redirect:/aula/list";
 	}
 	
+	
+		
+
+	@PostMapping(value = "/create")
+	public String create(@RequestParam(value = "quota", required=false) String quota,
+						@RequestParam(value = "nome", required=false) String nome,
+						@RequestParam(value = "numPosti", required=false) String numPosti,
+						@RequestParam(value = "prese", required=false) Boolean prese,
+						Model uiModel) {
+		
+			if(prese==null) prese=false;
+		
+			try {
+			Aula a = this.aulaService.create(nome, Integer.parseInt(quota), Integer.parseInt(numPosti), prese);
+			
+			if(a==null) System.out.println("ERRORE DENTRO IL TRY__________________________________");
+
+			} catch (Exception e) {
+				System.out.println("ERRORE DENTRO IL CATCH________________________________________");
+			}
+		
+		return "redirect:/aula/list";
+		
+	}
 	
 	
 }
