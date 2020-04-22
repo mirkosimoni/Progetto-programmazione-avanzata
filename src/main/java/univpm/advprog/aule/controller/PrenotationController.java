@@ -369,13 +369,13 @@ public class PrenotationController {
 					overlapped = true;
 			}
 			 if(overlapped) {
-				 return 2;
+				 return 4;
 			} else {
 				return 3;
 			}
 			 
 		} 
-		return 4;
+		return 5;
     }
 	
 	
