@@ -36,7 +36,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	@Override
 	public List<Aula> findAll() {
 		return getSession().
-				createQuery("from Aula a", Aula.class).
+				createQuery("from Aula a order by a.quota", Aula.class).
 				getResultList();
 	}
 
@@ -48,15 +48,6 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public Aula update(Aula aula) {
-		
-		List<Aula> aule = this.findAll();
-		
-		for(Aula a : aule) {
-			if(a.getId() != aula.getId())
-				if(a.getQuota() == aula.getQuota() && a.getNome() == a.getNome())
-					return null;
-		}
-		
 		Aula merged = (Aula)this.getSession().merge(aula);
 		return merged;
 	}

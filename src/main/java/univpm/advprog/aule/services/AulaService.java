@@ -12,6 +12,8 @@ public interface AulaService {
 	
 	Aula findByNameQuota(String nome, int quota);
 	
+	Aula findById(Long id);
+	
 	Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese);
 	
 	Aula update(Aula aula);

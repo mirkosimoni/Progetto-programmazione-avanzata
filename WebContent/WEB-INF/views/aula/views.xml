@@ -6,4 +6,7 @@
   <definition extends="default" name="aula/list">
    	<put-attribute name="body" value="/WEB-INF/views/aula/list.jsp" />
   </definition>
+  <definition extends="default" name="aula/form">
+   	<put-attribute name="body" value="/WEB-INF/views/aula/form.jsp" />
+  </definition>
 </tiles-definitions>

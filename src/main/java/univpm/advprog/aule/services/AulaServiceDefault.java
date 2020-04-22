@@ -51,6 +51,11 @@ public class AulaServiceDefault implements AulaService {
 		return aulaRepository.findByQuota();
 	}
 	
+	@Override
+	public Aula findById(Long id) {
+		return this.aulaRepository.findById(id);
+	}
+	
 	
 
 	@Override
