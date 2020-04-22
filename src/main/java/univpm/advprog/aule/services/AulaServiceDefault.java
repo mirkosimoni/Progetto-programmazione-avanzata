@@ -42,13 +42,13 @@ public class AulaServiceDefault implements AulaService {
 	}
 	
 	@Override
-	public List<Aula> findByName() {
-		return aulaRepository.findByNome();
+	public List<String> findName() {
+		return aulaRepository.findNome();
 	}
 	
 	@Override
-	public List<String> findByQuota() {
-		return aulaRepository.findByQuota();
+	public List<String> findQuota() {
+		return aulaRepository.findQuota();
 	}
 	
 	
