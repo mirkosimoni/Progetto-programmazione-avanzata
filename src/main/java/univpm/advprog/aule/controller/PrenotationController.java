@@ -68,16 +68,13 @@ public class PrenotationController {
 	
 	
 	@GetMapping(value = "/list")
-	public String list(@RequestParam(value = "message", required=false) String message, Model uiModel) {
-
+	public String list(@RequestParam(value = "message", required=false) String message, 
+					   @RequestParam(value="errorMessageData", required=false) String errorMessageData,
+					   Model uiModel) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		
 		List<Prenotation> allPrenotations = this.prenotationService.findAllFromToday();
-		
 		System.out.println(allPrenotations.size());
-		
-		
-		
+		uiModel.addAttribute("errorMessageData",errorMessageData);
 		uiModel.addAttribute("formatter", formatter);
 		uiModel.addAttribute("prenotations", allPrenotations);
 		
@@ -95,15 +92,6 @@ public class PrenotationController {
 						@RequestParam(value = "error", required = false) String error, 
 						Model uiModel) {
 		
-		//int int_quota = Integer.parseInt(quota);
-		
-		//System.out.println("Quota");
-		//System.out.println(quota);
-		
-		//List<Aula> aule = aulaService.findAule(int_quota, -1, null);
-		
-		//System.out.println("Lunghezza aule");
-		//System.out.println(aule.size());
 		System.out.println(data);
 		System.out.println(oraInizio);
 		System.out.println(oraFine);
@@ -161,13 +149,6 @@ public class PrenotationController {
 			uiModel.addAttribute("prenotations", prenotations);
 		}
 		
-		
-		//if(data.equals("") && (!oraInizio.equals("Scegli") || !oraFine.equals("Scegli"))) {
-		//	error = "Scegliere un giorno nel calendario se si desidera effettuare una ricerca per fascia oraria";
-		//	List<Prenotation> allPrenotations = prenotationService.findAll();
-		//	uiModel.addAttribute("prenotations", allPrenotations);
-		//}
-		
 		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
 		
@@ -183,31 +164,34 @@ public class PrenotationController {
 						@RequestParam(value = "data", required=false) String data,
 						@RequestParam(value = "ora_inizio", required=false) String oraInizio,
 						@RequestParam(value = "ora_fine", required=false) String oraFine,
-						@RequestParam(value = "error", required = false) String error, 
+						@RequestParam(value = "errorMessageData", required=false) String errorMessageData,
 						Model uiModel) {
 		
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		uiModel.addAttribute("variabile_view", auth.getName());
-		User user = this.profileService.findByUsername(auth.getName());
-		
-		
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-		String data_orainizio = data + ' ' + oraInizio;
-		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
-		String data_orafine = data + ' ' + oraFine;
-		DateTime dt_fine = formatter.parseDateTime(data_orafine);
-		
-		Aula aulanuova = this.aulaService.findByNameQuota(aula, Integer.parseInt(quota));
-		
-		this.prenotationService.create(dt_inizio, dt_fine, user, aulanuova, nome_evento, note);
-		
+		try{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			uiModel.addAttribute("variabile_view", auth.getName());
+			User user = this.profileService.findByUsername(auth.getName());
+			
+			
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+			String data_orainizio = data + ' ' + oraInizio;
+			DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+			String data_orafine = data + ' ' + oraFine;
+			DateTime dt_fine = formatter.parseDateTime(data_orafine);
+			
+			Aula aulanuova = this.aulaService.findByNameQuota(aula, Integer.parseInt(quota));
+			
+			Prenotation p = this.prenotationService.create(dt_inizio, dt_fine, user, aulanuova, nome_evento, note);
+			if(p == null) {
+				errorMessageData = "Creazione prenotazione non riuscita";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
+			}
+		} catch (Exception e) {
+			errorMessageData = "Creazione prenotazione non riuscita";
+			uiModel.addAttribute("errorMessageData",errorMessageData);
+		}
 		return "redirect:/prenotations/list";
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -216,6 +200,7 @@ public class PrenotationController {
 		this.prenotationService.delete(prenotationId);
 		return "redirect:/prenotations/list";
 	}
+	
 	
 	
 	@GetMapping("/{prenotationId}/edit")
@@ -230,6 +215,7 @@ public class PrenotationController {
 	}
 	
 	
+	
 	@PostMapping(value = "/save/{prenotationId}")
 	public String save(	@PathVariable("prenotationId") Long prenotationId,
 						@RequestParam(value = "nome_evento", required=false) String nome_evento, 
@@ -239,7 +225,7 @@ public class PrenotationController {
 						@RequestParam(value = "data", required=false) String data,
 						@RequestParam(value = "ora_inizio", required=false) String oraInizio,
 						@RequestParam(value = "ora_fine", required=false) String oraFine,
-						@RequestParam(value = "error", required = false) String error, 
+						@RequestParam(value = "errorMessageData", required = false) String errorMessageData, 
 						Model uiModel) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -263,10 +249,15 @@ public class PrenotationController {
 		p.setOraFine(dt_fine);
 		p.setAula(aula);
 		
-		this.prenotationService.update(p);
-		
+		Prenotation prenotazione_controllo = this.prenotationService.update(p);
+		if(prenotazione_controllo == null) {
+			errorMessageData = "Modifica non riuscita";
+			uiModel.addAttribute("errorMessageData",errorMessageData);
+		}
 		return "redirect:/prenotations/list";
 	}
+	
+	
 	
 	
 	public class AjaxObject {

@@ -6,6 +6,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
 <body style="background-color: rgb(52,58,64);">
+	<div class="container-fluid">
 	<c:url value="/prenotations/save/${prenot.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
@@ -74,6 +75,7 @@
 		     </form>
 		</div>
 	</div>
+</div>
 </body>
 
 <script type="text/javascript">

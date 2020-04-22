@@ -19,6 +19,7 @@
 
 <sec:authorize access="isAuthenticated()" var="isAuth" />
 
+<div class="container-fluid">
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
   <a class="navbar-brand" href="#">AuleProgram</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +32,10 @@
         <a class="nav-link" href="<c:url value="/" />">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<c:url value="/prenotations/list" />">Prenotazioni</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="<c:url value="/aula/list" />">Aule</a>
       </li>
       <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,3 +63,4 @@
     </ul>
   </div>
 </nav>
+</div>

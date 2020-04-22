@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 	
 <body style= "background-color:rgb(52,58,64);">
-
+<div class="container-fluid">
 <div class="row">
 	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%;">
 </div>
@@ -50,5 +50,6 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 </body>

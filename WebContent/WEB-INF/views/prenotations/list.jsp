@@ -5,8 +5,9 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-<body style="background-color: rgb(52,58,64);">
 
+<body style="background-color: rgb(52,58,64);">
+<div class="container-fluid">
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
 <c:if test="${not empty errorMessageData}">
@@ -51,7 +52,7 @@
 
 
 <!-- Button trigger modal -->
-<div class="col-12 col-md-1" style="text-align: center; margin-bottom: 1em;">
+<div class="col-12 col-md-2" style="text-align: center; margin-bottom: 1em;">
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-plus-circle"></i> Crea
   </button>
@@ -60,8 +61,8 @@
   </button>
 </div>
 
-
-
+</div>
+</div>
 
 
 
@@ -330,7 +331,7 @@
       </div>
     </div>
   
-  </div>
+
 
 
 
@@ -346,6 +347,7 @@
       </div>
     </div>
   </div>
+
 
 </body>
 
