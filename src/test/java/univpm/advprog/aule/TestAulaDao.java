@@ -151,8 +151,11 @@ public class TestAulaDao {
 			l1 = aulaDao.findAule(150, null, 10, true);
 			assertEquals(l1.size(), 2);
 			
-			List<String> listaQuote = aulaDao.findByQuota();
+			List<String> listaQuote = aulaDao.findQuota();
 			assertEquals(listaQuote.size(), 2);
+			
+			List<String> listaNomi = aulaDao.findNome();
+			assertEquals(listaNomi.size(), 5);
 			
 			
 			s.getTransaction().commit();
