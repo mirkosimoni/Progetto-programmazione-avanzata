@@ -63,6 +63,7 @@ public class AulaController {
 		
 		
 	
+		
 		error = null;
 		
 		if(quota == "") quota = "-1";
@@ -104,14 +105,16 @@ public class AulaController {
 
 		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
 		
+		List<String> quote = this.aulaService.findByQuota();
 	
 		uiModel.addAttribute("aula", auleLibere);
-		
+		uiModel.addAttribute("quote", quote);
 		uiModel.addAttribute("formatter",formatter_view);
 		uiModel.addAttribute("errorMessageData",error);
-	
-
-	
+		
+		System.out.println("__________________________________________________________________________________");
+		System.out.println(quote.size());
+		
 		return "aula/list";
 	}
 	
