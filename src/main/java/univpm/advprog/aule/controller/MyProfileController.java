@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +40,10 @@ private MyProfileService myprofileService;
 	
 	@GetMapping(value = "/profile")
 	public String profile() {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = this.myprofileService.findByUsername(auth.getName());
+		
 
 		return "myprofile";
 	}
