@@ -110,7 +110,8 @@ public class AulaController {
 
 		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
 		
-		List<String> quote = this.aulaService.findByQuota();
+		List<String> quote = this.aulaService.findQuota();
+		List<String> nomi = this.aulaService.findName();
 	
 		uiModel.addAttribute("aula", auleLibere);
 		uiModel.addAttribute("quote", quote);

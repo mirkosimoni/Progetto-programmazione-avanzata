@@ -101,7 +101,7 @@
 				<select class="custom-select" id="inputGroupSelect03" name="quota">
                   <option selected>Scegli</option>
                   <c:forEach items="${quote}" var="q">
-                  <option value=${q}>${q}</option>
+                  <option value="${q}">${q}</option>
                   </c:forEach>
                 </select>
               </div>
