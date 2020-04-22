@@ -24,4 +24,7 @@ public interface AulaService {
 	
 	List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, String nome, int minimoPosti, Boolean presentiPrese);
 	
+	List<Aula> findByName();
+	
+	List<String> findByQuota();
 }

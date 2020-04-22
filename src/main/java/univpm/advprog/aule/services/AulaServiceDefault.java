@@ -40,6 +40,18 @@ public class AulaServiceDefault implements AulaService {
 	public Aula findByNameQuota(String nome, int quota) {
 		return aulaRepository.findByNomeQuota(nome, quota);
 	}
+	
+	@Override
+	public List<Aula> findByName() {
+		return aulaRepository.findByNome();
+	}
+	
+	@Override
+	public List<String> findByQuota() {
+		return aulaRepository.findByQuota();
+	}
+	
+	
 
 	@Override
 	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {

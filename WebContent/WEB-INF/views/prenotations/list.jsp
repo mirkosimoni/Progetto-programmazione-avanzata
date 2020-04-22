@@ -184,7 +184,7 @@
                 	$("#div_error").addClass('alert-danger');
             	}
             	if(data == 2) {
-                	$("#span_error").text("Scegli valori diversi");
+                	$("#span_error").text("Scegliere orario corretto");
                 	$("#div_error").removeClass('alert-secondary');
                 	$("#div_error").removeClass('alert-success');
                 	$("#div_error").addClass('alert-danger');
@@ -196,6 +196,12 @@
                 	$("#div_error").addClass('alert-success');
             	}
             	if(data == 4) {
+            		$("#span_error").text("Prenotazione già esistente");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-succes');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            	if(data == 5) {
             		$("#span_error").text("Riempi tutti i campi");
                 	$("#div_error").removeClass('alert-secondary');
                 	$("#div_error").removeClass('alert-succes');

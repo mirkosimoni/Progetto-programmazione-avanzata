@@ -96,6 +96,40 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		}
 	}
 	
+	@Override
+	public List <Aula> findByNome() {
+		try {
+		//List<String> nomiAule= new ArrayList<String>();
+		List<Aula> nomiAule = this.getSession().createQuery("FROM Aula a DISTINCT a.nome", Aula.class).getResultList();
+		
+		//for(Aula aula: a)
+			//nomiAule.add(aula.getNome());
+		
+		return nomiAule;
+		} catch(NoResultException nre) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List <String> findByQuota() {
+		try {
+			List<String> quote= new ArrayList<String>();
+			List<Aula> quoteAule = this.getSession().createQuery("FROM Aula a DISTINCT a.quota", Aula.class).getResultList();
+		
+			for(Aula aula: quoteAule)
+			
+				quote.add(String.valueOf(aula.getQuota()));
+				
+			return quote;
+		
+		} catch(NoResultException nre) {
+			return null;
+		}
+	}
+	
+	
+	
 	
 	@Override
 	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {

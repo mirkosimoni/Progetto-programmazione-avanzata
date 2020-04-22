@@ -111,7 +111,7 @@
                 	$("#div_error").addClass('alert-danger');
             	}
             	if(data == 2) {
-                	$("#span_error").text("Scegli valori diversi");
+                	$("#span_error").text("Scegliere orario corretto");
                 	$("#div_error").removeClass('alert-secondary');
                 	$("#div_error").removeClass('alert-success');
                 	$("#div_error").addClass('alert-danger');
@@ -121,6 +121,12 @@
                 	$("#div_error").removeClass('alert-secondary');
                 	$("#div_error").removeClass('alert-danger');
                 	$("#div_error").addClass('alert-success');
+            	}
+            	if(data == 4) {
+                	$("#span_error").text("Modifica combacia con prenotazione già esistente");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-success');
+                	$("#div_error").addClass('alert-danger');
             	}
             },
             error: function(e) {console.log(e);}
