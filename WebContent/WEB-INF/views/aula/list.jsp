@@ -177,7 +177,12 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>
-                <input type="Text" class="form-control" name="nome">
+				<select class="custom-select" id="inputGroupSelect03" name="nomi">
+                  <option selected>Scegli</option>
+                  <c:forEach items="${nomi}" var="n">
+                  <option value="${n}">${n}</option>
+                  </c:forEach>
+                </select>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Numero posti minimi</label>

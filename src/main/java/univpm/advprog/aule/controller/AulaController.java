@@ -25,6 +25,10 @@ import univpm.advprog.aule.model.entities.User;
 import univpm.advprog.aule.services.AulaService;
 import univpm.advprog.aule.services.MyProfileService;
 
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+
+
 @RequestMapping("/aula")
 @Controller
 public class AulaController {
@@ -42,11 +46,13 @@ public class AulaController {
 
 		List<Aula> allAule = this.aulaService.findAll();
 		List<String> quote = this.aulaService.findQuota();
+		List<String> nomi = this.aulaService.findName();
 		
 		System.out.println(quote.size());
 		
 		uiModel.addAttribute("aula", allAule);
 		uiModel.addAttribute("quote", quote);
+		uiModel.addAttribute("nomi", nomi);
 		
 		return "aula/list";
 	}
@@ -59,8 +65,7 @@ public class AulaController {
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "nome", required=false) String nome,
 						@RequestParam(value = "numPosti", required=false) String numPosti,
-						@RequestParam(value = "prese", required=false) Boolean prese,
-						@RequestParam(value = "error", required = false) String error, 
+						@RequestParam(value = "prese", required=false) Boolean prese, 
 						Model uiModel) {
 		
 		
@@ -68,7 +73,7 @@ public class AulaController {
 		
 		SimpleDateFormat formatter_view = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		
-		error = null;
+		//error = null;
 		
 		if(quota.equals("Scegli")) quota = "-1";
 		
@@ -108,11 +113,14 @@ public class AulaController {
 		
 
 		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
-		
+		List<String> q = this.aulaService.findQuota();
+		List<String> n = this.aulaService.findName();
 	
 		uiModel.addAttribute("aula", auleLibere);
 		uiModel.addAttribute("formatter",formatter_view);
-		uiModel.addAttribute("errorMessageData",error);
+		uiModel.addAttribute("quote", q);
+		uiModel.addAttribute("nomi", n);
+		
 		
 		return "aula/list";
 	}
@@ -178,6 +186,7 @@ public class AulaController {
 						@RequestParam(value = "nome", required=false) String nome,
 						@RequestParam(value = "numPosti", required=false) String numPosti,
 						@RequestParam(value = "prese", required=false) Boolean prese,
+						@RequestParam(value = "errorMessageData", required=false) String errorMessageData,
 						Model uiModel) {
 		
 			if(prese==null) prese=false;
@@ -190,6 +199,8 @@ public class AulaController {
 			} catch (Exception e) {
 				System.out.println("ERRORE DENTRO IL CATCH________________________________________");
 			}
+
+			
 		
 		return "redirect:/aula/list";
 		
