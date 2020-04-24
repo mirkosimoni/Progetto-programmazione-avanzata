@@ -131,9 +131,12 @@ public class AulaController {
 	
 	@GetMapping("/{aulaId}/edit")
 	public String edit(@PathVariable("aulaId") Long aulaId, Model uiModel) {
-
+		
 		Aula a = this.aulaService.findById(aulaId);
+		List<String> quote = this.aulaService.findQuota();
 		uiModel.addAttribute("aula", a);
+		uiModel.addAttribute("quote", quote);
+		
 		return "aula/form";
 	}
 	

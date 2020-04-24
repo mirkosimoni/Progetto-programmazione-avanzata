@@ -237,7 +237,6 @@ public class PrenotationController {
 		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
 		String data_orafine = data + ' ' + oraFine;
 		DateTime dt_fine = formatter.parseDateTime(data_orafine);
-		
 		int quota_int = Integer.parseInt(quota);
 		Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
 		

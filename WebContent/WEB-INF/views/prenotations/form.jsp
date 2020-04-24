@@ -10,6 +10,7 @@
 	<c:url value="/prenotations/save/${prenot.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
+  		<h2><span class="badge badge-danger">Modifica Prenotazione</span></h1>
   			<div id="div_error" class="alert alert-secondary" role="alert" style="height: 3em; color: black;"><span id="span_error"></span></div>
   			<input hidden ="" id="id_prenotazione" value="${prenot.id}"> 
 			<form id="my-form" name='edit' action="${action_url}" method='POST'>    
