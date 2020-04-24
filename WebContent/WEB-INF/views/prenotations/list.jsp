@@ -2,11 +2,21 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ page session="false"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
+<sec:authorize access="hasRole('Teacher')" var="isTeacher" />
+<sec:authorize access="isAuthenticated()" var="isAuth" />
+<sec:authorize access="hasRole('Student')" var="isStudent" />
+<sec:authorize access="hasRole('Admin')" var="isAdmin" />
 
 <body style="background-color: rgb(52,58,64);">
+
 <div class="container-fluid">
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
@@ -25,8 +35,10 @@
       <th scope="col">Ora inizio</th>
       <th scope="col">Ora fine</th>
       <th scope="col">Note</th>
-      <th scope="col">Modifica</th>
-      <th scope="col">Elimina</th>
+      <c:if test="${isAdmin || isTeacher}">
+      	<th scope="col">Modifica</th>
+      	<th scope="col">Elimina</th>
+      </c:if>
     </tr>
   </thead>
   <tbody>
@@ -40,8 +52,10 @@
       <td>${formatter.format(p.oraInizio.toDate())}</td>
       <td>${formatter.format(p.oraFine.toDate())}</td>
       <td>${p.note}</td>
-      <td><a href="<c:url value="/prenotations/${p.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
-      <td><a href="<c:url value="/prenotations/delete/${p.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
+      <c:if test="${p.user.username == user.username || isAdmin}">
+      	<td><a href="<c:url value="/prenotations/${p.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
+      	<td><a href="<c:url value="/prenotations/delete/${p.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
+      </c:if>
     </tr>
     </c:forEach>
   </tbody>
@@ -66,7 +80,7 @@
 </div>
 
 
-
+</div>
 
 <!-- Modal Create-->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -205,6 +219,12 @@
             	}
             	if(data == 5) {
             		$("#span_error").text("Riempi tutti i campi");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-succes');
+                	$("#div_error").addClass('alert-danger');
+            	}
+            	if(data == 6) {
+            		$("#span_error").text("Scegli una data successiva ad oggi");
                 	$("#div_error").removeClass('alert-secondary');
                 	$("#div_error").removeClass('alert-succes');
                 	$("#div_error").addClass('alert-danger');

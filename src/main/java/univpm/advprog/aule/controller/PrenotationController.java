@@ -71,6 +71,9 @@ public class PrenotationController {
 	public String list(@RequestParam(value = "message", required=false) String message, 
 					   @RequestParam(value="errorMessageData", required=false) String errorMessageData,
 					   Model uiModel) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = this.profileService.findByUsername(auth.getName());
+		uiModel.addAttribute("user", user);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		List<Prenotation> allPrenotations = this.prenotationService.findAllFromToday();
 		System.out.println(allPrenotations.size());
@@ -95,6 +98,10 @@ public class PrenotationController {
 		System.out.println(data);
 		System.out.println(oraInizio);
 		System.out.println(oraFine);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = this.profileService.findByUsername(auth.getName());
+		uiModel.addAttribute("user", user);
 		
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
@@ -181,6 +188,12 @@ public class PrenotationController {
 			
 			Aula aulanuova = this.aulaService.findByNameQuota(aula, Integer.parseInt(quota));
 			
+			if(dt_inizio.isBeforeNow()) {
+				errorMessageData = "Creazione prenotazione non riuscita scegli una data successiva ad oggi";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
+				return "redirect:/prenotations/list";
+			}
+			
 			Prenotation p = this.prenotationService.create(dt_inizio, dt_fine, user, aulanuova, nome_evento, note);
 			if(p == null) {
 				errorMessageData = "Creazione prenotazione non riuscita";
@@ -248,6 +261,12 @@ public class PrenotationController {
 		p.setOraFine(dt_fine);
 		p.setAula(aula);
 		
+		if(dt_inizio.isBeforeNow()) {
+			errorMessageData = "Creazione prenotazione non riuscita scegli una data successiva ad oggi";
+			uiModel.addAttribute("errorMessageData",errorMessageData);
+			return "redirect:/prenotations/list";
+		}
+		
 		Prenotation prenotazione_controllo = this.prenotationService.update(p);
 		if(prenotazione_controllo == null) {
 			errorMessageData = "Modifica non riuscita";
@@ -291,6 +310,10 @@ public class PrenotationController {
 		
 		if(dt_fine.isBefore(dt_inizio.toInstant()) || dt_fine.equals(dt_inizio)) {
 			return 2;
+		}
+		
+		if(dt_inizio.isBeforeNow()) {
+			return 6;
 		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -355,6 +378,11 @@ public class PrenotationController {
 			
 			if(dt_fine.isBefore(dt_inizio.toInstant()) || dt_fine.equals(dt_inizio)) {
 				return 2;
+			}
+			
+			
+			if(dt_inizio.isBeforeNow()) {
+				return 6;
 			}
 
 			Prenotation p = new Prenotation();

@@ -131,6 +131,12 @@
                 	$("#div_error").removeClass('alert-success');
                 	$("#div_error").addClass('alert-danger');
             	}
+            	if(data == 6) {
+            		$("#span_error").text("Scegli una data successiva ad oggi");
+                	$("#div_error").removeClass('alert-secondary');
+                	$("#div_error").removeClass('alert-succes');
+                	$("#div_error").addClass('alert-danger');
+            	}
             },
             error: function(e) {console.log(e);}
         });
