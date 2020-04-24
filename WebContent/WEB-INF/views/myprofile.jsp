@@ -13,8 +13,6 @@
 <div class="row">
 	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%;">
 </div>
-<link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css"/>
-
 
 <div class="container">
         <div class="row">
