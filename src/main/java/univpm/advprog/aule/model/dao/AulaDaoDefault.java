@@ -89,14 +89,14 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	
 	@Override
 	public List <String> findNome() {
-		return this.getSession().createQuery("SELECT DISTINCT (a.nome) FROM Aula a", String.class).getResultList();
+		return this.getSession().createQuery("SELECT DISTINCT (a.nome) FROM Aula a ORDER BY a.nome", String.class).getResultList();
 	}
 	
 	@Override
 	public List<String> findQuota() {
 		try {
 			List<String> quote= new ArrayList<String>();
-			List<Integer> quoteAule = this.getSession().createQuery("SELECT DISTINCT (a.quota) FROM Aula a", Integer.class).getResultList();
+			List<Integer> quoteAule = this.getSession().createQuery("SELECT DISTINCT (a.quota) FROM Aula a ORDER BY a.quota", Integer.class).getResultList();
 		
 			for(int a: quoteAule)
 			

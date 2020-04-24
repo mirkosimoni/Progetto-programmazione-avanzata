@@ -18,9 +18,14 @@
 		            <input type="text" id="nomeve" class="form-control controllo" name="nome" maxlength="100" value="${aula.nome}">
 		        </div>
 		        <div class="form-group">
-		            <label for="exampleInputEmail1">Quota</label>
-		            <input type="text" id="not" class="form-control controllo" name="quota" maxlength="100" value="${aula.quota}">
-		        </div>
+                	<label for="exampleInputEmail1">Quota</label>
+						<select class="custom-select" id="inputGroupSelect03" name="quota">
+                  			<option selected>Scegli</option>
+                  			<c:forEach items="${quote}" var="q">
+                  			<option value="${q}">${q}</option>
+                  	</c:forEach>
+                </select>
+              </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Numero posti</label>
 		            <input type="text" id="quot" class="form-control controllo" name="numero_posti" value="${aula.numeroPosti}">
