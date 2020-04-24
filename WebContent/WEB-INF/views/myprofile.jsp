@@ -7,6 +7,8 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 	
+
+	
 <body style= "background-color:rgb(52,58,64);">
 <div class="row">
 	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%;">
@@ -30,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="userData ml-3">
-                                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a>Matricola</a></h2>
+                                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a>${user.username}</a></h2>
                                 </div>
                                 <div class="ml-auto">
                                     <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="Discard Changes" />
@@ -44,9 +46,6 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="otherThings-tab" data-toggle="tab" href="#otherThings" role="tab" aria-controls="otherThings" aria-selected="false">Other Things</a>
-                                    </li>
                                 </ul>
                                 <div class="tab-content ml-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
@@ -54,20 +53,20 @@
 
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Name</label>
+                                                <label style="font-weight:bold;">Nome</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                Nome
+                                            ${user.profile.nome}
                                             </div>
                                         </div>
                                         <hr />
 
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Birth Date</label>
+                                                <label style="font-weight:bold;">Cognome</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                               Data di nascita
+                                               ${user.profile.cognome}
                                             </div>
                                         </div>
                                         <hr />
@@ -75,35 +74,21 @@
                                         
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Something</label>
+                                                <label style="font-weight:bold;">Data di nascita</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                Something
+                                            ${dataNascita}
                                             </div>
                                         </div>
                                         <hr />
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Something</label>
+                                                <label style="font-weight:bold;">Interessi</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                Something
+                                                ${user.profile.interessi}
                                             </div>
                                         </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Something</label>
-                                            </div>
-                                            <div class="col-md-8 col-6">
-                                                Something
-                                            </div>
-                                        </div>
-                                        <hr />
-
-                                    </div>
-                                    <div class="tab-pane fade" id="otherThings" role="tabpanel" aria-labelledby="OtherThings-tab">
-                                        Facebook, Google, Twitter Account that are connected to this account
                                     </div>
                                 </div>
                             </div>

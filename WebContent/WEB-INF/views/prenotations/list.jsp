@@ -67,9 +67,11 @@
 
 <!-- Button trigger modal -->
 <div class="col-12 col-md-2" style="text-align: center; margin-bottom: 1em;">
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
-    <i class="fas fa-plus-circle"></i> Crea
-  </button>
+	<c:if test="${isTeacher || isAdmin}">
+		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
+    		<i class="fas fa-plus-circle"></i> Crea
+		</button>
+	</c:if>
 
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-search"></i> Cerca
