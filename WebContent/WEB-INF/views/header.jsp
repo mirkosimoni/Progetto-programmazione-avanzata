@@ -17,7 +17,10 @@
 <script src="https://kit.fontawesome.com/d7d273ea99.js" crossorigin="anonymous"></script>
 </head>
 
+<sec:authorize access="hasRole('Teacher')" var="isTeacher" />
 <sec:authorize access="isAuthenticated()" var="isAuth" />
+<sec:authorize access="hasRole('Student')" var="isStudent" />
+<sec:authorize access="hasRole('Admin')" var="isAdmin" />
 
 <div class="container-fluid">
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
