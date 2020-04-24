@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +41,14 @@ private MyProfileService myprofileService;
 	}
 	
 	@GetMapping(value = "/profile")
-	public String profile() {
+	public String profile(Model uiModel) {
+		
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = this.myprofileService.findByUsername(auth.getName());
-		
+		uiModel.addAttribute("user", user);
+		String dataNascita = user.getProfile().getDataNascita().getDayOfMonth() + "-" + user.getProfile().getDataNascita().getMonthValue() +"-"+ user.getProfile().getDataNascita().getYear();
+		uiModel.addAttribute("dataNascita", dataNascita);
 
 		return "myprofile";
 	}
