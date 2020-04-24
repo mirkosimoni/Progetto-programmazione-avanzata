@@ -79,15 +79,19 @@ public class LoadDataTest {
 				
 				Role admin = roleDao.create("Admin");
 				Role utente = roleDao.create("Student");
-				Set<Role> setRole = new HashSet();
-				setRole.add(admin);
-				setRole.add(utente);
+				Set<Role> setRoleAS = new HashSet();
+				setRoleAS.add(admin);
+				setRoleAS.add(utente);
 				
-				User user1 = userDao.create("Mirko", "12345", true, setRole);
-				User user2 = userDao.create("Daniele", "12345", true, setRole);
-				User user3 = userDao.create("Fabio", "12345", true, setRole);
-				User user4 = userDao.create("Lorenzo", "12345", true, setRole);
-				User user5 = userDao.create("Alberto", "12345", true, setRole);
+				Set<Role> setRoleT = new HashSet();
+				Role teacher = roleDao.create("Teacher");
+				setRoleT.add(teacher);
+				
+				User user1 = userDao.create("Mirko", "12345", true, setRoleT);
+				User user2 = userDao.create("Daniele", "12345", true, setRoleAS);
+				User user3 = userDao.create("Fabio", "12345", true, setRoleAS);
+				User user4 = userDao.create("Lorenzo", "12345", true, setRoleAS);
+				User user5 = userDao.create("Alberto", "12345", true, setRoleAS);
 				
 				
 				Profile profile1 = new Profile(); 
