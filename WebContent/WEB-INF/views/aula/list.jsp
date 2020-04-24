@@ -5,8 +5,14 @@
 
 <body style="background-color: rgb(52,58,64);">
 
+<div class="container-fluid">
+
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
+
+<c:if test="${not empty errorMessageData}">
+	<div class="alert alert-danger" role="alert">${errorMessageData}</div>
+</c:if>
 <table class="table">
   <thead class="thead text-center" style="background-color: #DCDCDC;">
     <tr>
@@ -18,6 +24,7 @@
       <th scope="col">Elimina</th>
     </tr>
   </thead>
+
   <tbody>
   <c:forEach items="${aula}" var="a">
     <tr class="text-center" style="color: white;">
@@ -44,7 +51,7 @@
 </div>
 
 </div>
-
+</div>
 <div class="row">
     <div class="col-md-10 col-0"></div>
     <div class="col-12 col-md-2 text-center">

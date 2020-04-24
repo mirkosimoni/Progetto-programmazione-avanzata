@@ -42,7 +42,9 @@ public class AulaController {
 	
 	
 	@GetMapping(value = "/list")
-	public String list(@RequestParam(value = "message", required=false) String message, Model uiModel) {
+	public String list(@RequestParam(value = "message", required=false) String message,
+			@RequestParam(value = "errorMessageData", required = false) String errorMessageData,
+			Model uiModel) {
 
 		List<Aula> allAule = this.aulaService.findAll();
 		List<String> quote = this.aulaService.findQuota();
@@ -53,6 +55,8 @@ public class AulaController {
 		uiModel.addAttribute("aula", allAule);
 		uiModel.addAttribute("quote", quote);
 		uiModel.addAttribute("nomi", nomi);
+		
+		uiModel.addAttribute("errorMessageData", errorMessageData);
 		
 		return "aula/list";
 	}
@@ -154,7 +158,7 @@ public class AulaController {
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "numero_posti", required=false) String numero_posti,
 						@RequestParam(value = "prese", required=false) boolean prese,
-						@RequestParam(value = "error", required = false) String error, 
+						@RequestParam(value = "error", required = false) String errorMessageData, 
 						Model uiModel) {
 		
 		int quota_int = 0;
@@ -200,6 +204,8 @@ public class AulaController {
 			if(a==null) System.out.println("ERRORE DENTRO IL TRY__________________________________");
 
 			} catch (Exception e) {
+				errorMessageData = "Creazione aula non riuscita";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
 				System.out.println("ERRORE DENTRO IL CATCH________________________________________");
 			}
 
