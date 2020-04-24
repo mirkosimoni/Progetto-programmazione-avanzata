@@ -14,7 +14,7 @@
 </div>
 
 <div class="row" style="padding-top:0.5em; padding-left:1em; padding-right:1em;">
-  <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
+  <div class="col-12 col-sm-6 col-lg-4" style="margin-top:1em;">
     <div class="card" style="height: 100%">
       <div class="card-body">
         <h5 class="card-title">Visualizza prenotazioni</h5>
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
+  <div class="col-12 col-sm-6 col-lg-4" style="margin-top:1em;">
     <div class="card" style="height: 100%">
       <div class="card-body">
         <h5 class="card-title">Cerca aula</h5>
@@ -32,7 +32,7 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
+  <div class="col-12 col-sm-6 col-lg-4" style="margin-top:1em;">
     <div class="card" style="height: 100%">
       <div class="card-body">
         <h5 class="card-title">Profilo</h5>
@@ -41,15 +41,7 @@
       </div>
     </div>
   </div>
-     <div class="col-12 col-sm-6 col-lg-3" style="margin-top:1em;">
-    <div class="card" style="height: 100%">
-      <div class="card-body">
-        <h5 class="card-title">Gestione aule</h5>
-        <p class="card-text">Aggiungi o cancella un'aula</p>
-        <a href="gestione-aule/gestione" class="btn btn-danger">Gestisci</a>
-      </div>
-    </div>
-  </div>
+    
 </div>
 </div>
 </body>
