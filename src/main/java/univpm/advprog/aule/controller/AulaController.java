@@ -158,7 +158,7 @@ public class AulaController {
 						@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "numero_posti", required=false) String numero_posti,
 						@RequestParam(value = "prese", required=false) boolean prese,
-						@RequestParam(value = "error", required = false) String errorMessageData, 
+						@RequestParam(value = "errorMessageData", required = false) String errorMessageData, 
 						Model uiModel) {
 		
 		int quota_int = 0;
@@ -168,11 +168,14 @@ public class AulaController {
 			quota_int = Integer.parseInt(quota);
 			posti_int = Integer.parseInt(numero_posti);
 		} catch(Exception e) {
+			uiModel.addAttribute("errorMessageData","Modifica non riuscita: Numero posti");
 			return "redirect:/aula/list";
 		}
 		
-		if(nome.equals("") || nome == null)
+		if(nome.equals("") || nome == null) {
+			uiModel.addAttribute("errorMessageData","Modifica non riuscita: errore inserimento nome");
 			return "redirect:/aula/list";
+		}
 		
 		Aula a = this.aulaService.findById(aulaId);
 		a.setNome(nome);
