@@ -2,11 +2,25 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+
+<sec:authorize access="hasRole('Teacher')" var="isTeacher" />
+<sec:authorize access="isAuthenticated()" var="isAuth" />
+<sec:authorize access="hasRole('Student')" var="isStudent" />
+<sec:authorize access="hasRole('Admin')" var="isAdmin" />
 
 <body style="background-color: rgb(52,58,64);">
 
+<div class="container-fluid">
+
 <div class="row" style="margin-top: 4em;">
 <div class="col-12 col-md-10">
+
+<c:if test="${not empty errorMessageData}">
+	<div class="alert alert-danger" role="alert">${errorMessageData}</div>
+</c:if>
 <table class="table">
   <thead class="thead text-center" style="background-color: #DCDCDC;">
     <tr>
@@ -14,10 +28,13 @@
       <th scope="col">Nome</th>
       <th scope="col">Numero posti</th>
       <th scope="col">Prese</th>
-      <th scope="col">Modifica</th>
-      <th scope="col">Elimina</th>
+      <c:if test="${isAdmin}">
+      	<th scope="col">Modifica</th>
+      	<th scope="col">Elimina</th>
+      </c:if>
     </tr>
   </thead>
+
   <tbody>
   <c:forEach items="${aula}" var="a">
     <tr class="text-center" style="color: white;">
@@ -25,8 +42,10 @@
       <td>${a.nome}</td>
       <td>${a.numeroPosti}</td>
       <td>${a.presentiPrese}</td>
-      <td><a href="<c:url value="/aula/${a.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
-      <td><a href="<c:url value="/aula/delete/${a.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
+      <c:if test="${isAdmin}">
+      	<td><a href="<c:url value="/aula/${a.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
+      	<td><a href="<c:url value="/aula/delete/${a.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
+      </c:if>
     </tr>
     </c:forEach>
   </tbody>
@@ -34,9 +53,11 @@
 </div>
 
 <div class="col-12 col-md-2" style="text-align: center; margin-bottom: 1em;">
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
-    <i class="fas fa-plus-circle"></i> Crea
-  </button>
+	<c:if test="${isAdmin}">
+  		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate" style="width: 6em; margin-bottom: 1em;">
+    		<i class="fas fa-plus-circle"></i> Crea
+  		</button>
+  </c:if>
   
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSearch" style="width: 6em; margin-bottom: 1em;">
     <i class="fas fa-search"></i> Cerca
@@ -44,7 +65,7 @@
 </div>
 
 </div>
-
+</div>
 <div class="row">
     <div class="col-md-10 col-0"></div>
     <div class="col-12 col-md-2 text-center">
