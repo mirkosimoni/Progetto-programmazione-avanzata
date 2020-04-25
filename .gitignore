@@ -7,3 +7,4 @@ bin/*
 
 /target/
 /bin/
+src/main/resources/path.properties

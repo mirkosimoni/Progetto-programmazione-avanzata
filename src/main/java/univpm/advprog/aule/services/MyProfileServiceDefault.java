@@ -27,8 +27,13 @@ public class MyProfileServiceDefault implements MyProfileService {
 	UserDao userRepository;
 	
 	@Autowired
-	public void setProfileRepository(UserDao userRepository) {
+	public void setUserRepository(UserDao userRepository) {
 		this.userRepository = userRepository;
+	}
+	
+	@Autowired
+	public void setProfileRepository(ProfileDao profileRepository) {
+		this.profilerepository = profileRepository;
 	}
 	
 	@Override
@@ -44,6 +49,7 @@ public class MyProfileServiceDefault implements MyProfileService {
 
 	@Override
 	public User update(User user) {
+		this.profilerepository.update(user.getProfile());
 		return userRepository.update(user);
 	}
 

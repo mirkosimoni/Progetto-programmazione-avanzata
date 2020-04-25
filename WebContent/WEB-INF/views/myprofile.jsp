@@ -25,7 +25,7 @@
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
                                 <div class="image-container">
-                                    <img src="${user.profile.immagine}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                    <img src="<c:url value="${user.profile.immagine}"/>" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
                                     <div class="middle">
                                     	<form method="POST" action="${action_url}" enctype="multipart/form-data">
                                 			<input type="submit" class="btn btn-danger" id="btnChangePicture" value="Change" />
