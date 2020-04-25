@@ -71,6 +71,8 @@ public class PrenotationController {
 	public String list(@RequestParam(value = "message", required=false) String message, 
 					   @RequestParam(value="errorMessageData", required=false) String errorMessageData,
 					   Model uiModel) {
+		List<String> quote = this.aulaService.findQuota();
+		List<String> nomi = this.aulaService.findName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = this.profileService.findByUsername(auth.getName());
 		uiModel.addAttribute("user", user);
@@ -80,6 +82,8 @@ public class PrenotationController {
 		uiModel.addAttribute("errorMessageData",errorMessageData);
 		uiModel.addAttribute("formatter", formatter);
 		uiModel.addAttribute("prenotations", allPrenotations);
+		uiModel.addAttribute("quote", quote);
+		uiModel.addAttribute("nomi", nomi);
 		
 		return "prenotations/list";
 	}
@@ -102,6 +106,9 @@ public class PrenotationController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = this.profileService.findByUsername(auth.getName());
 		uiModel.addAttribute("user", user);
+		
+		List<String> q = this.aulaService.findQuota();
+		List<String> n = this.aulaService.findName();
 		
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		
@@ -157,6 +164,8 @@ public class PrenotationController {
 		}
 		
 		uiModel.addAttribute("formatter",formatter_view);
+		uiModel.addAttribute("quote", q);
+		uiModel.addAttribute("nomi", n);
 		uiModel.addAttribute("errorMessageData",error);
 		
 		return "prenotations/list";
@@ -218,10 +227,14 @@ public class PrenotationController {
 	
 	@GetMapping("/{prenotationId}/edit")
 	public String edit(@PathVariable("prenotationId") Long prenotationId, Model uiModel) {
+		List<String> q = this.aulaService.findQuota();
+		List<String> n = this.aulaService.findName();
 		SimpleDateFormat formatter_ora = new SimpleDateFormat("HH:mm");
 		SimpleDateFormat formatter_giorno = new SimpleDateFormat("yyyy-MM-dd");
 		Prenotation p = this.prenotationService.findById(prenotationId);
 		uiModel.addAttribute("prenot", p);
+		uiModel.addAttribute("quote", q);
+		uiModel.addAttribute("nomi", n);
 		uiModel.addAttribute("formatter_ora", formatter_ora);
 		uiModel.addAttribute("formatter_giorno", formatter_giorno);
 		return "prenotations/form";

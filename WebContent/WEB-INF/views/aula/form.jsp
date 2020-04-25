@@ -9,7 +9,7 @@
 	<c:url value="/aula/save/${aula.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
-  			<h2><span class="badge badge-danger">Modifica aula</span></h1>
+  			<h2><span class="badge badge-danger">Modifica aula</span></h2>
   			<input hidden ="" id="id_aula" value="${aula.id}"> 
 			<form id="my-form" name='edit' action="${action_url}" method='POST'>  
 			  
@@ -20,10 +20,10 @@
 		        <div class="form-group">
                 	<label for="exampleInputEmail1">Quota</label>
 						<select class="custom-select" id="inputGroupSelect03" name="quota">
-                  			<option selected>Scegli</option>
+                  			<option selected>${aula.quota}</option>
                   			<c:forEach items="${quote}" var="q">
-                  			<option value="${q}">${q}</option>
-                  	</c:forEach>
+                  				<option value="${q}">${q}</option>
+                  			</c:forEach>
                 </select>
               </div>
 		        <div class="form-group">
@@ -31,7 +31,12 @@
 		            <input type="text" id="quot" class="form-control controllo" name="numero_posti" value="${aula.numeroPosti}">
 		         </div>
 		         <div class="form-check form-check-inline">
-  					<input class="form-check-input" type="checkbox" name="prese">
+		         	<c:if test="${aula.presentiPrese}">
+  						<input class="form-check-input" type="checkbox" name="prese" checked>
+  					</c:if>
+  					<c:if test="${!aula.presentiPrese}">
+  						<input class="form-check-input" type="checkbox" name="prese">
+  					</c:if>
  					<label class="form-check-label" for="inlineCheckbox1">Presenza prese</label>
 			  	</div>
 		            

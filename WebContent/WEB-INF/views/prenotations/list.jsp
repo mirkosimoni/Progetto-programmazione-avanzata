@@ -111,11 +111,21 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
-                <input  id = "quot" type="text" class="form-control controllo" name="quota">
+				<select class="custom-select controllo" id="quot" name="quota">
+                  <option selected>Scegli</option>
+                  <c:forEach items="${quote}" var="q">
+                  <option value="${q}">${q}</option>
+                  </c:forEach>
+                </select>
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Aula</label>
-                <input  id = "aul" type="text" class="form-control controllo" name="aula">
+                <label for="exampleInputEmail1">Nome</label>
+				<select class="custom-select" id="aul" name="aula">
+                  <option selected>Scegli</option>
+                  <c:forEach items="${nomi}" var="n">
+                  <option value="${n}">${n}</option>
+                  </c:forEach>
+                </select>
               </div>
               <div class="form-group">
     			<label for="exampleInputEmail1">Giorno</label>
@@ -299,11 +309,21 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>
-                <input type="text" class="form-control" name="quota">
+				<select class="custom-select controllo" id="quot" name="quota">
+                  <option selected>Scegli</option>
+                  <c:forEach items="${quote}" var="q">
+                  <option value="${q}">${q}</option>
+                  </c:forEach>
+                </select>
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Aula</label>
-                <input type="text" class="form-control" name="aula">
+                <label for="exampleInputEmail1">Nome</label>
+				<select class="custom-select" id="aul" name="aula">
+                  <option selected>Scegli</option>
+                  <c:forEach items="${nomi}" var="n">
+                  <option value="${n}">${n}</option>
+                  </c:forEach>
+                </select>
               </div>
               <div class="form-group">
     			     <label for="exampleInputEmail1">Giorno</label>

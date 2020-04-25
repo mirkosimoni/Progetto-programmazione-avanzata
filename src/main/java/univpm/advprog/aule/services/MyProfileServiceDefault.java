@@ -42,4 +42,9 @@ public class MyProfileServiceDefault implements MyProfileService {
 		return userRepository.findUserByUsername(username);
 	}
 
+	@Override
+	public User update(User user) {
+		return userRepository.update(user);
+	}
+
 }

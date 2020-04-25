@@ -6,5 +6,7 @@ public interface MyProfileService {
 
 	public Profile create(Profile profile);
 	
+	public User update(User user);
+	
 	public User findByUsername(String username);
 }

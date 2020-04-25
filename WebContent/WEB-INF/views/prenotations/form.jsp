@@ -10,7 +10,7 @@
 	<c:url value="/prenotations/save/${prenot.id}" var="action_url" />
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(52,58,64);">
   		<div class="col-md-6 offset-md-3 col-10 offset-1" style="margin-top: 5em; color: white; background-color:#696969; width: 80%; padding: 2em; border-radius: 1em;">
-  		<h2><span class="badge badge-danger">Modifica Prenotazione</span></h1>
+  		<h2><span class="badge badge-danger">Modifica Prenotazione</span></h2>
   			<div id="div_error" class="alert alert-secondary" role="alert" style="height: 3em; color: black;"><span id="span_error"></span></div>
   			<input hidden ="" id="id_prenotazione" value="${prenot.id}"> 
 			<form id="my-form" name='edit' action="${action_url}" method='POST'>    
@@ -21,15 +21,25 @@
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Note</label>
 		            <input type="text" id="not" class="form-control controllo" name="note" maxlength="100" value="${prenot.note}">
-		        </div>
-		        <div class="form-group">
-		            <label for="exampleInputEmail1">Quota</label>
-		            <input type="text" id="quot" class="form-control controllo" name="quota" value="${prenot.aula.quota}">
-		         </div>
+		        </div> 
 		         <div class="form-group">
-		            <label for="exampleInputEmail1">Aula</label>
-		            <input type="text" id="aul" class="form-control controllo" name="aula" value="${prenot.aula.nome}">
-		         </div>
+                <label for="exampleInputEmail1">Quota</label>
+				<select class="custom-select controllo" id="quot" name="quota">
+                  <option selected>${prenot.aula.quota}</option>
+                  <c:forEach items="${quote}" var="q">
+                  <option value="${q}">${q}</option>
+                  </c:forEach>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nome</label>
+				<select class="custom-select" id="aul" name="aula">
+                  <option selected>${prenot.aula.nome}</option>
+                  <c:forEach items="${nomi}" var="n">
+                  <option value="${n}">${n}</option>
+                  </c:forEach>
+                </select>
+              </div>
 		         <div class="form-group">
 		    		<label for="exampleInputEmail1">Giorno</label>
 		    		<input type="Date" id="gio" class="form-control controllo" name="data" value="${formatter_giorno.format(prenot.oraInizio.toDate())}">

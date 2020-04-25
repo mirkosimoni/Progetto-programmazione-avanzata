@@ -6,6 +6,7 @@
 <%@ page session="false"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 	
 
 	
@@ -14,6 +15,7 @@
 	<img src="<c:url value="/media/home.jpg"/>" class="img-fluid" alt="home" style="width: 100%;">
 </div>
 
+<c:url value="/myprofile/upload" var="action_url" />
 <div class="container">
         <div class="row">
             <div class="col-12">
@@ -23,10 +25,12 @@
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
                                 <div class="image-container">
-                                    <img src="http://placehold.it/150x150" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                    <img src="${user.profile.immagine}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
                                     <div class="middle">
-                                        <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
-                                        <input type="file" style="display: none;" id="profilePicture" name="file" />
+                                    	<form method="POST" action="${action_url}" enctype="multipart/form-data">
+                                			<input type="submit" class="btn btn-danger" id="btnChangePicture" value="Change" />
+                                        	<input type="file" id="profilePicture" name="file" />
+                                        </form >
                                     </div>
                                 </div>
                                 <div class="userData ml-3">
