@@ -118,6 +118,27 @@ public class LoadDataTest {
 				teacher3.setProfile(profileTeacher3);
 				userDao.update(teacher3);
 				
+				User teacher4 = userDao.create("teacher4", "12345", true, setRoleTeacher);
+				Profile profileTeacher4 = new Profile();
+				profileTeacher4.setCognome("Spegni"); profileTeacher4.setNome("Francesco"); profileTeacher4.setDataNascita(LocalDate.of(1980, 1, 1));
+				profileTeacher4 = profileDao.create(profileTeacher4);
+				teacher4.setProfile(profileTeacher4);
+				userDao.update(teacher4);
+				
+				User teacher5 = userDao.create("teacher5", "12345", true, setRoleTeacher);
+				Profile profileTeacher5 = new Profile();
+				profileTeacher5.setCognome("Potena"); profileTeacher5.setNome("Domenico"); profileTeacher5.setDataNascita(LocalDate.of(1980, 1, 1));
+				profileTeacher5 = profileDao.create(profileTeacher5);
+				teacher5.setProfile(profileTeacher5);
+				userDao.update(teacher5);
+				
+				User teacher6 = userDao.create("teacher6", "12345", true, setRoleTeacher);
+				Profile profileTeacher6 = new Profile();
+				profileTeacher6.setCognome("Spalazzi"); profileTeacher6.setNome("Luca"); profileTeacher6.setDataNascita(LocalDate.of(1980, 1, 1));
+				profileTeacher6 = profileDao.create(profileTeacher6);
+				teacher6.setProfile(profileTeacher6);
+				userDao.update(teacher6);
+				
 				User student1 = userDao.create("student1", "12345", true, setRoleStudent);
 				Profile profileStudent1 = new Profile();
 				profileStudent1.setCognome("Bianchi"); profileStudent1.setNome("Giovanni"); profileStudent1.setDataNascita(LocalDate.of(1990, 1, 1));
@@ -165,6 +186,16 @@ public class LoadDataTest {
 				Prenotation p3 = prenotationDao.create(oraInizio3, oraFine3, teacher3, aula3, "Esercitazione RO2", "");
 				session.refresh(aula3);
 				
+				DateTime oraInizio7 = new DateTime(anno, mese, giorno, 13, 30, 0);
+				DateTime oraFine7 = new DateTime(anno, mese, giorno, 18, 30, 0);
+				Prenotation p7 = prenotationDao.create(oraInizio7, oraFine7, teacher4, aula1, "Esame Programmazione Avanzata", "Presentarsi con il computer");
+				session.refresh(aula1);
+				
+				DateTime oraInizio8 = new DateTime(anno, mese, giorno, 13, 30, 0);
+				DateTime oraFine8 = new DateTime(anno, mese, giorno, 18, 30, 0);
+				Prenotation p8 = prenotationDao.create(oraInizio8, oraFine8, teacher5, aula7, "Esercitazione CyberSecurity", "");
+				session.refresh(aula7);
+				
 				DateTime dopoDomani = domani.plusDays(1);
 				anno = dopoDomani.getYear();
 				mese = dopoDomani.getMonthOfYear();
@@ -175,15 +206,46 @@ public class LoadDataTest {
 				Prenotation p4 = prenotationDao.create(oraInizio4, oraFine4, teacher1, aula3, "Ricevimento PM", "Non è necessario appuntamento");
 				session.refresh(aula4);
 				
-				DateTime oraInizio5 = new DateTime(anno, mese, giorno, 10, 30, 0);
+				DateTime oraInizio5 = new DateTime(anno, mese, giorno, 11, 30, 0);
 				DateTime oraFine5 = new DateTime(anno, mese, giorno, 16, 30, 0);
 				Prenotation p5 = prenotationDao.create(oraInizio5, oraFine5, teacher2, aula6, "Esame orale IA", "Solo se [voto scritto] >= 18");
 				session.refresh(aula6);
 				
-				DateTime oraInizio6 = new DateTime(anno, mese, giorno, 10, 30, 0);
-				DateTime oraFine6 = new DateTime(anno, mese, giorno, 16, 30, 0);
+				DateTime oraInizio6 = new DateTime(anno, mese, giorno, 9, 30, 0);
+				DateTime oraFine6 = new DateTime(anno, mese, giorno, 11, 30, 0);
 				Prenotation p6 = prenotationDao.create(oraInizio6, oraFine6, teacher3, aula6, "Verbalizzazione voto RO2", "");
 				session.refresh(aula6);
+				
+				DateTime oraInizio9 = new DateTime(anno, mese, giorno, 11, 30, 0);
+				DateTime oraFine9 = new DateTime(anno, mese, giorno, 13, 30, 0);
+				Prenotation p9 = prenotationDao.create(oraInizio9, oraFine9, teacher5, aula9, "Presentazione esercitazione Rapid Miner", "Massimo 8 slide a gruppo");
+				session.refresh(aula9);
+				
+				DateTime oraInizio10 = new DateTime(anno, mese, giorno, 14, 30, 0);
+				DateTime oraFine10 = new DateTime(anno, mese, giorno, 16, 30, 0);
+				Prenotation p10 = prenotationDao.create(oraInizio10, oraFine10, teacher6, aula4, "Seminario Sicurezza infromatica", "Richiesta prenotazione (vedi sito corso)");
+				session.refresh(aula4);
+				
+				DateTime dopoDopoDomani = dopoDomani.plusDays(1);
+				anno = dopoDopoDomani.getYear();
+				mese = dopoDopoDomani.getMonthOfYear();
+				giorno = dopoDopoDomani.getDayOfMonth();
+				
+				DateTime oraInizio11 = new DateTime(anno, mese, giorno, 9, 30, 0);
+				DateTime oraFine11 = new DateTime(anno, mese, giorno, 11, 30, 0);
+				Prenotation p11 = prenotationDao.create(oraInizio10, oraFine10, teacher3, aula6, "Ricevimento informazioni tesi triennale", "Massimo 2 esami rimanenti");
+				session.refresh(aula4);
+				
+				DateTime oraInizio12 = new DateTime(anno, mese, giorno, 11, 30, 0);
+				DateTime oraFine12 = new DateTime(anno, mese, giorno, 13, 30, 0);
+				Prenotation p12 = prenotationDao.create(oraInizio12, oraFine12, teacher5, aula6, "Seminario Spark e Hadoop", "Non è richiesta la prenotazione");
+				session.refresh(aula6);
+				
+				DateTime oraInizio13 = new DateTime(anno, mese, giorno, 14, 30, 0);
+				DateTime oraFine13 = new DateTime(anno, mese, giorno, 16, 30, 0);
+				Prenotation p13 = prenotationDao.create(oraInizio13, oraFine13, teacher1, aula6, "Presentazione corsi certificazione PMI", "Gli studenti del corso di PM sono caldamente invitati a partecipare");
+				session.refresh(aula6);
+				
 				
 				session.getTransaction().commit();
 				
