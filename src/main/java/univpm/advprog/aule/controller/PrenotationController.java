@@ -215,10 +215,20 @@ public class PrenotationController {
 		return "redirect:/prenotations/list";
 	}
 	
+	@GetMapping("/myprenotations/{username}")
+	public String myprenot (@PathVariable("username") String username, Model uiModel) {
+		User user = this.profileService.findByUsername(username);
+		List<Prenotation> prenotations = this.prenotationService.findByUser(user);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		uiModel.addAttribute("prenotations", prenotations);
+		uiModel.addAttribute("formatter", formatter);
+		return "prenotations/list";
+	}
+	
 	
 	
 	@GetMapping("/delete/{prenotationId}")
-	public String jobofferdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
+	public String prenotationdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
 		this.prenotationService.delete(prenotationId);
 		return "redirect:/prenotations/list";
 	}
