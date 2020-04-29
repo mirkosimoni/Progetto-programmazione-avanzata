@@ -71,6 +71,15 @@ public class MyProfileController {
 		return "myprofile";
 	}
 	
+	@GetMapping(value = "/userlist")
+	public String userlist(Model uiModel) {
+		
+		List<User> user = this.myprofileService.findAll();
+		uiModel.addAttribute("user", user);
+
+		return "userlist";
+	}
+	
 	
 	@PostMapping("/upload")
 	public String multiFileUpload(@RequestParam("file") MultipartFile file,

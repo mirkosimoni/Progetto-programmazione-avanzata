@@ -12,4 +12,8 @@
    <definition extends="default" name="myprofile">
    <put-attribute name="body" value="/WEB-INF/views/myprofile.jsp" />
   </definition>
+  <definition extends="default" name="userlist">
+   <put-attribute name="body" value="/WEB-INF/views/userlist.jsp" />
+  </definition>
+  
 </tiles-definitions>

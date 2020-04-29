@@ -56,6 +56,13 @@
     											</div>
 											</form>
 										</c:if>
+										<c:if test="${isAdmin}">
+                                    		<form name='userlist' action="<c:url value="/myprofile/userlist"/>" method='GET'>
+                                         		<div class="row" style="margin-bottom: 2em;">                                
+    												<button type="submit" class="btn btn-danger" role="button" aria-pressed="true">Lista utenti</button>
+    											</div>
+											</form>
+										</c:if>
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Nome</label>
