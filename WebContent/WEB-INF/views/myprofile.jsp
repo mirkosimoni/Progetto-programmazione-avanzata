@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 	
-
+<sec:authorize access="hasRole('Admin')" var="isAdmin" />
 	
 <body style= "background-color:rgb(52,58,64);">
 <div class="row">
@@ -16,6 +16,7 @@
 </div>
 
 <c:url value="/myprofile/upload" var="action_url" />
+
 <div class="container">
         <div class="row">
             <div class="col-12">
@@ -35,10 +36,7 @@
                                 </div>
                                 <div class="userData ml-3">
                                     <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a>${user.username}</a></h2>
-                                </div>
-                                <div class="ml-auto">
-                                    <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="Discard Changes" />
-                                </div>
+                                </div>                   
                             </div>
                         </div>
 
@@ -51,8 +49,13 @@
                                 </ul>
                                 <div class="tab-content ml-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
-                                        
-
+                                    	<c:if test="${isAdmin}">
+                                    		<form name='myprenot' action="<c:url value="/prenotations/myprenotations/${user.username}" />" method='GET'>
+                                         		<div class="row" style="margin-bottom: 2em;">                                
+    												<button type="submit" class="btn btn-danger" role="button" aria-pressed="true">Prenotazioni Personali</button>
+    											</div>
+											</form>
+										</c:if>
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Nome</label>
@@ -103,4 +106,5 @@
             </div>
         </div>
     </div>
+    
 </body>
