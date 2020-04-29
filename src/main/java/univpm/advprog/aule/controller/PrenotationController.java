@@ -116,10 +116,10 @@ public class PrenotationController {
 		
 		error = null;
 		
-		if(surname == "") surname = null;
-		if(name == "") name = null;
-		if(quota == "") quota = null;
-		if(nome_aula == "") nome_aula = null;
+		if("".equals(surname)) surname = null;
+		if("".equals(name)) name = null;
+		if("Scegli".equals(quota)) quota = null;
+		if("Scegli".equals(nome_aula)) nome_aula = null;
 		
 		if(!data.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")))) {
 			DateTime dt_inizio = new DateTime();
@@ -215,10 +215,21 @@ public class PrenotationController {
 		return "redirect:/prenotations/list";
 	}
 	
+	@GetMapping("/myprenotations/{username}")
+	public String myprenot (@PathVariable("username") String username, Model uiModel) {
+		User user = this.profileService.findByUsername(username);
+		List<Prenotation> prenotations = this.prenotationService.findByUser(user);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		uiModel.addAttribute("prenotations", prenotations);
+		uiModel.addAttribute("formatter", formatter);
+		uiModel.addAttribute("user", user);
+		return "prenotations/list";
+	}
+	
 	
 	
 	@GetMapping("/delete/{prenotationId}")
-	public String jobofferdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
+	public String prenotationdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
 		this.prenotationService.delete(prenotationId);
 		return "redirect:/prenotations/list";
 	}
@@ -375,7 +386,7 @@ public class PrenotationController {
 		System.out.println(obj.oraInizio);
 		System.out.println(obj.oraFine);
 		
-		if (!"".equals(obj.nome_evento) && !"".equals(obj.note) && !"".equals(obj.quota) && !"".equals(obj.nome_aula) && !"".equals(obj.giorno) && !"Scegli".equals(obj.oraInizio) && !"Scegli".equals(obj.oraFine)) {
+		if (!"".equals(obj.nome_evento) && !"".equals(obj.note) && !"Scegli".equals(obj.quota) && !"Scegli".equals(obj.nome_aula) && !"".equals(obj.giorno) && !"Scegli".equals(obj.oraInizio) && !"Scegli".equals(obj.oraFine)) {
 			
 			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 			String data_orainizio = obj.giorno + ' ' + obj.oraInizio;

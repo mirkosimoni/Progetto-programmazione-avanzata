@@ -118,7 +118,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		List<Aula> aule = this.findAll();
 		
 		for(Aula a : aule) {
-			if(a.getQuota() == quota && a.getNome() == nome)
+			if(a.getQuota() == quota && nome.equals(a.getNome()))
 				return null;
 		}
 		

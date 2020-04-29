@@ -66,7 +66,7 @@ public class AulaController {
 						@RequestParam(value = "oraInizio", required=false) String oraInizio,
 						@RequestParam(value = "oraFine", required=false) String oraFine,
 						@RequestParam(value = "quota", required=false) String quota,
-						@RequestParam(value = "nome", required=false) String nome,
+						@RequestParam(value = "nomi", required=false) String nomi,
 						@RequestParam(value = "numPosti", required=false) String numPosti,
 						@RequestParam(value = "prese", required=false) Boolean prese, 
 						Model uiModel) {
@@ -80,14 +80,13 @@ public class AulaController {
 		
 		if(quota.equals("Scegli")) quota = "-1";
 		
-		if(nome == "") nome = null;
+		if("Scegli".equals(nomi)) nomi = null;
 		if(numPosti == "") numPosti = "-1";	
 		
 		DateTime dt_inizio = new DateTime();
 		DateTime dt_fine = new DateTime();
 
-		
-		if(!giorno.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")))) {
+		if(!giorno.contentEquals("") && ((oraInizio.contentEquals("Scegli") || oraFine.contentEquals("Scegli")))) {
 			
 			if(!oraInizio.equals("Scegli")) {
 				String data_orainizio = giorno + ' ' + oraInizio;
@@ -104,18 +103,14 @@ public class AulaController {
 				String data_orafine = giorno + ' ' + "23:00";
 				dt_fine = formatter.parseDateTime(data_orafine);
 			}
-			
-
-			
-	}	
+		}	
 	
 		int quotaInt = Integer.parseInt(quota);
 		int numPostiInt = Integer.parseInt(numPosti);
 		
-		if(giorno=="") {dt_inizio=null; dt_fine=null;}
-		
+		if("".equals(giorno)) {dt_inizio=null; dt_fine=null;}
 
-		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nome, numPostiInt, prese);
+		List<Aula> auleLibere = this.aulaService.findAuleLibere(dt_inizio, dt_fine, quotaInt, nomi, numPostiInt, prese);
 		List<String> q = this.aulaService.findQuota();
 		List<String> n = this.aulaService.findName();
 	
@@ -203,12 +198,15 @@ public class AulaController {
 			try {
 			Aula a = this.aulaService.create(nome, Integer.parseInt(quota), Integer.parseInt(numPosti), prese);
 			
-			if(a==null) System.out.println("ERRORE DENTRO IL TRY__________________________________");
+			if(a==null) {
+				errorMessageData = "Creazione aula non riuscita";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
+				return "redirect:/aula/list";
+			}
 
 			} catch (Exception e) {
 				errorMessageData = "Creazione aula non riuscita";
 				uiModel.addAttribute("errorMessageData",errorMessageData);
-				System.out.println("ERRORE DENTRO IL CATCH________________________________________");
 			}
 
 			

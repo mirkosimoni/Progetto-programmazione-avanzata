@@ -37,6 +37,12 @@ public class MyProfileServiceDefault implements MyProfileService {
 	}
 	
 	@Override
+	public List<User> findAll(){
+		
+		return userRepository.findAll();
+	}
+	
+	@Override
 	public Profile create(Profile profilo) {
 		
 		return profilerepository.create(profilo);
