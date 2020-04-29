@@ -67,7 +67,7 @@ public class AulaController {
 						@RequestParam(value = "oraInizio", required=false) String oraInizio,
 						@RequestParam(value = "oraFine", required=false) String oraFine,
 						@RequestParam(value = "quota", required=false) String quota,
-						@RequestParam(value = "nome", required=false) String nome,
+						@RequestParam(value = "nomi", required=false) String nome,
 						@RequestParam(value = "numPosti", required=false) String numPosti,
 						@RequestParam(value = "prese", required=false) Boolean prese, 
 						Model uiModel) {
@@ -204,12 +204,15 @@ public class AulaController {
 			try {
 			Aula a = this.aulaService.create(nome, Integer.parseInt(quota), Integer.parseInt(numPosti), prese);
 			
-			if(a==null) System.out.println("ERRORE DENTRO IL TRY__________________________________");
+			if(a==null) {
+				errorMessageData = "Creazione aula non riuscita";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
+				return "redirect:/aula/list";
+			}
 
 			} catch (Exception e) {
 				errorMessageData = "Creazione aula non riuscita";
 				uiModel.addAttribute("errorMessageData",errorMessageData);
-				System.out.println("ERRORE DENTRO IL CATCH________________________________________");
 			}
 
 			

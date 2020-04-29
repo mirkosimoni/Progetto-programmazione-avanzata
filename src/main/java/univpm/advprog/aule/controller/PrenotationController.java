@@ -116,10 +116,10 @@ public class PrenotationController {
 		
 		error = null;
 		
-		if(surname == "") surname = null;
-		if(name == "") name = null;
-		if(quota == "") quota = null;
-		if(nome_aula == "") nome_aula = null;
+		if("".equals(surname)) surname = null;
+		if("".equals(name)) name = null;
+		if("Scegli".equals(quota)) quota = null;
+		if("Scegli".equals(nome_aula)) nome_aula = null;
 		
 		if(!data.equals("") && ((!oraInizio.equals("Scegli") || !oraFine.equals("Scegli")))) {
 			DateTime dt_inizio = new DateTime();
@@ -375,7 +375,7 @@ public class PrenotationController {
 		System.out.println(obj.oraInizio);
 		System.out.println(obj.oraFine);
 		
-		if (!"".equals(obj.nome_evento) && !"".equals(obj.note) && !"".equals(obj.quota) && !"".equals(obj.nome_aula) && !"".equals(obj.giorno) && !"Scegli".equals(obj.oraInizio) && !"Scegli".equals(obj.oraFine)) {
+		if (!"".equals(obj.nome_evento) && !"".equals(obj.note) && !"Scegli".equals(obj.quota) && !"Scegli".equals(obj.nome_aula) && !"".equals(obj.giorno) && !"Scegli".equals(obj.oraInizio) && !"Scegli".equals(obj.oraFine)) {
 			
 			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 			String data_orainizio = obj.giorno + ' ' + obj.oraInizio;
