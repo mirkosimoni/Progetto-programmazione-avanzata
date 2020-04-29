@@ -74,8 +74,8 @@ public class MyProfileController {
 	@GetMapping(value = "/userlist")
 	public String userlist(Model uiModel) {
 		
-		List<User> user = this.myprofileService.findAll();
-		uiModel.addAttribute("user", user);
+		List<User> users = this.myprofileService.findAll();
+		uiModel.addAttribute("user", users);
 
 		return "userlist";
 	}

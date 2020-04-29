@@ -9,6 +9,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 	
 <sec:authorize access="hasRole('Admin')" var="isAdmin" />
+<sec:authorize access="hasRole('Teacher')" var="isTeacher" />
 	
 <body style= "background-color:rgb(52,58,64);">
 <div class="row">
@@ -49,7 +50,7 @@
                                 </ul>
                                 <div class="tab-content ml-1" id="myTabContent">
                                     <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
-                                    	<c:if test="${isAdmin}">
+                                    	<c:if test="${isTeacher || isAdmin}">
                                     		<form name='myprenot' action="<c:url value="/prenotations/myprenotations/${user.username}" />" method='GET'>
                                          		<div class="row" style="margin-bottom: 2em;">                                
     												<button type="submit" class="btn btn-danger" role="button" aria-pressed="true">Prenotazioni Personali</button>

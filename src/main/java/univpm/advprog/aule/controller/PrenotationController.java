@@ -222,6 +222,7 @@ public class PrenotationController {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		uiModel.addAttribute("prenotations", prenotations);
 		uiModel.addAttribute("formatter", formatter);
+		uiModel.addAttribute("user", user);
 		return "prenotations/list";
 	}
 	
