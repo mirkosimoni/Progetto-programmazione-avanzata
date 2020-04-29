@@ -53,7 +53,7 @@
       <td>${formatter.format(p.oraFine.toDate())}</td>
       <td>${p.note}</td>
       <c:if test="${p.user.username == user.username || isAdmin}">
-      	<td><a href="<c:url value="/prenotations/${p.id}/edit"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
+      	<td><a href="<c:url value="/prenotations/edit/${p.id}"/>"><i class="far fa-hand-paper" style="color: rgb(218,56,73);"> </i></a></td>
       	<td><a href="<c:url value="/prenotations/delete/${p.id}"/>"><i class="fas fa-trash" style="color: rgb(218,56,73);"></i></a></td>
       </c:if>
     </tr>

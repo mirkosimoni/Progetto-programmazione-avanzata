@@ -225,7 +225,7 @@ public class PrenotationController {
 	
 	
 	
-	@GetMapping("/{prenotationId}/edit")
+	@GetMapping("/edit/{prenotationId}")
 	public String edit(@PathVariable("prenotationId") Long prenotationId, Model uiModel) {
 		List<String> q = this.aulaService.findQuota();
 		List<String> n = this.aulaService.findName();

@@ -41,8 +41,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().
 		antMatchers("/login").permitAll().
 		antMatchers("/").permitAll().
-		antMatchers("/prenotations/**").authenticated().
-		antMatchers("/myprofile/**").authenticated().
+		
+		antMatchers("/prenotations/list").authenticated().
+		antMatchers("/aula/list").authenticated().
+		antMatchers("/myprofile/profile").authenticated().
+		antMatchers("/myprofile/upload").authenticated().
+		
+		antMatchers("/prenotations/myprenotations/**").hasAnyRole("Admin","Teacher").
+		antMatchers("/myprofile/userlist").hasAnyRole("Admin").
+		antMatchers("/prenotations/create/**").hasAnyRole("Admin","Teacher").
+		antMatchers("/prenotations/edit/**").hasAnyRole("Admin","Teacher").
+		antMatchers("/prenotations/delete/**").hasAnyRole("Admin","Teacher").
+		antMatchers("/prenotations/save/**").hasAnyRole("Admin","Teacher").
+		antMatchers("/aula/create/**").hasAnyRole("Admin").
+		antMatchers("/aula/edit/**").hasAnyRole("Admin").
+		antMatchers("/aula/delete/**").hasAnyRole("Admin").
+	    antMatchers("/aula/save/**").hasAnyRole("Admin").
+		
+		
 		and().formLogin().loginPage("/login").defaultSuccessUrl("/"). //pagina dove va quando la login ha successo
 		failureUrl("/login?error=true").permitAll(). //pagina dove va se la login non ha successo
 		and().logout().logoutSuccessUrl("/") //va a / dopo il logout. default path per logout è /logout

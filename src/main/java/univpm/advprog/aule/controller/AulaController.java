@@ -42,9 +42,8 @@ public class AulaController {
 	
 	
 	@GetMapping(value = "/list")
-	public String list(@RequestParam(value = "message", required=false) String message,
-			@RequestParam(value = "errorMessageData", required = false) String errorMessageData,
-			Model uiModel) {
+	public String list(@RequestParam(value = "errorMessageData", required = false) String errorMessageData,
+		Model uiModel) {
 
 		List<Aula> allAule = this.aulaService.findAll();
 		List<String> quote = this.aulaService.findQuota();
@@ -141,7 +140,7 @@ public class AulaController {
 		return "redirect:/aula/list";
 	}
 	
-	@GetMapping("/{aulaId}/edit")
+	@GetMapping("/edit/{aulaId}")
 	public String edit(@PathVariable("aulaId") Long aulaId, Model uiModel) {
 		
 		Aula a = this.aulaService.findById(aulaId);
