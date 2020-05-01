@@ -91,7 +91,7 @@ public class User implements Serializable{
 		  this.roles = roles;
 	  }
 	  
-	  @ManyToMany
+	  @ManyToMany(fetch = FetchType.EAGER)
 	  @JoinTable( 
 	      name = "users_roles", 
 	       joinColumns = @JoinColumn(

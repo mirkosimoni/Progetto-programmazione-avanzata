@@ -50,7 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		antMatchers("/prenotations/myprenotations/**").hasAnyRole("Admin","Teacher").
 		antMatchers("/myprofile/userlist").hasAnyRole("Admin").
 		antMatchers("/prenotations/create/**").hasAnyRole("Admin","Teacher").
-		antMatchers("/prenotations/edit/{id}").access("@guard.checkPrenotationId(authentication,#id)").
 		antMatchers("/prenotations/delete/**").hasAnyRole("Admin","Teacher").
 		antMatchers("/prenotations/save/**").hasAnyRole("Admin","Teacher").
 		antMatchers("/aula/create/**").hasAnyRole("Admin").

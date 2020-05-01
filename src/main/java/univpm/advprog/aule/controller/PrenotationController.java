@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -230,7 +232,21 @@ public class PrenotationController {
 	
 	@GetMapping("/delete/{prenotationId}")
 	public String prenotationdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
-		this.prenotationService.delete(prenotationId);
+		String usernamePrenotazione = this.prenotationService.findById(prenotationId).getUser().getUsername();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User userLogged = this.profileService.findByUsername(auth.getName());
+		
+		Set<Role> ruoliLogged = userLogged.getRoles();
+		boolean admin = false;
+		
+		for(Role r: ruoliLogged)
+			if(r.getName().contentEquals("Admin"))
+					admin = true;
+		
+		if(usernamePrenotazione.contentEquals(userLogged.getUsername()) || admin)
+			this.prenotationService.delete(prenotationId);
+		
+		
 		return "redirect:/prenotations/list";
 	}
 	
@@ -269,33 +285,46 @@ public class PrenotationController {
 		User user = this.profileService.findByUsername(auth.getName());
 		System.out.println(user);
 		
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-		String data_orainizio = data + ' ' + oraInizio;
-		DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
-		String data_orafine = data + ' ' + oraFine;
-		DateTime dt_fine = formatter.parseDateTime(data_orafine);
-		int quota_int = Integer.parseInt(quota);
-		Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
+		String usernamePrenotazione = this.prenotationService.findById(prenotationId).getUser().getUsername();
 		
-		Prenotation p = this.prenotationService.findById(prenotationId);
-		p.setUser(user);
-		p.setNomeEvento(nome_evento);
-		p.setNote(note);
-		p.setOraInizio(dt_inizio);
-		p.setOraFine(dt_fine);
-		p.setAula(aula);
+		Set<Role> ruoliLogged = user.getRoles();
+		boolean admin = false;
 		
-		if(dt_inizio.isBeforeNow()) {
-			errorMessageData = "Creazione prenotazione non riuscita scegli una data successiva ad oggi";
-			uiModel.addAttribute("errorMessageData",errorMessageData);
-			return "redirect:/prenotations/list";
+		for(Role r: ruoliLogged)
+			if(r.getName().contentEquals("Admin"))
+					admin = true;
+		
+		if(usernamePrenotazione.contentEquals(user.getUsername()) || admin) {
+		
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+			String data_orainizio = data + ' ' + oraInizio;
+			DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+			String data_orafine = data + ' ' + oraFine;
+			DateTime dt_fine = formatter.parseDateTime(data_orafine);
+			int quota_int = Integer.parseInt(quota);
+			Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
+		
+			Prenotation p = this.prenotationService.findById(prenotationId);
+			p.setUser(user);
+			p.setNomeEvento(nome_evento);
+			p.setNote(note);
+			p.setOraInizio(dt_inizio);
+			p.setOraFine(dt_fine);
+			p.setAula(aula);
+		
+			if(dt_inizio.isBeforeNow()) {
+				errorMessageData = "Creazione prenotazione non riuscita scegli una data successiva ad oggi";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
+				return "redirect:/prenotations/list";
+			}
+		
+			Prenotation prenotazione_controllo = this.prenotationService.update(p);
+			if(prenotazione_controllo == null) {
+				errorMessageData = "Modifica non riuscita";
+				uiModel.addAttribute("errorMessageData",errorMessageData);
+			}
 		}
 		
-		Prenotation prenotazione_controllo = this.prenotationService.update(p);
-		if(prenotazione_controllo == null) {
-			errorMessageData = "Modifica non riuscita";
-			uiModel.addAttribute("errorMessageData",errorMessageData);
-		}
 		return "redirect:/prenotations/list";
 	}
 	
