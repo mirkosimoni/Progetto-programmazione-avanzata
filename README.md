@@ -11,9 +11,9 @@ Il programma permette la gestione di aule e prenotazione in base a tre ruoli:
 # Istruzioni d'uso
 1. Una volta clonato il progetto andare su src/main/resources e modificare il file path.properties con i dati del proprio path dove è presente la cartella "img_user" del progetto nel vostro pc.
 2. Inserire i propri dati al posto di [...] nella classe univpm.advprog.aule.app.DataServiceConfig:
-            ds.setUrl("jdbc:mysql://localhost:.../");
-			ds.setUsername("...");
-			ds.setPassword("...");
+	- ds.setUrl("jdbc:mysql://localhost:.../");
+	- ds.setUsername("...");
+	- ds.setPassword("...");
 3. Aprire la classe univpm.advprog.aule.test.LoadDataTest e lanciarla con Run as--> Java Application
 4. Lanciare il progetto per intero come Run as--->Run on Server utilizzando un server (per esempio TomCat dopo averlo configurato)
 5. All'atto dell'eventuale aggiunta di immagini al proprio profilo di utente o azienda fare refresh (F5) del progetto su eclipse o altro Ide per vedere aggiornare l'immagine del proprio profilo
