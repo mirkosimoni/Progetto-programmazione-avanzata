@@ -27,7 +27,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	@Override
 	public List<Prenotation> findAll() {
 		return getSession().
-				createQuery("from Prenotation p", Prenotation.class).
+				createQuery("from Prenotation p order by p.oraInizio", Prenotation.class).
 				getResultList();
 	}
 	
@@ -215,7 +215,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	public List<Prenotation> findAllFromToday() {
 		DateTime now = DateTime.now();
 		DateTime oggi = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 7, 0);
-		return this.getSession().createQuery("FROM Prenotation p  WHERE p.oraInizio >= :oggi", Prenotation.class).setParameter("oggi", oggi).getResultList();
+		return this.getSession().createQuery("FROM Prenotation p  WHERE p.oraInizio >= :oggi ORDER BY p.oraInizio", Prenotation.class).setParameter("oggi", oggi).getResultList();
 	}
 	
 }

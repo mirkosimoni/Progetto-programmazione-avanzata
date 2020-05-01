@@ -15,7 +15,8 @@
 			  
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Nome</label>
-		            <input type="text" id="nomeve" class="form-control controllo" name="nome" maxlength="100" value="${aula.nome}">
+		            <label style="font-style:italic; font-size:13px; color:#C0C0C0;"for="exampleInputEmail1">(max 50 caratteri)</label>
+		            <input type="text" id="nomeve" class="form-control controllo" name="nome" maxlength="30" value="${aula.nome}">
 		        </div>
 		        <div class="form-group">
                 	<label for="exampleInputEmail1">Quota</label>
@@ -28,7 +29,7 @@
               </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Numero posti</label>
-		            <input type="text" id="quot" class="form-control controllo" name="numero_posti" value="${aula.numeroPosti}">
+		            <input type="text" id="quot" class="form-control controllo" name="numero_posti" value="${aula.numeroPosti}" maxlength="4">
 		         </div>
 		         <div class="form-check form-check-inline">
 		         	<c:if test="${aula.presentiPrese}">

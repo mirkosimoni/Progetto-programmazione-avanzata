@@ -103,11 +103,13 @@
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Nome Evento</label>
-                <input id = "nomeve" type="text" class="form-control controllo" name="nome_evento">
+                <label style="font-style:italic; font-size:13px; color:#C0C0C0;"for="exampleInputEmail1">(max 50 caratteri)</label>
+                <input id = "nomeve" type="text" class="form-control controllo" name="nome_evento" maxlength="50">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Note</label>
-                <input  id = "not" type="text" class="form-control controllo" name="note">
+                <label style="font-style:italic; font-size:13px; color:#C0C0C0;"for="exampleInputEmail1">(max 100 caratteri)</label>
+                <input  id = "not" type="text" class="form-control controllo" name="note" maxlength="100">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Quota</label>

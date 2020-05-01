@@ -16,10 +16,12 @@
 			<form id="my-form" name='edit' action="${action_url}" method='POST'>    
 		         <div class="form-group">
 		            <label for="exampleInputEmail1">Nome Evento</label>
-		            <input type="text" id="nomeve" class="form-control controllo" name="nome_evento" maxlength="100" value="${prenot.nomeEvento}">
+		            <label style="font-style:italic; font-size:13px; color:#C0C0C0;"for="exampleInputEmail1">(max 50 caratteri)</label>
+		            <input type="text" id="nomeve" class="form-control controllo" name="nome_evento" maxlength="50" value="${prenot.nomeEvento}">
 		        </div>
 		        <div class="form-group">
 		            <label for="exampleInputEmail1">Note</label>
+		            <label style="font-style:italic; font-size:13px; color:#C0C0C0;"for="exampleInputEmail1">(max 100 caratteri)</label>
 		            <input type="text" id="not" class="form-control controllo" name="note" maxlength="100" value="${prenot.note}">
 		        </div> 
 		         <div class="form-group">
