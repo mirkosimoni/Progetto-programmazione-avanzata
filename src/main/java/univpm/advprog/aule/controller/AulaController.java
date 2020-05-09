@@ -40,7 +40,7 @@ public class AulaController {
 		this.aulaService = aulaService;
 	}
 	
-	
+	// ritorna la lista con tutte le aule
 	@GetMapping(value = "/list")
 	public String list(@RequestParam(value = "errorMessageData", required = false) String errorMessageData,
 		Model uiModel) {
@@ -61,6 +61,7 @@ public class AulaController {
 	}
 	
 	
+	// ritorna la lista delle aule libere in un range d'orario
 	@PostMapping(value = "/search")
 	public String search(@RequestParam(value = "giorno", required=false) String giorno, 
 						@RequestParam(value = "oraInizio", required=false) String oraInizio,
@@ -128,13 +129,14 @@ public class AulaController {
 	
 	
 	
-	
+	// elimina l'aula
 	@GetMapping("/delete/{aulaId}")
 	public String delete (@PathVariable("aulaId") Long aulaId, Model model) {
 		this.aulaService.delete(aulaId);
 		return "redirect:/aula/list";
 	}
 	
+	// ritorna la vista per la modifica dell'aula selezionata 
 	@GetMapping("/edit/{aulaId}")
 	public String edit(@PathVariable("aulaId") Long aulaId, Model uiModel) {
 		
@@ -146,6 +148,7 @@ public class AulaController {
 		return "aula/form";
 	}
 	
+	// salvataggio modifica aula 
 	@PostMapping(value = "/save/{aulaId}")
 	public String save(	@PathVariable("aulaId") Long aulaId,
 						@RequestParam(value = "nome", required=false) String nome, 
@@ -184,7 +187,7 @@ public class AulaController {
 	
 	
 		
-
+	// creazione nuova aula
 	@PostMapping(value = "/create")
 	public String create(@RequestParam(value = "quota", required=false) String quota,
 						@RequestParam(value = "nome", required=false) String nome,

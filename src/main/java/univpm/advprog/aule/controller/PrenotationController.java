@@ -68,7 +68,7 @@ public class PrenotationController {
 	}
 	
 	
-	
+	// ritorna vista con lista di tutte le prenotazioni
 	@GetMapping(value = "/list")
 	public String list(@RequestParam(value = "message", required=false) String message, 
 					   @RequestParam(value="errorMessageData", required=false) String errorMessageData,
@@ -90,6 +90,7 @@ public class PrenotationController {
 		return "prenotations/list";
 	}
 	
+	// ritorna la vista con le prenotazioni che corrispondono ai criteri di ricerca
 	@PostMapping(value = "/search")
 	public String search(@RequestParam(value = "prof_surname", required=false) String surname, 
 						@RequestParam(value = "prof_name", required=false) String name,
@@ -173,7 +174,7 @@ public class PrenotationController {
 		return "prenotations/list";
 	}
 	
-	
+	// creazione nuova prenotazione
 	@PostMapping(value = "/create")
 	public String create(@RequestParam(value = "nome_evento", required=false) String nome_evento,
 						@RequestParam(value = "note", required=false) String note,
@@ -217,6 +218,7 @@ public class PrenotationController {
 		return "redirect:/prenotations/list";
 	}
 	
+	// ritorna la vista con la lista delle mie prenotazioni
 	@GetMapping("/myprenotations/{username}")
 	public String myprenot (@PathVariable("username") String username, Model uiModel) {
 		User user = this.profileService.findByUsername(username);
@@ -229,7 +231,7 @@ public class PrenotationController {
 	}
 	
 	
-	
+	// elimina la prenotazione
 	@GetMapping("/delete/{prenotationId}")
 	public String prenotationdelete (@PathVariable("prenotationId") Long prenotationId, Model model) {
 		String usernamePrenotazione = this.prenotationService.findById(prenotationId).getUser().getUsername();
@@ -251,7 +253,7 @@ public class PrenotationController {
 	}
 	
 	
-	
+	// ritorna la vista per la modifica della prenotazione selezionata
 	@GetMapping("/edit/{prenotationId}")
 	public String edit(@PathVariable("prenotationId") Long prenotationId, Model uiModel) {
 		List<String> q = this.aulaService.findQuota();
@@ -268,7 +270,7 @@ public class PrenotationController {
 	}
 	
 	
-	
+	// salva le modifiche della prenotazione selezionata
 	@PostMapping(value = "/save/{prenotationId}")
 	public String save(	@PathVariable("prenotationId") Long prenotationId,
 						@RequestParam(value = "nome_evento", required=false) String nome_evento, 
@@ -342,7 +344,7 @@ public class PrenotationController {
 		  String oraFine;
 		}
 	
-	
+	// controllo real time per verificare se la prenotazione può essere modificata in base ai valori inseriti fino a quel momento
 	@PostMapping(value= "/ajaxtest", headers = "Accept=*/*",produces = "application/text", consumes="application/json")
     public @ResponseBody Integer validate(@RequestBody String oggetto) {
 		Gson gson = new Gson();  

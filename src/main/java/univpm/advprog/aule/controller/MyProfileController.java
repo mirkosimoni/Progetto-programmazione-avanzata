@@ -58,6 +58,7 @@ public class MyProfileController {
 		this.myprofileService = myprofileService;
 	}
 	
+	// ritorna la vista del profilo
 	@GetMapping(value = "/profile")
 	public String profile(Model uiModel) {
 		
@@ -71,6 +72,7 @@ public class MyProfileController {
 		return "myprofile";
 	}
 	
+	// ritorna la vista con la lista di tutti gli utenti
 	@GetMapping(value = "/userlist")
 	public String userlist(Model uiModel) {
 		
@@ -81,6 +83,7 @@ public class MyProfileController {
 	}
 	
 	
+	// caricamento immagine del profilo
 	@PostMapping("/upload")
 	public String multiFileUpload(@RequestParam("file") MultipartFile file,
 	                             	Model uiModel) {
