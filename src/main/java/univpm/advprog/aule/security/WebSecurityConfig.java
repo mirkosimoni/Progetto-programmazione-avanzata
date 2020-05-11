@@ -42,15 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		antMatchers("/login").permitAll().
 		antMatchers("/").permitAll().
 		
-		antMatchers("/prenotations/list").authenticated().
-		antMatchers("/aula/list").authenticated().
-		antMatchers("/myprofile/profile").authenticated().
-		antMatchers("/myprofile/upload").authenticated().
+		antMatchers("/prenotations/list").authenticated().		//Azioni possibili solo a chi � loggato con un profilo qualsiasi
+		antMatchers("/aula/list").authenticated().				
+		antMatchers("/myprofile/profile").authenticated().		
+		antMatchers("/myprofile/upload").authenticated().		
 		
-		antMatchers("/prenotations/myprenotations/**").hasAnyRole("Admin","Teacher").
-		antMatchers("/myprofile/userlist").hasAnyRole("Admin").
-		antMatchers("/prenotations/create/**").hasAnyRole("Admin","Teacher").
-		antMatchers("/prenotations/delete/**").hasAnyRole("Admin","Teacher").
+		antMatchers("/prenotations/myprenotations/**").hasAnyRole("Admin","Teacher").		//Azioni possibili solo agli utenti dotati di certi ruoli
+		antMatchers("/myprofile/userlist").hasAnyRole("Admin").								
+		antMatchers("/prenotations/create/**").hasAnyRole("Admin","Teacher").				
+		antMatchers("/prenotations/delete/**").hasAnyRole("Admin","Teacher").				
 		antMatchers("/prenotations/save/**").hasAnyRole("Admin","Teacher").
 		antMatchers("/aula/create/**").hasAnyRole("Admin").
 		antMatchers("/aula/edit/**").hasAnyRole("Admin").
@@ -58,9 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    antMatchers("/aula/save/**").hasAnyRole("Admin").
 		
 		
-		and().formLogin().loginPage("/login").defaultSuccessUrl("/"). //pagina dove va quando la login ha successo
-		failureUrl("/login?error=true").permitAll(). //pagina dove va se la login non ha successo
-		and().logout().logoutSuccessUrl("/") //va a / dopo il logout. default path per logout è /logout
+		and().formLogin().loginPage("/login").defaultSuccessUrl("/"). 	//pagina dove va quando la login ha successo
+		failureUrl("/login?error=true").permitAll(). 					//pagina dove va se la login non ha successo
+		and().logout().logoutSuccessUrl("/") 							//va a / dopo il logout. default path per logout è /logout
 		.invalidateHttpSession(true).permitAll().
 		and().csrf().disable();
 			
