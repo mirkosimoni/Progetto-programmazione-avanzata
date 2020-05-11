@@ -24,7 +24,7 @@ import univpm.advprog.aule.utils.PrenotationsOverlapFinder;
 
 @Transactional
 @Repository("aulaDao")
-public class AulaDaoDefault extends DefaultDao implements AulaDao {
+public class AulaDaoDefault extends DefaultDao implements AulaDao {  
 	
 	PrenotationDao prenotationDao;
 	
@@ -34,26 +34,26 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 	
 	@Override
-	public List<Aula> findAll() {
+	public List<Aula> findAll() {		//Ritorna lista con tutte le aule esistenti ordinate per quota
 		return getSession().
 				createQuery("from Aula a order by a.quota", Aula.class).
 				getResultList();
 	}
 
 	@Override
-	public Aula findById(long id) {
+	public Aula findById(long id) {				//Ritorna aula il cui "id" combaci con quello richiesto
 		return this.getSession().find(Aula.class, id);
 	}
 
 
 	@Override
-	public Aula update(Aula aula) {
+	public Aula update(Aula aula) {				//Ritorna la pagina delle aule aggiornata
 		Aula merged = (Aula)this.getSession().merge(aula);
 		return merged;
 	}
 
 	@Override
-	public void delete(Aula aula) {
+	public void delete(Aula aula) {				//Elimini l'aula passata come parametro al metodo dopo aver salvato le prenotazioni effettute su di essa
 		Set<Prenotation> prenotazioni = aula.getPrenotazioni();
 		
 		/*
@@ -66,19 +66,19 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		this.getSession().delete(aula);
 	}
 	
-	public void delete(Long id) {
+	public void delete(Long id) { 
 		Aula aula = this.findById(id);
 		this.getSession().delete(aula);
 	}
 
-	@Override
-	public Set<Prenotation> getPrenotazioni(Aula aula) {
+	@Override 
+	public Set<Prenotation> getPrenotazioni(Aula aula) {			//Ritorna prenotazioni effettuate sull'aula passat per parametro 
 		Query q = this.getSession().createQuery("From Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula", Prenotation.class);
 		return new HashSet<Prenotation>(q.setParameter("aula", aula).getResultList());
 	}
 
 	@Override
-	public Aula findByNomeQuota(String nome, int quota) {
+	public Aula findByNomeQuota(String nome, int quota) {			//Ritorna aula dal nome e quota corrispondente nel database se esiste, altrimenti ritorna NULL
 		try {
 		return this.getSession().createQuery("FROM Aula a  WHERE a.nome= :nome AND a.quota = :quota", Aula.class).setParameter("nome",nome).
 				setParameter("quota", quota).getSingleResult();
@@ -88,19 +88,19 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 	
 	@Override
-	public List <String> findNome() {
+	public List <String> findNome() {			//Ritorna i nomi (saltando i doppioni) delle aule ordinati alfabeticamente
 		return this.getSession().createQuery("SELECT DISTINCT (a.nome) FROM Aula a ORDER BY a.nome", String.class).getResultList();
 	}
 	
 	@Override
-	public List<String> findQuota() {
+	public List<String> findQuota() {			//Ritorna le quote (saltando i doppioni) delle aule ordinate in verso crescente
 		try {
 			List<String> quote= new ArrayList<String>();
 			List<Integer> quoteAule = this.getSession().createQuery("SELECT DISTINCT (a.quota) FROM Aula a ORDER BY a.quota", Integer.class).getResultList();
 		
 			for(int a: quoteAule)
 			
-				quote.add(String.valueOf(a));
+				quote.add(String.valueOf(a)); //conversione quota Nesima da INT a STRING
 				
 			return quote;
 		
@@ -113,7 +113,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	
 	
 	@Override
-	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {
+	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {		//Ritorna aula creata coi parametri passati dal richiamante nel caso non sia già presente nel DB
 		
 		List<Aula> aule = this.findAll();
 		
@@ -132,24 +132,25 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAulePosti(int minimoPosti) {
+	public List<Aula> findAulePosti(int minimoPosti) {			//Ritorna lista di aule con numero di posti maggiori al minimo passato per parametro
 		return this.getSession().createQuery("FROM Aula a WHERE a.numeroPosti >= :minimoPosti", Aula.class).
 				setParameter("minimoPosti", minimoPosti).getResultList();
 	}
 
 	@Override
-	public List<Aula> findAuleQuota(int quota) {
+	public List<Aula> findAuleQuota(int quota) {			//Ritorna lista di aule presenti in una data quota 
 		return this.getSession().createQuery("FROM Aula a WHERE a.quota = :quota", Aula.class).
 				setParameter("quota", quota).getResultList();
 	}
 
 	@Override
-	public List<Aula> findAulePrese() {
+	public List<Aula> findAulePrese() {				//Ritorna lista con tutte le aule dotate di prese
 		return this.getSession().createQuery("FROM Aula a WHERE a.presentiPrese = TRUE", Aula.class).getResultList();
 	}
 
 	@Override
-	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {
+	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {		//Fa query con criteri a runtime per usare valori dei campi inseriti nella corrispondente vista 
+																										//Ritorna lista di aule che rispettano i criteri di ricerca 
 		
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Aula> cr = cb.createQuery(Aula.class);
@@ -178,7 +179,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, String nome, int minimoPosti, Boolean presentiPrese) {
+	public List<Aula> findAuleLibere(DateTime oraInizio, DateTime oraFine, int quota, String nome, int minimoPosti, Boolean presentiPrese) {		//Ritorna la lista di aule libere, tutte quelle senza prenotazioni presenti nell'ultima mezz'ora.
 		
 		List<Aula> aule = this.findAule(quota, nome, minimoPosti, presentiPrese);
 		List<Aula> auleLibere = new ArrayList<Aula>();
@@ -186,13 +187,10 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		
 		Prenotation dummyPrenotation = new Prenotation();
 		
-		//if(oraInizio == null && oraFine == null) {
-		//	return aule;
-		//}
 		
-		if(oraInizio != null && oraFine != null) {
-			dummyPrenotation.setOraInizio(oraInizio);
-			dummyPrenotation.setOraFine(oraFine);
+		if(oraInizio != null && oraFine != null) {			//Implementazione del controllo accessibilità aula: 	
+			dummyPrenotation.setOraInizio(oraInizio);		//Si usa una "prenotazione artificiale" per verificare che non si sovrapponi con una già esistente
+			dummyPrenotation.setOraFine(oraFine);			//Se si sovrappone vuol dire che l'aula non è libera, altrimenti l'aggiungo assieme alle altre nella lista da ritornare	
 		}
 		else if(oraInizio != null && oraFine == null) {
 			dummyPrenotation.setOraInizio(oraInizio);
@@ -205,7 +203,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		
 		for(Aula a : aule){
 			boolean libera = true;
-			//Prenotazioni AulaData
+
 			List<Prenotation> prenotazioniAula = this.prenotationDao.findPrenotationsData(null, null, String.valueOf(a.getQuota()) , a.getNome(), dummyPrenotation.getOraInizio());			
 			for(Prenotation p : prenotazioniAula) {
 				if(overlapFinder.areOverlapped(p, dummyPrenotation))
@@ -221,19 +219,5 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
