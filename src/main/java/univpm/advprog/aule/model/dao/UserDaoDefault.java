@@ -15,14 +15,17 @@ import univpm.advprog.aule.model.entities.User;
 @Repository("userDao")
 public class UserDaoDefault extends DefaultDao implements UserDao {
 	
+	//Usato per codificare password
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	//Restituisce l'utente a seconda dell'username
 	@Override
 	public User findUserByUsername(String username) {
 		return this.getSession().get(User.class, username);
 	}
-
+	
+	//Tutti gli utenti
 	@Override
 	public List<User> findAll(){
 		return getSession().
@@ -30,6 +33,7 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 				getResultList();
 	}
 	
+	//Crea un utente
 	@Override
 	public User create(String username, String password, boolean isEnabled, Set<Role> roles) {
 		User u = new User();
@@ -41,18 +45,21 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 		
 		return u;
 	}
-
+	
+	//Aggiorna un utente
 	@Override
 	public User update(User user) {
 		return (User)this.getSession().merge(user);
 	}
 
+	//Elimina un utente
 	@Override
 	public void delete(User user) {
 		this.getSession().delete(user);
 		
 	}
-
+	
+	//Cifratore della password
 	@Override
 	public String encryptPassword(String password) {
 		return this.passwordEncoder.encode(password);
