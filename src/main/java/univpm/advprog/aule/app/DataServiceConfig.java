@@ -42,9 +42,7 @@ public class DataServiceConfig {
 		sessionFactoryBean.setDataSource(dataSource());
 		sessionFactoryBean.setPackagesToScan("univpm.advprog.aule.model");
 		sessionFactoryBean.setHibernateProperties(hibernateProperties());
-		System.out.println("Prima di PropertiesSet");
 		sessionFactoryBean.afterPropertiesSet();
-		System.out.println("Dopo PropertiesSet");
 		return sessionFactoryBean.getObject();
 	}
 

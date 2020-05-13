@@ -133,6 +133,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		DateTime inizio = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 0, 0);
 		DateTime fine = new DateTime(data.getYear(), data.getMonthOfYear(), data.getDayOfMonth(), 23, 59);
 		
+		// Query dinamica in base ai parametri passati
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
 		Root<Prenotation> root = cr.from(Prenotation.class);
@@ -191,6 +192,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		
 		DateTime fine = new DateTime(dataOra.getYear(), dataOra.getMonthOfYear(), dataOra.getDayOfMonth(), 23, 59);
 		
+		// Query dinamica in base ai parametri passati
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
 		Root<Prenotation> root = cr.from(Prenotation.class);

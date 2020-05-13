@@ -113,7 +113,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	
 	
 	@Override
-	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {		//Ritorna aula creata coi parametri passati dal richiamante nel caso non sia già presente nel DB
+	public Aula create(String nome, int quota, int numeroPosti, boolean presentiPrese) {		//Ritorna aula creata coi parametri passati dal richiamante nel caso non sia giï¿½ presente nel DB
 		
 		List<Aula> aule = this.findAll();
 		
@@ -151,7 +151,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	@Override
 	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {		//Fa query con criteri a runtime per usare valori dei campi inseriti nella corrispondente vista 
 																										//Ritorna lista di aule che rispettano i criteri di ricerca 
-		
+		// Query dinamica in base ai parametri passati
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Aula> cr = cb.createQuery(Aula.class);
 		Root<Aula> root = cr.from(Aula.class);
@@ -188,9 +188,9 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		Prenotation dummyPrenotation = new Prenotation();
 		
 		
-		if(oraInizio != null && oraFine != null) {			//Implementazione del controllo accessibilità aula: 	
-			dummyPrenotation.setOraInizio(oraInizio);		//Si usa una "prenotazione artificiale" per verificare che non si sovrapponi con una già esistente
-			dummyPrenotation.setOraFine(oraFine);			//Se si sovrappone vuol dire che l'aula non è libera, altrimenti l'aggiungo assieme alle altre nella lista da ritornare	
+		if(oraInizio != null && oraFine != null) {			//Implementazione del controllo accessibilitï¿½ aula: 	
+			dummyPrenotation.setOraInizio(oraInizio);		//Si usa una "prenotazione artificiale" per verificare che non si sovrapponi con una giï¿½ esistente
+			dummyPrenotation.setOraFine(oraFine);			//Se si sovrappone vuol dire che l'aula non ï¿½ libera, altrimenti l'aggiungo assieme alle altre nella lista da ritornare	
 		}
 		else if(oraInizio != null && oraFine == null) {
 			dummyPrenotation.setOraInizio(oraInizio);
