@@ -39,49 +39,6 @@ public class TestPrenotationDao {
 		}
 	}
 	
-	//@Test
-	void testBeginWithoutSpecifyingSession() {
-			
-		try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)){
-				
-			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			PrenotationDao prenotationDao = ctx.getBean("prenotationDao", PrenotationDao.class);
-			AulaDao aulaDao = ctx.getBean("aulaDao", AulaDao.class);
-			UserDao userDao = ctx.getBean("userDao", UserDao.class);
-			ProfileDao profileDao = ctx.getBean("profileDao", ProfileDao.class);
-			RoleDao roleDao = ctx.getBean("roleDao", RoleDao.class);
-			
-			//Creazione utente con ruoli
-			Role admin = roleDao.create("Admin");
-			Role utente = roleDao.create("User");
-			Set<Role> setRole = new HashSet();
-			setRole.add(admin);
-			setRole.add(utente);
-			Profile profile1 = new Profile(); 
-			profile1.setCognome("Simoni"); profile1.setNome("Mirko"); profile1.setDataNascita(LocalDate.of(1990, 1, 1));
-			profile1 = profileDao.create(profile1);
-			User user1 = userDao.create("username1", "12345", true, setRole);
-			user1.setProfile(profile1);
-			user1.setRoles(setRole);
-			userDao.update(user1);
-				
-			//Creazione aula
-			Aula aula = aulaDao.create("D1", 155, 20, true);
-				
-				//Creazione prenotazione
-			DateTime inizio = new DateTime(2020, 7, 1, 10, 0, 0);
-			DateTime fine = new DateTime(2020, 7, 1, 12, 0, 0);
-			Prenotation prenotation = prenotationDao.create(inizio, fine, user1, aula, "evento1", "note");
-				
-			//Controllo sessione
-			Session s1 = prenotationDao.getSession(); //Problemi in questo metodo, anche se la create funziona
-			assertFalse(s1.isOpen());
-				
-		}catch (Exception e) {
-			fail("Error unexpected: " + e);
-		}
-	}
-
 	// Test metodi ricerca
 	@Test
 	void searchPrenotazione() {

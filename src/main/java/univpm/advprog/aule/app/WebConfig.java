@@ -32,7 +32,6 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import univpm.advprog.aule.test.DataServiceConfigTest;
-import univpm.advprog.aule.utils.LocalDateAttributeConverter;
 import univpm.advprog.aule.utils.LocalDateToDateConverter;
 import univpm.advprog.aule.utils.StringToLocalDateConverter;
 

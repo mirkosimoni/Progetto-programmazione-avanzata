@@ -40,32 +40,6 @@ public class TestAulaDao {
 	}
 	
 	
-	//@Test
-	void testBeginWithoutSpecifyingSession() {
-		
-		try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)){
-			
-			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			AulaDao aulaDao = ctx.getBean("aulaDao", AulaDao.class);
-
-			aulaDao.create("NomeProva1", 100, 15, true); //Funziona
-			
-			//Non funziona
-			Session s1 = aulaDao.getSession(); //Problemi in questo metodo, anche se la create funziona
-			assertFalse(s1.isOpen());
-			
-			List<Aula> aule = aulaDao.findAll(); //Funziona
-			assertEquals(aule.size(), 1); //Funziona
-			
-			//aulaDao.create("NomeProva2", 130, 15, true);
-			//Session s2 = aulaDao.getSession();
-			//assertNotEquals(s1, s2);
-			
-		}catch (Exception e) {
-			fail("Error unexpected: " + e);
-		}
-	}
-	
 	// Test creazione e modifica di un aula
 	@Test
 	void createAndUpdateAula() {

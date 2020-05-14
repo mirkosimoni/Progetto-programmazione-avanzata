@@ -61,6 +61,7 @@ public class TestUserDao {
 		}
 	}
 	
+	// Test aggiunta ruoli ad un utente
 	@Test
 	void testAddRoles() {
 		
