@@ -33,15 +33,19 @@ public class PrenotationServiceDefault implements PrenotationService {
 		return this.prenotationRepository.findById(id);
 	}
 
+	// Rtirona le prenotazioni relative ad un'aula
 	@Override
 	public List<Prenotation> findByAula(Aula aula) {
 		return  this.prenotationRepository.findByAula(aula);
 	}
 	
+	// Ritorna le prenotazioni fatte da un'utente
+	@Override
 	public List<Prenotation> findByUser(User user){
 		return this.prenotationRepository.findByUser(user);
 	}
 
+	// Creazione di una prenotazione con controllo sulla data e sull'orario
 	@Override
 	public Prenotation create(DateTime oraInizio, DateTime oraFine, User user, Aula aula, String nomeEvento, String note) {
 		
@@ -72,8 +76,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 		else return null;
 	}
 
-	//Aggiungere controlli sull'orario, inoltre la data di inizio e fine deve essere la stessa
-	//Devono essere rispettati gli orari di apertura dell'università (forse meglio nel controller?)
+	// Modifica di una prenotazione con controllo sulla data e sull'orario
 	@Override
 	public Prenotation update(Prenotation prenotation) {
 		
@@ -101,6 +104,7 @@ public class PrenotationServiceDefault implements PrenotationService {
 		else return null;
 	}
 
+	// Eliminazione di una prenotazione
 	@Override
 	public void delete(Long id) {
 		Prenotation p = this.prenotationRepository.findById(id);
@@ -112,23 +116,30 @@ public class PrenotationServiceDefault implements PrenotationService {
 		this.prenotationRepository = prenotationRepository;
 	}
 
+	// Restituisce le prenotazioni in una certa data
 	@Override
 	public List<Prenotation> findByDate(DateTime data) {
 		return this.prenotationRepository.findByDate(data);
 	}
 
+	// Restituisce le prenotazioni con i seguenti parametri
+	// Passando null ad un parametro questo non sarà considerato
 	@Override
 	public List<Prenotation> findPrenotations(String cognome, String nome, String quota, String nomeAula) {
 		
 		return this.prenotationRepository.findPrenotations(cognome, nome, quota, nomeAula);
 	}
 
+	// Restituisce le prenotazioni con i seguenti parametri in una specifica data
+	// Passando null ad un parametro questo non sarà considerato
 	@Override
 	public List<Prenotation> findPrenotationsData(String cognome, String nome, String quota, String nomeAula, DateTime data) {
 		
 		return this.prenotationRepository.findPrenotationsData(cognome, nome, quota, nomeAula, data);
 	}
 
+	// Restituisce le prenotazioni con i seguenti parametri in un determinato range di orari
+	// Passando null ad un parametro questo non sarà considerato
 	@Override
 	public List<Prenotation> findPrenotationsRange(String cognome, String nome, String quota, String nomeAula, DateTime oraInizio,
 			DateTime oraFine) {
@@ -136,12 +147,15 @@ public class PrenotationServiceDefault implements PrenotationService {
 		return this.prenotationRepository.findPrenotationsRange(cognome, nome, quota, nomeAula, oraInizio, oraFine);
 	}
 
+	// Restituisce le prenotazioni con i seguenti parametri in una specifica data a partire da una pecifica ora
+	// Passando null ad un parametro questo non sarà considerato
 	@Override
 	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, String quota, String nomeAula, DateTime dataOra) {
 		
 		return this.prenotationRepository.findPrenotationsDataOra(cognome, nome, quota, nomeAula, dataOra);
 	}
 
+	// Restituisce tutte le prenotazioni da oggi in avanti
 	@Override
 	public List<Prenotation> findAllFromToday() {
 		return this.prenotationRepository.findAllFromToday();

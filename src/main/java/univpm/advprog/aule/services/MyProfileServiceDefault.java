@@ -36,23 +36,27 @@ public class MyProfileServiceDefault implements MyProfileService {
 		this.profilerepository = profileRepository;
 	}
 	
+	// Restituisce la lista di tutti gli utenti
 	@Override
 	public List<User> findAll(){
 		
 		return userRepository.findAll();
 	}
 	
+	// Creazione di un profilo
 	@Override
 	public Profile create(Profile profilo) {
 		
 		return profilerepository.create(profilo);
 	}
 	
+	// Trova un utente dato il suo username
 	@Override
 	public User findByUsername(String username) {
 		return userRepository.findUserByUsername(username);
 	}
 
+	// Modifica di un utente
 	@Override
 	public User update(User user) {
 		this.profilerepository.update(user.getProfile());

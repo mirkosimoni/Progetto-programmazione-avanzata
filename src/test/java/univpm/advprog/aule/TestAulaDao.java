@@ -66,6 +66,7 @@ public class TestAulaDao {
 		}
 	}
 	
+	// Test creazione e modifica di un aula
 	@Test
 	void createAndUpdateAula() {
 		
@@ -113,7 +114,7 @@ public class TestAulaDao {
 		}
 	}
 	
-	
+	// Test metodi ricerca aule
 	@Test
 	void searchAulaParameters() {
 		
@@ -164,6 +165,7 @@ public class TestAulaDao {
 		}
 	}
 	
+	// Test metodi ricerca aule libere
 	@Test
 	void searchAuleLibere(){
 		try(AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)){
@@ -262,6 +264,7 @@ public class TestAulaDao {
 		}
 	}
 	
+	// Test eliminazione aula
 	@Test
 	void deleteAula() {
 		

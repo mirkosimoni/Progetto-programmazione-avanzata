@@ -81,7 +81,8 @@ public class TestPrenotationDao {
 			fail("Error unexpected: " + e);
 		}
 	}
-	
+
+	// Test metodi ricerca
 	@Test
 	void searchPrenotazione() {
 		
@@ -197,6 +198,7 @@ public class TestPrenotationDao {
 		
 	}
 	
+	// Test creazione e modifica di una prenotazione
 	@Test
 	void createAndUpdatePrenotazione() {
 		
@@ -274,6 +276,7 @@ public class TestPrenotationDao {
 		
 	}
 	
+	// Test eliminazione prenotazione
 	@Test
 	void deletePrenotazione() {
 		
