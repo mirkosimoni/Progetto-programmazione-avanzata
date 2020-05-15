@@ -54,15 +54,6 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 
 	@Override
 	public void delete(Aula aula) {				//Elimini l'aula passata come parametro al metodo dopo aver salvato le prenotazioni effettute su di essa
-		Set<Prenotation> prenotazioni = aula.getPrenotazioni();
-		
-		/*
-		for(Iterator<Prenotation> it = prenotazioni.iterator(); it.hasNext();) {
-			Prenotation toRemove = it.next();
-			aula.removePrenotation(toRemove);
-			prenotationDao.delete(toRemove);
-		}
-		*/
 		this.getSession().delete(aula);
 	}
 	
