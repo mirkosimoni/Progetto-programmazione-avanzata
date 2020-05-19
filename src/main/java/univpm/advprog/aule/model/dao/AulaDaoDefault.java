@@ -124,7 +124,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAulePosti(int minimoPosti) {			//Ritorna lista di aule con numero di posti maggiori al minimo passato per parametro
+	public List<Aula> findAulePosti(int minimoPosti) {			//Ritorna lista di aule con numero di posti maggiori o uguali al minimo passato per parametro
 		return this.getSession().createQuery("FROM Aula a WHERE a.numeroPosti >= :minimoPosti", Aula.class).
 				setParameter("minimoPosti", minimoPosti).getResultList();
 	}

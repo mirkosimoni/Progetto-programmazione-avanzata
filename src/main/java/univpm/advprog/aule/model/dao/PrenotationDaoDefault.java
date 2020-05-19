@@ -24,6 +24,7 @@ import univpm.advprog.aule.model.entities.Aula;
 @Repository("prenotationDao")
 public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao {
 
+	//Tutte le prenotazioni ordinate per ora inizio
 	@Override
 	public List<Prenotation> findAll() {
 		return getSession().
@@ -31,7 +32,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				getResultList();
 	}
 	
-	//Tutte le prenotazioni
+	//Ritorna la prenotazione a seconda dell'id
 	@Override
 	public Prenotation findById(Long id) {
 		return getSession().find(Prenotation.class, id);
