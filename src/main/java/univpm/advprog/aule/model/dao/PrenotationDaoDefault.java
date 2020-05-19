@@ -68,14 +68,14 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 	//Tutte le prenotazioni per quell'aula, ordinate cronologicamente
 	@Override
 	public List<Prenotation> findByAula(Aula aula) {
-		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula ORDER BY p.oraInizio DESC", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula ORDER BY p.oraInizio", Prenotation.class).
 				setParameter("aula", aula).getResultList();
 				
 	}
 	
 	@Override
 	public List<Prenotation> findByUser(User user){
-		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.user WHERE p.user= :user ORDER BY p.oraInizio DESC", Prenotation.class).
+		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.user WHERE p.user= :user ORDER BY p.oraInizio", Prenotation.class).
 				setParameter("user", user).getResultList();
 	}
 	
@@ -90,7 +90,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				setParameter("inizio", inizio).setParameter("fine", fine).getResultList();
 	}
 
-	//Lista prenotazioni con date caratteristiche, a partire dall'ora in cui viene fatta la richiesta
+	//Lista prenotazioni filtrata con criteri passati alla query dinamica
 	@Override
 	public List<Prenotation> findPrenotations(String cognome, String nome, String quota, String nomeAula) {
 		
@@ -155,7 +155,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		return this.getSession().createQuery(cr).getResultList();
 	}
 
-	//Lista delle prenotazioni con date caratteristiche in un determinato rage 
+	//Lista delle prenotazioni con date caratteristiche in un determinato range 
 	@Override
 	public List<Prenotation> findPrenotationsRange(String cognome, String nome, String quota, String nomeAula, DateTime oraInizio,
 			DateTime oraFine) {
@@ -163,6 +163,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		if(oraFine == null)
 			return this.findPrenotationsData(cognome, nome, quota, nomeAula, oraInizio);
 		
+		//se cerco evento che comincia in un giorno e finisce in un altro ritorno tutte prenotazioni del giorno presente in "oraInizio"
 		if(oraInizio.getYear() != oraFine.getYear() || oraInizio.getDayOfMonth() != oraFine.getDayOfMonth() || oraInizio.getMonthOfYear() != oraFine.getMonthOfYear()) {
 			this.findPrenotationsData(cognome, nome, quota, nomeAula, oraInizio);
 		}
@@ -183,6 +184,8 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		return prenotazioniResult;
 	}
 
+	
+	//Ritorna lista delle prenotazioni che combaciano con tuple della tabella a seconda dei parametri passati al metodo
 	@Override
 	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, String quota, String nomeAula, DateTime dataOra) {
 		
@@ -193,7 +196,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		
 		DateTime fine = new DateTime(dataOra.getYear(), dataOra.getMonthOfYear(), dataOra.getDayOfMonth(), 23, 59);
 		
-		// Query dinamica in base ai parametri passati
+		// Query dinamica in base ai parametri passati 
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Prenotation> cr = cb.createQuery(Prenotation.class);
 		Root<Prenotation> root = cr.from(Prenotation.class);
