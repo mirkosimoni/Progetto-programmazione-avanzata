@@ -57,7 +57,8 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		this.getSession().delete(aula);
 	}
 	
-	public void delete(Long id) { 
+	@Override
+	public void delete(Long id) { 				//Uguale ma passando l'id dell'aula
 		Aula aula = this.findById(id);
 		this.getSession().delete(aula);
 	}
