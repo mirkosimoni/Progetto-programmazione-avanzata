@@ -25,7 +25,7 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
 		return this.getSession().get(User.class, username);
 	}
 	
-	//Tutti gli utenti
+	//Restituisce tutti gli utenti
 	@Override
 	public List<User> findAll(){
 		return getSession().
