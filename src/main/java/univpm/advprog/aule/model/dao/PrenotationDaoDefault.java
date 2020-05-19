@@ -73,6 +73,7 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 				
 	}
 	
+	//Ritorna tutte le prenotazioni dell'utente che ha effettuato il login, ordinate per l'ora inizio 
 	@Override
 	public List<Prenotation> findByUser(User user){
 		return this.getSession().createQuery("FROM Prenotation p JOIN FETCH p.user WHERE p.user= :user ORDER BY p.oraInizio DESC", Prenotation.class).
@@ -183,11 +184,12 @@ public class PrenotationDaoDefault extends DefaultDao implements PrenotationDao 
 		return prenotazioniResult;
 	}
 
+	
 	@Override
 	public List<Prenotation> findPrenotationsDataOra(String cognome, String nome, String quota, String nomeAula, DateTime dataOra) {
 		
 		if(dataOra == null)
-			return this.findPrenotations(cognome, cognome, quota, nomeAula);
+			return this.findPrenotations(cognome, nome, quota, nomeAula);
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		
