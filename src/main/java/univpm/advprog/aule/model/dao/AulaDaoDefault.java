@@ -63,8 +63,9 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 		this.getSession().delete(aula);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override 
-	public Set<Prenotation> getPrenotazioni(Aula aula) {			//Ritorna prenotazioni effettuate sull'aula passat per parametro 
+	public Set<Prenotation> getPrenotazioni(Aula aula) {			//Ritorna prenotazioni effettuate sull'aula passata per parametro 
 		Query q = this.getSession().createQuery("From Prenotation p JOIN FETCH p.aula WHERE p.aula= :aula", Prenotation.class);
 		return new HashSet<Prenotation>(q.setParameter("aula", aula).getResultList());
 	}
@@ -124,7 +125,7 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAulePosti(int minimoPosti) {			//Ritorna lista di aule con numero di posti maggiori al minimo passato per parametro
+	public List<Aula> findAulePosti(int minimoPosti) {			//Ritorna lista di aule con numero di posti maggiore o uguale al minimo passato per parametro
 		return this.getSession().createQuery("FROM Aula a WHERE a.numeroPosti >= :minimoPosti", Aula.class).
 				setParameter("minimoPosti", minimoPosti).getResultList();
 	}
@@ -141,9 +142,8 @@ public class AulaDaoDefault extends DefaultDao implements AulaDao {
 	}
 
 	@Override
-	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {		//Fa query con criteri a runtime per usare valori dei campi inseriti nella corrispondente vista 
+	public List<Aula> findAule(int quota, String nome, int minimoPosti, Boolean presentiPrese) {		//Fa query con criteri dinamica per usare valori dei campi inseriti nella corrispondente vista 
 																										//Ritorna lista di aule che rispettano i criteri di ricerca 
-		// Query dinamica in base ai parametri passati
 		CriteriaBuilder cb = this.getSession().getCriteriaBuilder();
 		CriteriaQuery<Aula> cr = cb.createQuery(Aula.class);
 		Root<Aula> root = cr.from(Aula.class);
