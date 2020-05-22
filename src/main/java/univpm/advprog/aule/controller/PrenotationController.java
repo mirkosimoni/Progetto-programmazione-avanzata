@@ -283,48 +283,56 @@ public class PrenotationController {
 						@RequestParam(value = "errorMessageData", required = false) String errorMessageData, 
 						Model uiModel) {
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = this.profileService.findByUsername(auth.getName());
-		System.out.println(user);
 		
-		String usernamePrenotazione = this.prenotationService.findById(prenotationId).getUser().getUsername();
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = this.profileService.findByUsername(auth.getName());
+			System.out.println(user);
 		
-		Set<Role> ruoliLogged = user.getRoles();
-		boolean admin = false;
+			String usernamePrenotazione = this.prenotationService.findById(prenotationId).getUser().getUsername();
 		
-		for(Role r: ruoliLogged)
-			if(r.getName().contentEquals("Admin"))
+			Set<Role> ruoliLogged = user.getRoles();
+			boolean admin = false;
+		
+			for(Role r: ruoliLogged)
+				if(r.getName().contentEquals("Admin"))
 					admin = true;
 		
-		if(usernamePrenotazione.contentEquals(user.getUsername()) || admin) {
+			if(usernamePrenotazione.contentEquals(user.getUsername()) || admin) {
 		
-			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-			String data_orainizio = data + ' ' + oraInizio;
-			DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
-			String data_orafine = data + ' ' + oraFine;
-			DateTime dt_fine = formatter.parseDateTime(data_orafine);
-			int quota_int = Integer.parseInt(quota);
-			Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
+				DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+				String data_orainizio = data + ' ' + oraInizio;
+				DateTime dt_inizio = formatter.parseDateTime(data_orainizio);
+				String data_orafine = data + ' ' + oraFine;
+				DateTime dt_fine = formatter.parseDateTime(data_orafine);
+				int quota_int = Integer.parseInt(quota);
+				Aula aula = this.aulaService.findByNameQuota(aula_nome, quota_int);
 		
-			Prenotation p = this.prenotationService.findById(prenotationId);
-			p.setUser(user);
-			p.setNomeEvento(nome_evento);
-			p.setNote(note);
-			p.setOraInizio(dt_inizio);
-			p.setOraFine(dt_fine);
-			p.setAula(aula);
+				Prenotation p = this.prenotationService.findById(prenotationId);
+				p.setUser(user);
+				p.setNomeEvento(nome_evento);
+				p.setNote(note);
+				p.setOraInizio(dt_inizio);
+				p.setOraFine(dt_fine);
+				p.setAula(aula);
 		
-			if(dt_inizio.isBeforeNow()) {
-				errorMessageData = "Creazione prenotazione non riuscita scegli una data successiva ad oggi";
-				uiModel.addAttribute("errorMessageData",errorMessageData);
-				return "redirect:/prenotations/list";
-			}
+				if(dt_inizio.isBeforeNow()) {
+					errorMessageData = "Creazione prenotazione non riuscita scegli una data successiva ad oggi";
+					uiModel.addAttribute("errorMessageData",errorMessageData);
+					return "redirect:/prenotations/list";
+				}
 		
-			Prenotation prenotazione_controllo = this.prenotationService.update(p);
-			if(prenotazione_controllo == null) {
-				errorMessageData = "Modifica non riuscita";
-				uiModel.addAttribute("errorMessageData",errorMessageData);
-			}
+				Prenotation prenotazione_controllo = this.prenotationService.update(p);
+				if(prenotazione_controllo == null) {
+					errorMessageData = "Modifica non riuscita";
+					uiModel.addAttribute("errorMessageData",errorMessageData);
+				}
+			
+		}
+		}catch (Exception e) {
+			errorMessageData = "Creazione prenotazione non riuscita";
+			uiModel.addAttribute("errorMessageData",errorMessageData);
+			
 		}
 		
 		return "redirect:/prenotations/list";
